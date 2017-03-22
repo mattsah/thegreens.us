@@ -3,18 +3,18 @@
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
 	  <?php $wl_theme_options = weblizar_get_options(); $j=1;
-			for($i=1; $i<=3; $i++){  ?>
-			<?php if($wl_theme_options['slide_image_'.$i]!='') { 
+			for($i=1; $i<=5; $i++){  ?>
+			<?php if($wl_theme_options['slide_image_'.$i]!='') {
               			?>
         <div class="item <?php if($j==1) echo "active"; ?>">
-			
-          <img src="<?php echo esc_url($wl_theme_options['slide_image_'.$i]); ?>" class="img-responsive" alt="<?php echo esc_attr($wl_theme_options['slide_title_'.$i]); ?>">		  
+
+          <img src="<?php echo esc_url($wl_theme_options['slide_image_'.$i]); ?>" class="img-responsive" alt="<?php echo esc_attr($wl_theme_options['slide_title_'.$i]); ?>">
 		  <div class="container">
             <div class="carousel-caption">
 			<?php if($wl_theme_options['slide_title_'.$i]!='') {  ?>
 			<div class="carousel-text">
-            <h1 class="animated bounceInRight"><?php echo esc_attr($wl_theme_options['slide_title_'.$i]); ?></h1>			
-			<?php  	
+            <h1 class="animated bounceInRight"><?php echo esc_attr($wl_theme_options['slide_title_'.$i]); ?></h1>
+			<?php
 			 if($wl_theme_options['slide_desc_'.$i]!='') {  ?>
 			  <ul class="list-unstyled carousel-list">
 			 <li class="animated bounceInLeft"><?php echo esc_attr($wl_theme_options['slide_desc_'.$i]); ?></li>
@@ -27,8 +27,8 @@
 			<?php } ?>
 			</div>
           </div>
-        </div>	
-			<?php $j++; }  } ?>		
+        </div>
+			<?php $j++; }  } ?>
       </div>
 	  <ol class="carousel-indicators">
 			<?php for($i=0; $i<$j-1; $i++) { ?>

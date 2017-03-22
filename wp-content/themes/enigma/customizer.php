@@ -10,7 +10,7 @@ function weblizar_gl_customizer( $wp_customize ) {
 	$port['2'] = esc_url(get_template_directory_uri() ."/images/portfolio2.png");
 	$port['3'] = esc_url(get_template_directory_uri() ."/images/portfolio3.png");
 	$port['4'] = esc_url(get_template_directory_uri() ."/images/portfolio4.png");
-	
+
 	/* Genral section */
 	$wp_customize->add_panel( 'enigma_theme_option', array(
     'title' => __( 'Theme Options','enigma' ),
@@ -24,7 +24,7 @@ $wp_customize->add_section(
 			'panel'=>'enigma_theme_option',
 			'capability'=>'edit_theme_options',
             'priority' => 35,
-			
+
         )
     );
 		$wl_theme_options = weblizar_get_options();
@@ -43,7 +43,7 @@ $wp_customize->add_section(
 		'section'    => 'general_sec',
 		'settings'   => 'enigma_options[_frontpage]',
 	) );
-	
+
 	$wp_customize->add_setting(
 		'enigma_options[upload_image_logo]',
 		array(
@@ -89,7 +89,7 @@ $wp_customize->add_section(
 		'section'    => 'general_sec',
 		'settings'   => 'enigma_options[width]',
 	) );
-	
+
 	$wp_customize->add_setting(
 		'enigma_options[upload_image_favicon]',
 		array(
@@ -119,6 +119,10 @@ $wp_customize->add_section(
 		'section'    => 'general_sec',
 		'settings'   => 'enigma_options[custom_css]'
 	) );
+
+
+
+
 	/* Slider options */
 	$wp_customize->add_section(
         'slider_sec',
@@ -156,9 +160,31 @@ $wp_customize->add_section(
 			'default'=>$ImageUrl3,
 			'capability' => 'edit_theme_options',
 			'sanitize_callback'=>'esc_url_raw',
-			
+
 		)
 	);
+	$wp_customize->add_setting(
+		'enigma_options[slide_image_4]',
+		array(
+			'type'    => 'option',
+			'default'=>$ImageUrl3,
+			'capability' => 'edit_theme_options',
+			'sanitize_callback'=>'esc_url_raw',
+
+		)
+	);
+	$wp_customize->add_setting(
+		'enigma_options[slide_image_5]',
+		array(
+			'type'    => 'option',
+			'default'=>$ImageUrl3,
+			'capability' => 'edit_theme_options',
+			'sanitize_callback'=>'esc_url_raw',
+
+		)
+	);
+
+
 	$wp_customize->add_setting(
 		'enigma_options[slide_title_1]',
 		array(
@@ -166,7 +192,7 @@ $wp_customize->add_section(
 			'default'=>$wl_theme_options['slide_title_1'],
 			'capability' => 'edit_theme_options',
 			'sanitize_callback'=>'enigma_sanitize_text',
-			
+
 		)
 	);
 	$wp_customize->add_setting(
@@ -176,7 +202,7 @@ $wp_customize->add_section(
 			'default'=>$wl_theme_options['slide_title_2'],
 			'capability' => 'edit_theme_options',
 			'sanitize_callback'=>'enigma_sanitize_text',
-			
+
 		)
 	);
 	$wp_customize->add_setting(
@@ -186,9 +212,31 @@ $wp_customize->add_section(
 			'default'=>$wl_theme_options['slide_title_3'],
 			'capability' => 'edit_theme_options',
 			'sanitize_callback'=>'enigma_sanitize_text',
-			
+
 		)
 	);
+	$wp_customize->add_setting(
+		'enigma_options[slide_title_4]',
+		array(
+			'type'    => 'option',
+			'default'=>$wl_theme_options['slide_title_3'],
+			'capability' => 'edit_theme_options',
+			'sanitize_callback'=>'enigma_sanitize_text',
+
+		)
+	);
+	$wp_customize->add_setting(
+		'enigma_options[slide_title_5]',
+		array(
+			'type'    => 'option',
+			'default'=>$wl_theme_options['slide_title_5'],
+			'capability' => 'edit_theme_options',
+			'sanitize_callback'=>'enigma_sanitize_text',
+
+		)
+	);
+
+
 	$wp_customize->add_setting(
 		'enigma_options[slide_desc_1]',
 		array(
@@ -196,7 +244,7 @@ $wp_customize->add_section(
 			'default'=>$wl_theme_options['slide_desc_1'],
 			'capability' => 'edit_theme_options',
 			'sanitize_callback'=>'enigma_sanitize_text',
-			
+
 		)
 	);
 	$wp_customize->add_setting(
@@ -206,7 +254,7 @@ $wp_customize->add_section(
 			'default'=>$wl_theme_options['slide_desc_2'],
 			'capability' => 'edit_theme_options',
 			'sanitize_callback'=>'enigma_sanitize_text',
-			
+
 		)
 	);
 	$wp_customize->add_setting(
@@ -216,9 +264,32 @@ $wp_customize->add_section(
 			'default'=>$wl_theme_options['slide_desc_3'],
 			'capability' => 'edit_theme_options',
 			'sanitize_callback'=>'enigma_sanitize_text',
-			
+
 		)
 	);
+	$wp_customize->add_setting(
+		'enigma_options[slide_desc_4]',
+		array(
+			'type'    => 'option',
+			'default'=>$wl_theme_options['slide_desc_4'],
+			'capability' => 'edit_theme_options',
+			'sanitize_callback'=>'enigma_sanitize_text',
+
+		)
+	);
+	$wp_customize->add_setting(
+		'enigma_options[slide_desc_5]',
+		array(
+			'type'    => 'option',
+			'default'=>$wl_theme_options['slide_desc_5'],
+			'capability' => 'edit_theme_options',
+			'sanitize_callback'=>'enigma_sanitize_text',
+
+		)
+	);
+
+
+
 	$wp_customize->add_setting(
 		'enigma_options[slide_btn_text_1]',
 		array(
@@ -226,7 +297,7 @@ $wp_customize->add_section(
 			'default'=>$wl_theme_options['slide_btn_text_1'],
 			'capability' => 'edit_theme_options',
 			'sanitize_callback'=>'enigma_sanitize_text',
-			
+
 		)
 	);
 	$wp_customize->add_setting(
@@ -236,7 +307,7 @@ $wp_customize->add_section(
 			'default'=>$wl_theme_options['slide_btn_text_2'],
 			'capability' => 'edit_theme_options',
 			'sanitize_callback'=>'enigma_sanitize_text',
-			
+
 		)
 	);
 	$wp_customize->add_setting(
@@ -246,9 +317,32 @@ $wp_customize->add_section(
 			'default'=>$wl_theme_options['slide_btn_text_3'],
 			'capability' => 'edit_theme_options',
 			'sanitize_callback'=>'enigma_sanitize_text',
-			
+
 		)
 	);
+	$wp_customize->add_setting(
+		'enigma_options[slide_btn_text_4]',
+		array(
+			'type'    => 'option',
+			'default'=>$wl_theme_options['slide_btn_text_4'],
+			'capability' => 'edit_theme_options',
+			'sanitize_callback'=>'enigma_sanitize_text',
+
+		)
+	);
+	$wp_customize->add_setting(
+		'enigma_options[slide_btn_text_5]',
+		array(
+			'type'    => 'option',
+			'default'=>$wl_theme_options['slide_btn_text_5'],
+			'capability' => 'edit_theme_options',
+			'sanitize_callback'=>'enigma_sanitize_text',
+
+		)
+	);
+
+
+
 	$wp_customize->add_setting(
 		'enigma_options[slide_btn_link_1]',
 		array(
@@ -256,7 +350,7 @@ $wp_customize->add_section(
 			'default'=>$wl_theme_options['slide_btn_link_1'],
 			'capability' => 'edit_theme_options',
 			'sanitize_callback'=>'esc_url_raw',
-			
+
 		)
 	);
 	$wp_customize->add_setting(
@@ -266,7 +360,7 @@ $wp_customize->add_section(
 			'default'=>$wl_theme_options['slide_btn_link_2'],
 			'capability' => 'edit_theme_options',
 			'sanitize_callback'=>'esc_url_raw',
-			
+
 		)
 	);
 	$wp_customize->add_setting(
@@ -276,9 +370,31 @@ $wp_customize->add_section(
 			'default'=>$wl_theme_options['slide_btn_link_3'],
 			'capability' => 'edit_theme_options',
 			'sanitize_callback'=>'esc_url_raw',
-			
+
 		)
 	);
+	$wp_customize->add_setting(
+		'enigma_options[slide_btn_link_4]',
+		array(
+			'type'    => 'option',
+			'default'=>$wl_theme_options['slide_btn_link_4'],
+			'capability' => 'edit_theme_options',
+			'sanitize_callback'=>'esc_url_raw',
+
+		)
+	);
+	$wp_customize->add_setting(
+		'enigma_options[slide_btn_link_5]',
+		array(
+			'type'    => 'option',
+			'default'=>$wl_theme_options['slide_btn_link_5'],
+			'capability' => 'edit_theme_options',
+			'sanitize_callback'=>'esc_url_raw',
+
+		)
+	);
+
+
 	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'enigma_slider_image_1', array(
 		'label'        => __( 'Slider Image One', 'enigma' ),
 		'section'    => 'slider_sec',
@@ -302,7 +418,7 @@ $wp_customize->add_section(
 		'section'    => 'slider_sec',
 		'settings'   => 'enigma_options[slide_btn_text_1]'
 	) );
-	
+
 	$wp_customize->add_control( 'enigma_slide_btnlink_1', array(
 		'label'        => __( 'Slider Button Link One', 'enigma' ),
 		'type'=>'url',
@@ -314,7 +430,7 @@ $wp_customize->add_section(
 		'section'    => 'slider_sec',
 		'settings'   => 'enigma_options[slide_image_2]'
 	) ) );
-	
+
 	$wp_customize->add_control( 'enigma_slide_title_2', array(
 		'label'        => __( 'Slider Title Two', 'enigma' ),
 		'type'=>'text',
@@ -350,7 +466,7 @@ $wp_customize->add_section(
 		'section'    => 'slider_sec',
 		'settings'   => 'enigma_options[slide_title_3]'
 	) );
-	
+
 	$wp_customize->add_control( 'enigma_slide_desc_3', array(
 		'label'        => __( 'Slider Description Three', 'enigma' ),
 		'type'=>'text',
@@ -369,6 +485,75 @@ $wp_customize->add_section(
 		'section'    => 'slider_sec',
 		'settings'   => 'enigma_options[slide_btn_link_3]'
 	) );
+
+
+	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'enigma_slider_image_4', array(
+		'label'        => __( 'Slider Image Four', 'enigma' ),
+		'section'    => 'slider_sec',
+		'settings'   => 'enigma_options[slide_image_4]'
+	) ) );
+	$wp_customize->add_control( 'enigma_slide_title_4', array(
+		'label'        => __( 'Slider Title Four', 'enigma' ),
+		'type'=>'text',
+		'section'    => 'slider_sec',
+		'settings'   => 'enigma_options[slide_title_4]'
+	) );
+
+	$wp_customize->add_control( 'enigma_slide_desc_4', array(
+		'label'        => __( 'Slider Description Four', 'enigma' ),
+		'type'=>'text',
+		'section'    => 'slider_sec',
+		'settings'   => 'enigma_options[slide_desc_4]'
+	) );
+	$wp_customize->add_control( 'enigma_slide_btn_4', array(
+		'label'        => __( 'Slider Button Text Four', 'enigma' ),
+		'type'=>'text',
+		'section'    => 'slider_sec',
+		'settings'   => 'enigma_options[slide_btn_text_4]'
+	) );
+	$wp_customize->add_control( 'enigma_slide_btnlink_4', array(
+		'label'        => __( 'Slider Button Link Four', 'enigma' ),
+		'type'=>'url',
+		'section'    => 'slider_sec',
+		'settings'   => 'enigma_options[slide_btn_link_4]'
+	) );
+
+
+	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'enigma_slider_image_5', array(
+		'label'        => __( 'Slider Image Five', 'enigma' ),
+		'section'    => 'slider_sec',
+		'settings'   => 'enigma_options[slide_image_5]'
+	) ) );
+	$wp_customize->add_control( 'enigma_slide_title_5', array(
+		'label'        => __( 'Slider Title Five', 'enigma' ),
+		'type'=>'text',
+		'section'    => 'slider_sec',
+		'settings'   => 'enigma_options[slide_title_5]'
+	) );
+	$wp_customize->add_control( 'enigma_slide_desc_5', array(
+		'label'        => __( 'Slider Description Five', 'enigma' ),
+		'type'=>'text',
+		'section'    => 'slider_sec',
+		'settings'   => 'enigma_options[slide_desc_5]'
+	) );
+	$wp_customize->add_control( 'enigma_slide_btn_5', array(
+		'label'        => __( 'Slider Button Text Five', 'enigma' ),
+		'type'=>'text',
+		'section'    => 'slider_sec',
+		'settings'   => 'enigma_options[slide_btn_text_5]'
+	) );
+	$wp_customize->add_control( 'enigma_slide_btnlink_5', array(
+		'label'        => __( 'Slider Button Link Five', 'enigma' ),
+		'type'=>'url',
+		'section'    => 'slider_sec',
+		'settings'   => 'enigma_options[slide_btn_link_5]'
+	) );
+
+
+
+
+
+
 	/* Service Options */
 	$wp_customize->add_section('service_section',array(
 	'title'=>__("Service Options",'enigma'),
@@ -386,8 +571,8 @@ $wp_customize->add_section(
 			'capability' => 'edit_theme_options'
 		)
 	);
-	
-	
+
+
 	$wp_customize->add_setting(
 	'enigma_options[home_service_heading]',
 		array(
@@ -395,7 +580,7 @@ $wp_customize->add_section(
 		'type'=>'option',
 		'capability'=>'edit_theme_options',
 		'sanitize_callback'=>'enigma_sanitize_text',
-		
+
 			)
 	);
 	$wp_customize->add_control( 'home_service_heading', array(
@@ -411,7 +596,7 @@ $wp_customize->add_section(
 		'type'=>'option',
 		'capability'=>'edit_theme_options',
 		'sanitize_callback'=>'enigma_sanitize_text',
-		
+
 			)
 	);
 	$wp_customize->add_setting(
@@ -421,7 +606,7 @@ $wp_customize->add_section(
 		'type'=>'option',
 		'capability'=>'edit_theme_options',
 		'sanitize_callback'=>'enigma_sanitize_text',
-		
+
 		)
 	);
 	$wp_customize->add_setting(
@@ -431,7 +616,7 @@ $wp_customize->add_section(
 		'type'=>'option',
 		'capability'=>'edit_theme_options',
 		'sanitize_callback'=>'enigma_sanitize_text',
-		
+
 		)
 	);
 	$wp_customize->add_setting(
@@ -488,7 +673,7 @@ $wp_customize->add_section(
 		'capability'=>'edit_theme_options',
 		)
 	);
-	
+
 	$wp_customize->add_setting(
 	'enigma_options[service_1_link]',
 		array(
@@ -513,14 +698,14 @@ $wp_customize->add_section(
 		'capability'=>'edit_theme_options',
 		'sanitize_callback'=>'esc_url_raw',
 		));
-	
+
 	$wp_customize->add_control( 'enigma_show_service', array(
 		'label'        => __( 'Enable Service on Home', 'enigma' ),
 		'type'=>'checkbox',
 		'section'    => 'service_section',
 		'settings'   => 'enigma_options[service_home]'
 	) );
-	
+
 	$wp_customize->add_control(
     new enigma_Customize_Misc_Control(
         $wp_customize,
@@ -537,7 +722,7 @@ $wp_customize->add_section(
 		'section'    => 'service_section',
 		'settings'   => 'enigma_options[service_1_title]'
 	) );
-	
+
 		$wp_customize->add_control('enigma_options[service_1_icons]',
         array(
 			'label'        => __( 'Service Icon One', 'enigma' ),
@@ -547,7 +732,7 @@ $wp_customize->add_section(
 			'settings'   => 'enigma_options[service_1_icons]'
         )
     );
-	
+
 	$wp_customize->add_control( 'service_one_text', array(
 		'label'        => __( 'Service One Text', 'enigma' ),
 		'type'=>'text',
@@ -641,7 +826,7 @@ $wp_customize->add_section(
             'priority' => 35,
         )
     );
-	
+
 	$wp_customize->add_setting(
 		'enigma_options[portfolio_home]',
 		array(
@@ -661,7 +846,7 @@ $wp_customize->add_section(
 		)
 	);
 
-	for($i=1;$i<=4;$i++){ 
+	for($i=1;$i<=4;$i++){
 		$wp_customize->add_setting(
 			'enigma_options[port_'.$i.'_img]',
 			array(
@@ -691,7 +876,7 @@ $wp_customize->add_section(
 			)
 		);
 	}
-	
+
 	$wp_customize->add_control( 'enigma_show_portfolio', array(
 		'label'        => __( 'Enable Portfolio on Home', 'enigma' ),
 		'type'=>'checkbox',
@@ -718,7 +903,7 @@ $wp_customize->add_section(
 		'section'    => 'portfolio_section',
 		'settings'   => 'enigma_options[port_'.$i.'_title]'
 	) );
-	
+
 	$wp_customize->add_control( 'enigma_portfolio_link_'.$i, array(
 		'label'        => __( 'Portfolio Link', 'enigma' ).$j[$i-1],
 		'type'=>'url',
@@ -764,7 +949,7 @@ $wp_customize->add_section(
 		'section'    => 'blog_section',
 		'settings'   => 'enigma_options[blog_title]',
 	) );
-	
+
 /* Font Family Section */
 	$wp_customize->add_section('font_section', array(
 	'title' => __('Typography Settings', 'enigma'),
@@ -772,7 +957,7 @@ $wp_customize->add_section(
 	'capability' => 'edit_theme_options',
 	'priority' => 35
 	));
-	
+
 	$wp_customize->add_setting(
 	'enigma_options[main_heading_font]',
 	array(
@@ -786,7 +971,7 @@ $wp_customize->add_section(
 	'section' => 'font_section',
 	'settings' => 'enigma_options[main_heading_font]',
 	)));
-	
+
 	$wp_customize->add_setting(
 	'enigma_options[menu_font]',
 	array(
@@ -800,7 +985,7 @@ $wp_customize->add_section(
 	'section' => 'font_section',
 	'settings' => 'enigma_options[menu_font]'
 	)));
-	
+
 	$wp_customize->add_setting(
 	'enigma_options[theme_title]',
 	array(
@@ -814,7 +999,7 @@ $wp_customize->add_section(
 	'section' => 'font_section',
 	'settings' => 'enigma_options[theme_title]'
 	)));
-	
+
 	$wp_customize->add_setting(
 	'enigma_options[desc_font_all]',
 	array(
@@ -828,7 +1013,7 @@ $wp_customize->add_section(
 	'section' => 'font_section',
 	'settings' => 'enigma_options[desc_font_all]'
 	)));
-	
+
 /* Social options */
 	$wp_customize->add_section('social_section',array(
 	'title'=>__("Social Options",'enigma'),
@@ -941,7 +1126,7 @@ $wp_customize->add_section(
 		'section'    => 'social_section',
 		'settings'   => 'enigma_options[linkedin_link]'
 	) );
-	
+
 	$wp_customize->add_setting(
 	'enigma_options[gplus]',
 		array(
@@ -1091,7 +1276,7 @@ $wp_customize->add_section(
 		'section'    => 'footer_section',
 		'settings'   => 'enigma_options[footer_customizations]'
 	) );
-	
+
 	$wp_customize->add_setting(
 	'enigma_options[developed_by_text]',
 		array(
@@ -1136,8 +1321,8 @@ $wp_customize->add_section(
 		'type'=>'url',
 		'section'    => 'footer_section',
 		'settings'   => 'enigma_options[developed_by_link]'
-	) );   
-	
+	) );
+
 			$wp_customize->add_section( 'enigma_more' , array(
 				'title'      	=> __( 'Upgrade to Enigma Premium', 'enigma' ),
 				'priority'   	=> 999,
@@ -1155,7 +1340,7 @@ $wp_customize->add_section(
 				'settings' => 'enigma_more',
 				'priority' => 1,
 			) ) );
-		
+
 }
 function enigma_sanitize_text( $input ) {
     return wp_kses_post( force_balance_tags( $input ) );
@@ -1174,15 +1359,15 @@ class enigma_Customize_Misc_Control extends WP_Customize_Control {
     public function render_content() {
         switch ( $this->type ) {
             default:
-           
+
             case 'heading':
                 echo '<span class="customize-control-title">' . esc_html( $this->label ) . '</span>';
                 break;
- 
+
             case 'line' :
                 echo '<hr />';
                 break;
-			
+
         }
     }
 }
@@ -1197,17 +1382,17 @@ class More_Enigma_Control extends WP_Customize_Control {
 	public function render_content() {
 		?>
 		<label style="overflow: hidden; zoom: 1;">
-			<div class="col-md-2 col-sm-6 upsell-btn">					
+			<div class="col-md-2 col-sm-6 upsell-btn">
 					<a style="margin-bottom:20px;margin-left:20px;" href="http://weblizar.com/themes/enigma-premium/" target="blank" class="btn btn-success btn"><?php _e('Upgrade to Enigma Premium','enigma'); ?> </a>
 			</div>
 			<div class="col-md-4 col-sm-6">
 				<img class="enigma_img_responsive " src="<?php echo WL_TEMPLATE_DIR_URI .'/images/Enig.jpg'?>">
-			</div>			
+			</div>
 			<div class="col-md-3 col-sm-6">
 				<h3 style="margin-top:10px;margin-left: 20px;text-decoration:underline;color:#333;"><?php echo _e( 'Enigma Premium - Features','enigma'); ?></h3>
 					<ul style="padding-top:20px">
 						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('Responsive Design','enigma'); ?> </li>
-						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('Enigma Parallax Design Included','enigma'); ?> </li>						
+						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('Enigma Parallax Design Included','enigma'); ?> </li>
 						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('More than 13 Templates','enigma'); ?> </li>
 						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('8 Different Types of Blog Templates','enigma'); ?> </li>
 						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('6 Types of Portfolio Templates','enigma'); ?></li>
@@ -1216,16 +1401,16 @@ class More_Enigma_Control extends WP_Customize_Control {
 						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('WPML Compatible','enigma'); ?>   </li>
 						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('Woo-commerce Compatible','enigma'); ?>
 						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('Image Background','enigma'); ?>  </li>
-						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('Image Background','enigma'); ?>  </li>	
+						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('Image Background','enigma'); ?>  </li>
 						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('Ultimate Portfolio layout with Isotope effect','enigma'); ?> </li>
 						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('Rich Short codes','enigma'); ?> </li>
 						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('Translation Ready','enigma'); ?> </li>
 						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('Coming Soon Mode','enigma'); ?>  </li>
 						<li class="upsell-enigma"> <div class="dashicons dashicons-yes"></div> <?php _e('Extreme Gallery Design Layout','enigma'); ?>  </li>
-					
+
 					</ul>
 			</div>
-			<div class="col-md-2 col-sm-6 upsell-btn">					
+			<div class="col-md-2 col-sm-6 upsell-btn">
 					<a style="margin-bottom:20px;margin-left:20px;" href="http://weblizar.com/themes/enigma-premium/" target="blank" class="btn btn-success btn"><?php _e('Upgrade to Enigma Premium','enigma'); ?> </a>
 			</div>
 			<span class="customize-control-title"><?php _e( 'Enjoying Enigma?', 'enigma' ); ?></span>
@@ -1242,9 +1427,9 @@ endif;
 
 /* class for font-family */
 if ( class_exists( 'WP_Customize_Control' ) && ! class_exists( 'enigma_Font_Control' ) ) :
-class enigma_Font_Control extends WP_Customize_Control 
-{  
- public function render_content() 
+class enigma_Font_Control extends WP_Customize_Control
+{
+ public function render_content()
  {?>
    <span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
    <select <?php $this->link(); ?> >
@@ -1304,8 +1489,8 @@ class enigma_Font_Control extends WP_Customize_Control
 	<option  value="Warnes"<?php if($this->value()== 'Warnes') echo 'selected="selected"';?>><?php _e('Warnes','enigma'); ?></option>
 	<option  value="Yesteryear"<?php if($this->value()== 'Yesteryear') echo 'selected="selected"';?>><?php _e('Yesteryear','enigma'); ?></option>
 	<option  value="Zeyada"<?php if($this->value()== 'Zeyada') echo 'selected="selected"';?>><?php _e('Zeyada','enigma'); ?></option>
-    </select>		
-		
+    </select>
+
   <?php
  }
 }
