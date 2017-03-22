@@ -1,0 +1,30 @@
+	
+
+	— — — ——  Change Log for Simpel Wordpress Theme  — — — —
+
+		v1.0.7	- Initial Release
+
+		v1.1	- 1. Fixed a compatibility issue for previous versions 
+			  2. Updated Font-Awesome
+
+		v1.2	- 1. Added an option to disable the featured image on post pages.
+
+		v1.3	- 1. Added Mobile Support for Navigation Menu
+
+		v1.3.1	- 1. Enqueued jQuery internally rather than externally
+
+		v1.4	- 1. Updated Font-Awesome
+			  2. Stylized the respond section a bit
+			  3. Other minor bug fixes and stylisations
+
+		v1.5	- 1. Updated Font Awesome
+			  2. Minor Bug Fixes
+
+		v1.6	- 1. Updated Bootstrap
+			  2. Added feature to show featured image in Posts
+			  3. Fixed errors with font integration
+			  4. Other minor bug fixes
+
+		v1.7	- 1. Improved Preview feature in Customiser
+			  2. Updated Font Awesome
+			  3. Updated Bootstrap
