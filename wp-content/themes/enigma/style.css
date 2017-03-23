@@ -17,15 +17,15 @@ Text Domain: enigma
 .row {
     margin-left: 0px;
     margin-right: 0px;
-} 
-/* Header Section css-------------------------------------------------------------- */ 
+}
+/* Header Section css-------------------------------------------------------------- */
 body {
    /* padding:0 30px;*/
    font-family: 'Open Sans', sans-serif;
    background-color: #fff;
 
    }
-#wrapper{	
+#wrapper{
     position: relative;
     transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
 }
@@ -42,7 +42,7 @@ h1, h2, h3, h4, h5, h6 {
 	text-shadow: 0 0 1px rgba(0,0,0,0.01);
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 600;
-	
+
 }
 p , .textwidget{
 font-family: 'Open Sans', sans-serif;
@@ -61,7 +61,7 @@ line-height: 26px;
 	display: inline;
 	margin-right:10px;
 	font-size:18px;
-	
+
 }
 .head-contact-info li a{color:#fff;}
 .head-contact-info i {
@@ -105,11 +105,11 @@ line-height: 26px;
 	margin-right: 5px;
 	width: 35px;
 	text-align: center;
-	-webkit-transition: background .5s ease-in-out; 
+	-webkit-transition: background .5s ease-in-out;
 	-moz-transition: background .5s ease-in-out;
 	-o-transition: background .5s ease-in-out;
 	-ms-transition: background .5s ease-in-out;
-	transition: background .5s ease-in-out; 
+	transition: background .5s ease-in-out;
 	border: 2px solid #ffffff;
 	cursor:pointer;
 }
@@ -208,7 +208,7 @@ line-height: 26px;
 
 
 /* Flex Slider css *****************************************************************************************************************
-********************************************************************************************************************************/ 
+********************************************************************************************************************************/
 .carousel{
 	margin-bottom:40px;
 }
@@ -315,14 +315,12 @@ line-height: 26px;
 ********************************************************************************************************************************/
 .enigma_service {
 	padding-top:90px;
-	padding-bottom:90px;
-	
 }
 .enigma_service_area{
 	border-radius: 0px;
 	margin-bottom: 65px;
 	transition: all 0.4s ease 0s;
-	
+
 }
 .enigma_service_iocn{
 	width: 90px;
@@ -349,11 +347,11 @@ line-height: 26px;
 	-webkit-transition: all .25s linear;
     -moz-transition: all .25s linear;
     -o-transition: all .25s linear;
-    transition: all .25s linear;	
+    transition: all .25s linear;
 }
 .enigma_service_detail h3{
 	font-size: 24px;
-	
+
 	letter-spacing: normal;
 	line-height: 32px;
 	word-wrap:break-word;
@@ -364,7 +362,7 @@ line-height: 26px;
 .enigma_service_detail p{
 	font-size: 16px;
 	line-height: 27px;
-}	
+}
 .enigma_service_area:hover .enigma_service_iocn{
 	background-position: 0 -100%;
 }
@@ -395,7 +393,7 @@ line-height: 26px;
     transition: all ease 0.8s;
 }
 .enigma_service_detail_2 h3{
-	font-size: 24px;	
+	font-size: 24px;
 	letter-spacing: normal;
 	line-height: 27px;
 	font-weight: 600;
@@ -404,7 +402,7 @@ line-height: 26px;
 .enigma_service_detail_2 p{
 	font-size: 18px;
 	line-height: 27px;
-}	
+}
 .enigma_service_area_2:hover .enigma_service_iocn_2 i{
 	background-position: 0 -100%;
 }
@@ -415,7 +413,7 @@ line-height: 26px;
 /*** Project Or Works  ******************************************************************************************************
 **************************************************************************************************************************/
 .enigma_project_section{
-	background:#ecf0f1; 
+	background:#ecf0f1;
     padding-top:90px;
 	padding-bottom:90px;
 	border-top:1px solid #DEE1E2;
@@ -707,7 +705,7 @@ line-height: 26px;
 	padding-bottom:20px;
 }
 .enigma_portfolio_detail_pagi li {
-	display: block; 
+	display: block;
 	float: left;
 	margin-right:15px;
 
@@ -755,7 +753,7 @@ transition: all 0.3s ease 0s;
 	text-transform: lovercase;
 	transition: all 0.4s ease 0s;
 	vertical-align: middle;
-	
+
 }
 .enigma-project-detail-sidebar .launch-enigma-project a {
 	text-decoration:none;
@@ -780,7 +778,7 @@ transition: all 0.3s ease 0s;
 	color:#f9504b;
 }
 .enigma-project-description p{
-	color:#6a6a6a;	
+	color:#6a6a6a;
 }
 .enigma-related-project{
 	background: none repeat scroll 0 0 #F9F9F9;
@@ -795,8 +793,8 @@ transition: all 0.3s ease 0s;
 	margin-bottom:70px;
 	width:100%;
 	float:left;
-	margin-right: auto; 
-	margin-left: auto; 
+	margin-right: auto;
+	margin-left: auto;
 }
 
 
@@ -807,7 +805,7 @@ transition: all 0.3s ease 0s;
 }
 .enigma_gal_img{
 	position: relative;
-	overflow: hidden; 
+	overflow: hidden;
 }
 
 .gallery_wrapper{
@@ -815,7 +813,7 @@ transition: all 0.3s ease 0s;
 	overflow:hidden;
 }
 .enigma_gallery_showcase {
-	
+
 	position: relative;
 	width: 100%;
 	overflow: hidden;
@@ -871,7 +869,7 @@ transition: all 0.3s ease 0s;
     width: 100%;
 }
 .enigma_gallery_showcase .enigma_gallery_showcase_icons a {
-  
+
     display: inline-block;
     margin-left: 2px;
     padding: 8px 8px;
@@ -882,13 +880,13 @@ transition: all 0.3s ease 0s;
 	width:60px;
 	height:60px;
 	transition: all 0.3s ease 0s;
-	
+
 }
 
 .enigma_gallery_showcase .enigma_gallery_showcase_icons a i{
     font-size: 1.6em;
 	line-height:40px;
-	
+
 }
 .enigma_gallery_showcase:hover .enigma_gallery_showcase_overlay {
     visibility: visible;
@@ -899,17 +897,16 @@ transition: all 0.3s ease 0s;
     visibility: visible;
      bottom:40%;
     left: 0;
-	
+
 }
 
 
 /***************** BLog Section *************************************************************************
-***************************************************************************************************/ 
+***************************************************************************************************/
 
 /** wrapper for front page **/
 .enigma_blog_area{
-	padding-top: 90px;
-	padding-bottom: 90px;
+	padding-top: 50px;
 }
 .enigma_blog_wrapper{
 	margin-bottom: 90px;
@@ -923,7 +920,7 @@ transition: all 0.3s ease 0s;
 
 .enigma_blog_thumb_wrapper img {
 	width:100%;
-	
+
 }
 
 .enigma_blog_thumb_wrapper h2 {
@@ -932,7 +929,7 @@ transition: all 0.3s ease 0s;
 	padding-right: 0px;
 	line-height:1.4;
 	margin-top:0px;
-	
+
 }
 .enigma_blog_thumb_wrapper h2 a:hover {
 	color: #34495e !important;
@@ -1016,7 +1013,7 @@ transition: all 0.3s ease 0s;
 	width: 100%;
 	overflow: hidden;
 	margin-bottom: 15px;
-	
+
 }
 .enigma_blog_thumb_wrapper_showcase_overlay {
       visibility: hidden;
@@ -1037,7 +1034,7 @@ transition: all 0.3s ease 0s;
     -moz-transition: all .45s ease-in;
     -o-transition: all .45s ease-in;
     transition: all .45s ease-in;
-	
+
 
 }
 .enigma_blog_thumb_wrapper_showcase_overlay_inner {
@@ -1071,7 +1068,7 @@ transition: all 0.3s ease 0s;
 	border-radius:100%;
 	width:60px;
 	height:60px;
-	
+
 }
 
 .enigma_blog_thumb_wrapper_showcase:hover .enigma_blog_thumb_wrapper_showcase_overlay {
@@ -1088,12 +1085,12 @@ transition: all 0.3s ease 0s;
     visibility: visible;
     bottom:40%;
     left: 0;
-	
+
 }
 .enigma_blog_thumb_wrapper_showcase .enigma_blog_thumb_wrapper_showcase_icons a i{
      font-size: 1.6em;
 	line-height:40px;
-	
+
 }
 
 
@@ -1169,7 +1166,7 @@ margin-bottom:20px;
 
 .enigma_post_author img {
 	height: 100px !important;
-	max-width: 100%; 
+	max-width: 100%;
 }
 
 .enigma_post_author {
@@ -1230,7 +1227,7 @@ margin-bottom:20px;
 	float: left;
 	margin-bottom: 10px;
 	width: 100%;
-	
+
 }
 .enigma_blog_post_content p {
 	font-family: 'Open Sans', sans-serif;
@@ -1295,7 +1292,7 @@ margin-bottom:20px;
     line-height: 20px;
     margin-bottom: 2px;
     margin-top: -2px;
-	
+
 }
 .enigma_recent_widget_post h3 a {
     transition: all 0.2s ease 0s;
@@ -1329,7 +1326,7 @@ margin-bottom:20px;
 	overflow: hidden;
 	box-shadow: 0 0 6px rgba(0,0,0,.7);
 	padding: 0px 20px 15px 20px;
-	
+
 }
 .enigma_sidebar_widget_title{
 	margin-bottom:20px;
@@ -1338,7 +1335,7 @@ margin-bottom:20px;
 	text-align:center;
 	padding-top:10px;
 	padding-bottom:10px;
-	
+
 }
 .enigma_sidebar_widget .enigma_recent_widget_post_date{
 color: #6a6a6a;
@@ -1421,7 +1418,7 @@ color: #6a6a6a;
 /**** link widget **/
 .enigma_sidebar_widget ul li a , .enigma_footer_widget_column ul li a {
     position:relative;
-}    
+}
 .enigma_sidebar_widget ul li a:before , .enigma_footer_widget_column ul li a:before {
         position:absolute;
         font-family: FontAwesome;
@@ -1433,7 +1430,7 @@ color: #6a6a6a;
 	text-shadow: 0 0 1px rgba(0, 0, 0, 0.01);
 	font-family: "Open Sans",sans-serif;
 	font-size: 16px;
-	line-height: 20px;	
+	line-height: 20px;
 	transition: all 0.2s ease 0s;
 }
 
@@ -1474,7 +1471,7 @@ color: #6a6a6a;
 	display: inline-block;
 	font-weight: 600;
 	font-family: 'Open Sans', sans-serif;
-	font-size: 14px !important;	
+	font-size: 14px !important;
 	line-height: 20px;
 	margin: 0 5px 10px 0;
 	padding: 8px 12px;
@@ -1538,7 +1535,7 @@ float:left;
 	float:left;
 	margin-right:20px;
 	margin-bottom:2px;
-	
+
 }
 .enigma_author_detail_name{
 	font-size: 18px;
@@ -1697,7 +1694,7 @@ margin-bottom: 20px;
 	padding: 15px 40px;
 	margin-bottom: 0;
 	font-size: 18px;
-	
+
 	line-height: 1.428571429;
 	text-align: center;
 	white-space: nowrap;
@@ -1706,7 +1703,7 @@ margin-bottom: 20px;
 	background-image: none;
 	border: 2px solid transparent;
 	transition: all 0.4s ease;
-	
+
 }
 
 
@@ -1755,8 +1752,7 @@ margin-bottom: 20px;
 **************************************************************************************************************************/
 .enigma_testimonial_area{
 	background: #ecf0f1;
-	padding-top: 90px;
-	padding-bottom: 90px;
+	padding-top: 50px;
 	border-top: 1px solid #DEE1E2;
 	border-bottom: 1px solid #DEE1E2;
 	text-align:center;
@@ -1823,7 +1819,7 @@ margin-bottom: 20px;
 **************************************************************************************************************************/
 
 .enigma_client_area{
-	padding-top: 90px;
+	padding-top: 50px;
 	padding-bottom: 40px;
 
 }
@@ -1834,7 +1830,7 @@ margin-bottom: 20px;
 	text-align:center;
 	transition: all 0.3s ease 0s;
 	margin-bottom: 50px;
-	
+
 }
 
 .enigma_client_area .enigma_heading_title2{
@@ -1847,7 +1843,7 @@ margin-bottom: 20px;
 	display: inline;
 }
 .enigma_client_prev {
-	
+
     background-position: center center;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -1855,7 +1851,7 @@ margin-bottom: 20px;
 	transition: all 0.3s ease 0s;
 	padding: 6px 15px 10px;
 	margin-right: 5px;
-	
+
 }
 .enigma_client_next {
     background-position: center center;
@@ -1881,7 +1877,7 @@ margin-bottom: 20px;
 	padding-bottom:40px;
 	display:block;
 	overflow:hidden;
-	
+
 }
 
 .enigma_callout_area p{
@@ -1902,7 +1898,7 @@ margin-bottom: 20px;
 	vertical-align:middle;
 }
 .enigma_callout_btn {
-	float: right;	
+	float: right;
 }
 .enigma_callout_area a {
     display: inline-block;
@@ -1948,7 +1944,7 @@ margin-bottom: 20px;
 	background-size: 100% 100%;
 	margin-top:40px;
 	background: url('./images/shadow.png') center center no-repeat;
-	
+
 
 }
 
@@ -2019,7 +2015,7 @@ margin-bottom: 20px;
 
 .enigma_footer_widget_column address{
 	color: #9e9d9d;
-	
+
 }
 .enigma_footer_widget_column address p{
 	color: #f2f2f2;
@@ -2031,7 +2027,7 @@ margin-bottom: 20px;
 }
 .enigma_footer_widget_column address a{
 	color: #CCCCCC;
-	
+
 }
 .enigma_footer_widget_column address a:hover{
 	color: #ffffff;
@@ -2132,12 +2128,12 @@ a.enigma_scrollup:hover i, a.enigma_scrollup:focus i {
     text-decoration: none;
     color: #fafafa;
     outline: none;
-	
+
 }
 
 /*-----------------------
 -----Scrollimations------
-------------------------*/   
+------------------------*/
 .scrollimation.fade-in{
 	opacity:0;
 	-webkit-transition:opacity 0.6s ease-out;
@@ -2372,7 +2368,7 @@ color: #fff;
 .enigma-sidebar .flickr_badge_image {
     float: left;
     margin-bottom: 5%;
-    margin-left: 5%;    
+    margin-left: 5%;
 	transition: all 0.2s ease-in-out 0s;
 }
 .flickr_badge_image:hover{opacity:0.65;}
@@ -2391,7 +2387,7 @@ color: #fff;
 .sticky{}
 /*HTML POST HEADING CSS*/
 .enigma_fuul_blog_detail_padding h1,.enigma_fuul_blog_detail_padding h3,.enigma_fuul_blog_detail_padding h4,
-.enigma_fuul_blog_detail_padding h5 , .enigma_fuul_blog_detail_padding h5, .enigma_fuul_blog_detail_padding h6 
+.enigma_fuul_blog_detail_padding h5 , .enigma_fuul_blog_detail_padding h5, .enigma_fuul_blog_detail_padding h6
 {
 color: #31A3DD;
 margin-top: 10px;

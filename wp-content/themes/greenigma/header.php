@@ -43,7 +43,7 @@
 					<?php
 					if($wl_theme_options['upload_image_logo']!='')
 					{ ?>
-					<img src="<?php echo esc_url($wl_theme_options['upload_image_logo']); ?>" style="height:<?php if($wl_theme_options['height']!='') { echo $wl_theme_options['height']; }  else { "80"; } ?>px; width:<?php if($wl_theme_options['width']!='') { echo $wl_theme_options['width']; }  else { "200"; } ?>px;" />
+					<img src="<?php echo esc_url($wl_theme_options['upload_image_logo']); ?>" />
 					<?php } else { ?>
 					<?php echo esc_attr_e('Greenigma',"weblizar"); ?>
 					<?php } ?>
