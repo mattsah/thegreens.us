@@ -71,12 +71,14 @@
 					<li class="instagram" data-toggle="tooltip" data-placement="bottom" title="Instagram"><a href="<?php echo esc_url($wl_theme_options['instagram']); ?>" target="_blank"><i class="fa fa-instagram"></i></a></li>
 
 					<?php } if($wl_theme_options['youtube_link']!='') { ?>
-					<li class="youtube" data-toggle="tooltip" data-placement="bottom" title="Youtube"><a href="<?php echo esc_url($wl_theme_options['youtube_link']) ; ?>" target="_blank"><i class="fa fa-youtube"></i></a></li>
-	                <?php } ?>
+						<li class="youtube" data-toggle="tooltip" data-placement="bottom" title="Youtube"><a href="<?php echo esc_url($wl_theme_options['youtube_link']) ; ?>" target="_blank"><i class="fa fa-youtube"></i></a></li>
+					<?php } ?>
 					</ul>
-					<form class="signup" action="//thegreens.us15.list-manage.com/subscribe/post?u=d8925995a05f1e7da88de37c6&amp;id=bd49f4e2f1" method="post">
+					<form class="signup" action="//thegreens.us15.list-manage.com/subscribe/post?u=d8925995a05f1e7da88de37c6&amp;id=50f624f557" method="post">
 						<input type="email" name="EMAIL" placeholder="e.g. user@example.com" required />
 						<button type="submit">Signup</button>
+						<a class="enigma_blog_read_btn animated bounceInUp" href="/take-action/volunteer">Volunteer</a>
+						<a class="enigma_blog_read_btn animated bounceInUp" href="/take-action/donate">Donate</a>
 					</form>
 				</div>
 				<?php } ?>
