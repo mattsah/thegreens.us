@@ -27,7 +27,7 @@ class ECWD_Display {
         }
 
         if (isset($_REQUEST['date'])) {
-            $date = $_REQUEST['date'];
+            $date = sanitize_text_field($_REQUEST['date']);
             $date = date('Y-n-j', strtotime($date));
         }
         if ($date == '' && !isset($_REQUEST['date'])) {
@@ -40,13 +40,13 @@ class ECWD_Display {
         $month = $date_part[1];
         $day = $date_part[2];
         if (isset($_REQUEST['y']) && $_REQUEST['y'] != '') {
-            $year = $_REQUEST['y'];
+            $year = sanitize_text_field($_REQUEST['y']);
         } // if year is set in querystring it takes precedence
         if (isset($_REQUEST['m']) && $_REQUEST['m'] != '') {
-            $month = $_REQUEST['m'];
+            $month = sanitize_text_field($_REQUEST['m']);
         } // if month is set in querystring it takes precedence
         if (isset($_REQUEST['d']) && $_REQUEST['d'] != '') {
-            $day = $_REQUEST['d'];
+            $day = sanitize_text_field($_REQUEST['d']);
         } // if day is set in querystring it takes precedence
 
         if ($year == '') {
@@ -215,24 +215,48 @@ class ECWD_Display {
                 wp_reset_query();
             }
             try {
+                $args['post_status'] = 'publish';
                 $ecwd_events = get_posts($args);
+                $private_events = array();
+                if(current_user_can('read_private_posts')){
+                  $private_events_args = $args;
+                  $private_events_args['post_status'] = 'private';
+                  $private_events =  get_posts($private_events_args);
+                }
             } catch (Exception $e) {
                 $ecwd_events = array();
             }
 
             $ecwd_events += $ecwd_events_title;
-            wp_reset_query();
+            if(!empty($private_events)){
+              foreach($private_events as $private_event) {
+                $ecwd_events[] = $private_event;
+              }
+            }
+
+          wp_reset_query();
             $google_events = array();
             $events = array();
             $ical_events = array();
             $facebook_events = array();
             //fetch google calendar events
 
+            global $ecwd_options;
+            $event_desc_length = isset($ecwd_options['event_description_max_length']) ? $ecwd_options['event_description_max_length'] : "";
 
+            $hide_old_events_meta = get_post_meta($id, 'ecwd_hide_old_events', true);
+
+            if ($hide_old_events_meta === '0'){
+                $hide_old_events = false;
+            }else if($hide_old_events_meta === '1'){
+                $hide_old_events = true;
+            }else{
+                $hide_old_events = (isset($ecwd_options['hide_old_events']) && $ecwd_options['hide_old_events'] == '1');
+            }
 
             foreach ($ecwd_events as $ecwd_event) {
 
-                $term_metas = '';
+                $term_metas = array();
                 $categories = get_the_terms($ecwd_event->ID, ECWD_PLUGIN_PREFIX . '_event_category');
                 if (is_array($categories)) {
                     $ci = 0;
@@ -245,7 +269,7 @@ class ECWD_Display {
                     }
                 }
                 $ecwd_event_metas = get_post_meta($ecwd_event->ID, '', true);
-                $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_url'] = array(0 => '');
+                $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_url'] = array(0 => '');//???
                 if (!isset($ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_location'])) {
                     $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_location'] = array(0 => '');
                 }
@@ -260,25 +284,71 @@ class ECWD_Display {
                 }
 
                 $permalink = get_permalink($ecwd_event->ID);
+                if ($event_desc_length !== '') {
+                    $ecwd_event->post_content = $this->the_excerpt_max_charlength(intval($event_desc_length), $ecwd_event->post_content, $permalink);
+                }
                 if (isset($ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_calendars'][0])) {
                     if (is_serialized($ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_calendars'][0])) {
                         $event_calendar_ids = unserialize($ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_calendars'][0]);
                     } else {
                         $event_calendar_ids = $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_calendars'][0];
                     }
-                    //var_dump($term_metas);
+
                     if (in_array($this->id[0], $event_calendar_ids)) {
-                        $events[$ecwd_event->ID] = new ECWD_Event($ecwd_event->ID, $id, $ecwd_event->post_title, $ecwd_event->post_content, $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_location'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_date_from'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_date_to'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_url'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_lat_long'][0], $permalink, $ecwd_event, $term_metas, $ecwd_event_metas);
+                        if($hide_old_events === false){
+                            $events[$ecwd_event->ID] = new ECWD_Event($ecwd_event->ID, $id, $ecwd_event->post_title, $ecwd_event->post_content, $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_location'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_date_from'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_date_to'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_url'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_lat_long'][0], $permalink, $ecwd_event, $term_metas, $ecwd_event_metas);
+                        }else{
+
+                            if (strtotime($ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_date_to'][0]) >= strtotime(date("Y-m-d 00:00:00"))) {
+                                $events[$ecwd_event->ID] = new ECWD_Event($ecwd_event->ID, $id, $ecwd_event->post_title, $ecwd_event->post_content, $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_location'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_date_from'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_date_to'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_url'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_lat_long'][0], $permalink, $ecwd_event, $term_metas, $ecwd_event_metas);
+                            }
+
+
+//                            if (isset($ecwd_event_metas['ecwd_all_day_event'][0]) && $ecwd_event_metas['ecwd_all_day_event'][0] == "1") {
+//                                if (strtotime($ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_date_to'][0]) >= strtotime(date("Y-m-d"))) {
+//                                    $events[$ecwd_event->ID] = new ECWD_Event($ecwd_event->ID, $id, $ecwd_event->post_title, $ecwd_event->post_content, $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_location'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_date_from'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_date_to'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_url'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_lat_long'][0], $permalink, $ecwd_event, $term_metas, $ecwd_event_metas);
+//                                }
+//                            } else {
+//                                if (strtotime($ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_date_to'][0]) >= strtotime(date("Y-m-d H:i:s"))) {
+//                                    $events[$ecwd_event->ID] = new ECWD_Event($ecwd_event->ID, $id, $ecwd_event->post_title, $ecwd_event->post_content, $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_location'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_date_from'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_date_to'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_event_url'][0], $ecwd_event_metas[ECWD_PLUGIN_PREFIX . '_lat_long'][0], $permalink, $ecwd_event, $term_metas, $ecwd_event_metas);
+//                                }
+//                            }
                     }
                 }
+
+                }
             }
+
             $this->merged_events += $google_events + $facebook_events + $ical_events + $events;
 
             //$this->merged_events += $events;
 
-            global $ecwd_options;
+            if(isset($_REQUEST['ecwd_calendar_search']) && $_REQUEST['ecwd_calendar_search'] == '1'){
+                $this->get_search_events_for_long_days();
+            }else {
+                $this->get_events_for_long_days('', 1);
+            }
+        }
+    }
 
-            $this->get_events_for_long_days();
+    public function the_excerpt_max_charlength($charlength, $content,$permalink) {
+        $excerpt = $content;
+        $excerpt = strip_shortcodes($excerpt);
+        $excerpt = strip_tags($excerpt);
+        $charlength++;
+
+        if (mb_strlen($excerpt) > $charlength) {
+            $read_more = '<a href="'.$permalink.'">[' . __('Read more', 'event-calendar-wd') . ']</a>';
+            $subex = mb_substr($excerpt, 0, $charlength);
+            $exwords = explode(' ', $subex);
+            $excut = -(mb_strlen($exwords[count($exwords) - 1]));
+            if ($excut < 0) {
+                return mb_substr($subex, 0, $excut) . '...' .$read_more;
+            } else {
+                return $subex . '...'.$read_more;
+            }
+        } else {
+            return str_replace('[&hellip;]', '', $excerpt);
         }
     }
 
@@ -635,6 +705,62 @@ class ECWD_Display {
 
         if ($events) {
             return $this->events;
+        }
+    }
+
+    private function get_search_events_for_long_days(){
+        $this->get_events_for_long_days('', 1);
+
+        if(empty($this->merged_events) || (is_array($this->events) && !empty($this->events))){
+            return ;
+        }
+
+        $max_end_date = 0;
+        $max_end_date_event_id = 0;
+
+        foreach ($this->merged_events as $id=>$event) {
+
+            if(isset($event->metas['ecwd_event_repeat_repeat_until'][0])){
+                $temp_date = $event->metas['ecwd_event_repeat_repeat_until'][0];
+            }else{
+                $temp_date = $event->end_time;
+            }
+
+            $temp_date = strtotime($temp_date);
+
+            if($temp_date > $max_end_date){
+                $max_end_date = $temp_date;
+                $max_end_date_event_id = $id;
+            }
+        }
+
+        $max_end_date = strtotime(date("Y/m/t H:i:s", $max_end_date));
+        
+
+        $init_start_date = $this->start_date;
+        $init_end_date = $this->end_date;
+
+        while(true){
+
+            $start_date = date("Y-n-j" ,strtotime("+1 MONTH", strtotime($this->start_date)));
+            $end_date = date("Y-m-t" , strtotime($start_date));
+
+            if(strtotime($end_date) > $max_end_date){
+                $this->start_date = $init_start_date;
+                $this->end_date = $init_end_date;
+                break;
+            }
+
+
+            $this->start_date = $start_date;
+            $this->end_date = $end_date;
+
+            $this->get_events_for_long_days('', 1);
+
+
+            if(is_array($this->events) && !empty($this->events)){
+                break;
+            }
         }
     }
 
@@ -1135,6 +1261,11 @@ class ECWD_Display {
      * Return the calendar
      */
     public function get_view($date = '', $type = '', $widget = 0, $ecwd_views, $preview) {
+        if(isset($_REQUEST['ecwd_calendar_search']) && $_REQUEST['ecwd_calendar_search'] == '1'){
+            if(!empty($this->start_date)){
+                $date = $this->start_date;
+            }
+        }
         require_once 'calendar-class.php';
         $categories = get_categories(array('taxonomy' => ECWD_PLUGIN_PREFIX . '_event_category'));
         $tags = get_terms('ecwd_event_tag', array('hide_empty' => false));
@@ -1195,7 +1326,7 @@ class ECWD_Display {
         } else {
 
             $ecwd_event = get_post($event_id);
-            $term_metas = '';
+            $term_metas = array();
             if ($ecwd_event) {
                 $categories = get_the_terms($ecwd_event->ID, ECWD_PLUGIN_PREFIX . '_event_category');
                 if (is_array($categories)) {

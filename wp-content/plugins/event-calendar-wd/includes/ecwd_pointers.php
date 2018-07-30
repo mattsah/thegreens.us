@@ -46,7 +46,7 @@ class Ecwd_pointers {
     private function get_page_pointers() {
         $post_type = false;
         if (isset($_REQUEST['post']) && intval($_REQUEST['post']) !== 0 && isset($_REQUEST['action']) && $_REQUEST['action'] === 'edit') {
-            $post_type = get_post_type($_REQUEST['post']);
+            $post_type = get_post_type(sanitize_text_field($_REQUEST['post']));
         }
         foreach ($this->pointers as $id => $options) {
             $t = false;
@@ -170,29 +170,29 @@ class Ecwd_pointers {
     
     public function set_pointer_text(){
         $this->pointer_text = array(
-            'plugins1' => 'Press Start Tour to learn how to create your first Event Calendar.',
-            'plugins2' => 'As a first step go to Calendar section.',
-            'calendar' => 'Press Add New Calendar button to start working on your first calendar.',
-            'publish_clendar' => 'Provide a title and description(optional) for your calendar. And press Publish button.',
-            'organizer2' => 'Go to Organizers section.',
-            'organizer' => 'Go to Organizers section.',
-            'add_organizer' => 'Press Add New button to add organizer/event planner.',
-            'publish_organizer' => 'Provide a title and description(optional) for your organizer. And press Publish button.',
-            'venue' => 'Go to Venues section',
-            'venue2' => 'Go to Venues section',
-            'add_venue' => 'Press Add New button to add event venue/location.',
-            'publish_venue' => 'Provide a title and description(optional) for your venue. And press Publish button.',
-            'event2' => 'Go to Events section.',
-            'event' => 'Go to Events section.',
-            'event3' => 'Press Add New button to add an event.',
-            'ecwd-display-options-wrap' => 'Provide event start and end dates(From and To).',
-            'event_calendar' => 'Assign event to a calendar. Additionaly select event venue and organizer(optional).',
-            'publish_event' => 'Provide a title and description(optional) for your event. And press Publish button.',
-            'menu-pages' => 'Go to Pages section.',
-            'menu-pages2' => 'Go to Pages section.',
-            'add-page' => 'Press Add New button to add a Page.',
-            'add-shortcode' => 'Click on a calendar icon in visual editor to insert ECWD shortcode to page. Use the tabs to set up your calendar and press Publish button.',
-            'view_calendar' => 'Press view page to view your first calendar.'
+            'plugins1' => __('Press Start Tour to learn how to create your first Event Calendar.' ,'event-calendar-wd'),
+            'plugins2' => __('As a first step go to Calendar section.','event-calendar-wd'),
+            'calendar' => __('Press Add New Calendar button to start working on your first calendar.','event-calendar-wd'),
+            'publish_clendar' => __('Provide a title and description(optional) for your calendar. And press Publish button.','event-calendar-wd'),
+            'organizer2' => __('Go to Organizers section.','event-calendar-wd'),
+            'organizer' => __('Go to Organizers section.','event-calendar-wd'),
+            'add_organizer' => __('Press Add New button to add organizer/event planner.','event-calendar-wd'),
+            'publish_organizer' => __('Provide a title and description(optional) for your organizer. And press Publish button.','event-calendar-wd'),
+            'venue' => __('Go to Venues section','event-calendar-wd'),
+            'venue2' => __('Go to Venues section','event-calendar-wd'),
+            'add_venue' => __('Press Add New button to add event venue/location.','event-calendar-wd'),
+            'publish_venue' => __('Provide a title and description(optional) for your venue. And press Publish button.','event-calendar-wd'),
+            'event2' => __('Go to Events section.','event-calendar-wd'),
+            'event' => __('Go to Events section.','event-calendar-wd'),
+            'event3' => __('Press Add New button to add an event.','event-calendar-wd'),
+            'ecwd-display-options-wrap' => __('Provide event start and end dates(From and To).','event-calendar-wd'),
+            'event_calendar' => __('Assign event to a calendar. Additionaly select event venue and organizer(optional).','event-calendar-wd'),
+            'publish_event' => __('Provide a title and description(optional) for your event. And press Publish button.','event-calendar-wd'),
+            'menu-pages' => __('Go to Pages section.','event-calendar-wd'),
+            'menu-pages2' => __('Go to Pages section.','event-calendar-wd'),
+            'add-page' => __('Press Add New button to add a Page.','event-calendar-wd'),
+            'add-shortcode' => __('Click on a calendar icon in visual editor to insert ECWD shortcode to page. Use the tabs to set up your calendar and press Publish button.','event-calendar-wd'),
+            'view_calendar' => __('Press view page to view your first calendar.','event-calendar-wd'),
         );
     }
 
@@ -202,11 +202,11 @@ class Ecwd_pointers {
                 'page' => 'plugins.php',
                 'buttons' => array(
                     'next_pointer' => array(
-                        'title' => 'Start',
+                        'title' => __('Start','event-calendar-wd'),
                         'pointer_id' => 'plugins2'
                     )
                 ),
-                'title' => 'Click to Start Tour',
+                'title' => __('Click to Start Tour','event-calendar-wd'),
                 //'content' => 'description',
                 'selector' => '#menu-posts-ecwd_event',
                 'edge' => 'left',
@@ -216,11 +216,11 @@ class Ecwd_pointers {
                 'page' => 'plugins.php',
                 'buttons' => array(
                     'next_page' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'url' => 'edit.php?post_type=ecwd_calendar'
                     )
                 ),
-                'title' => 'Create a Calendar',                
+                'title' => __('Create a Calendar','event-calendar-wd'),
                 'selector' => '#menu-posts-ecwd_calendar',
                 'edge' => 'left',
                 'align' => 'center',
@@ -230,11 +230,11 @@ class Ecwd_pointers {
                 'page' => 'edit.php?post_type=ecwd_calendar',
                 'buttons' => array(
                     'next_page' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'url' => 'post-new.php?post_type=ecwd_calendar'
                     )
                 ),
-                'title' => 'Add new calendar',
+                'title' => __('Add new calendar','event-calendar-wd'),
                 //'content' => '',
                 'selector' => '.page-title-action',
                 'edge' => 'top',
@@ -244,11 +244,11 @@ class Ecwd_pointers {
                 'page' => 'post-new.php?post_type=ecwd_calendar',
                 'buttons' => array(
                     'next_pointer' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'pointer_id' => 'organizer'
                     )
                 ),
-                'title' => 'Publish Calendar',
+                'title' => __('Publish Calendar','event-calendar-wd'),
                 //'content' => 'description',
                 'selector' => '#publishing-action',
                 'edge' => 'right',
@@ -259,11 +259,11 @@ class Ecwd_pointers {
                 'post_type' => 'ecwd_calendar',
                 'buttons' => array(
                     'next_page' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'url' => 'edit.php?post_type=ecwd_organizer'
                     )
                 ),
-                'title' => 'Create an Organizer',
+                'title' => __('Create an Organizer','event-calendar-wd'),
                 //'content' => 'description',
                 'selector' => '#menu-posts-ecwd_organizer',
                 'edge' => 'left',
@@ -273,11 +273,11 @@ class Ecwd_pointers {
                 'page' => 'post-new.php?post_type=ecwd_calendar',
                 'buttons' => array(
                     'next_page' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'url' => 'edit.php?post_type=ecwd_organizer'
                     )
                 ),
-                'title' => 'Create an Organizer',
+                'title' => __('Create an Organizer','event-calendar-wd'),
                 //'content' => 'description',
                 'selector' => '#menu-posts-ecwd_organizer',
                 'edge' => 'left',
@@ -288,11 +288,11 @@ class Ecwd_pointers {
                 'page' => 'edit.php?post_type=ecwd_organizer',
                 'buttons' => array(
                     'next_page' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'url' => 'post-new.php?post_type=ecwd_organizer'
                     )
                 ),
-                'title' => 'Add new organizer',
+                'title' => __('Add new organizer','event-calendar-wd'),
                 //'content' => 'description',
                 'selector' => '.page-title-action',
                 'edge' => 'top',
@@ -302,11 +302,11 @@ class Ecwd_pointers {
                 'page' => 'post-new.php?post_type=ecwd_organizer',
                 'buttons' => array(
                     'next_pointer' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'pointer_id' => 'venue'
                     )
                 ),
-                'title' => 'Publish Organizer',
+                'title' => __('Publish Organizer','event-calendar-wd'),
                 //'content' => 'description',
                 'selector' => '#publishing-action',
                 'edge' => 'right',
@@ -316,11 +316,11 @@ class Ecwd_pointers {
                 'page' => 'post-new.php?post_type=ecwd_organizer',
                 'buttons' => array(
                     'next_page' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'url' => 'edit.php?post_type=ecwd_venue'
                     )
                 ),
-                'title' => 'Create a Venue',
+                'title' => __('Create a Venue','event-calendar-wd'),
                 'content' => 'description',
                 'selector' => '#menu-posts-ecwd_venue',
                 'edge' => 'left',
@@ -332,11 +332,11 @@ class Ecwd_pointers {
                 'post_type' => 'ecwd_organizer',
                 'buttons' => array(
                     'next_page' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'url' => 'edit.php?post_type=ecwd_venue'
                     )
                 ),
-                'title' => 'Create a Venue',
+                'title' => __('Create a Venue','event-calendar-wd'),
                 'content' => 'description',
                 'selector' => '#menu-posts-ecwd_venue',
                 'edge' => 'left',
@@ -346,11 +346,11 @@ class Ecwd_pointers {
                 'page' => 'edit.php?post_type=ecwd_venue',
                 'buttons' => array(
                     'next_page' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'url' => 'post-new.php?post_type=ecwd_venue'
                     )
                 ),
-                'title' => 'Add new venue',
+                'title' => __('Add new venue','event-calendar-wd'),
                 'content' => 'description',
                 'selector' => '.page-title-action',
                 'edge' => 'top',
@@ -360,11 +360,11 @@ class Ecwd_pointers {
                 'page' => 'post-new.php?post_type=ecwd_venue',
                 'buttons' => array(
                     'next_pointer' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'pointer_id' => 'event'
                     )
                 ),
-                'title' => 'Publish Venue',
+                'title' => __('Publish Venue','event-calendar-wd'),
                 'content' => 'description',
                 'selector' => '#publishing-action',
                 'edge' => 'right',
@@ -374,11 +374,11 @@ class Ecwd_pointers {
                 'page' => $this->page_url,
                 'buttons' => array(
                     'next_page' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'url' => 'edit.php?post_type=ecwd_event'
                     )
                 ),
-                'title' => 'Create an Event',
+                'title' => __('Create an Event','event-calendar-wd'),
                 'content' => 'description',
                 'selector' => '#menu-posts-ecwd_event',
                 'edge' => 'left',
@@ -389,11 +389,11 @@ class Ecwd_pointers {
                 'page' => 'post-new.php?post_type=ecwd_venue',
                 'buttons' => array(
                     'next_page' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'url' => 'edit.php?post_type=ecwd_event'
                     )
                 ),
-                'title' => 'Create an Event',
+                'title' => __('Create an Event','event-calendar-wd'),
                 'content' => 'description',
                 'selector' => '#menu-posts-ecwd_event',
                 'edge' => 'left',
@@ -404,11 +404,11 @@ class Ecwd_pointers {
                 'page' => 'edit.php?post_type=ecwd_event',
                 'buttons' => array(
                     'next_page' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'url' => 'post-new.php?post_type=ecwd_event'
                     )
                 ),
-                'title' => 'Add new Event',
+                'title' => __('Add new Event','event-calendar-wd'),
                 'selector' => '.page-title-action',
                 'edge' => 'left',
                 'align' => 'left'
@@ -417,12 +417,12 @@ class Ecwd_pointers {
                'page' => 'post-new.php?post_type=ecwd_event',
                'buttons' => array(
                    'next_pointer' => array(
-                       'title' => 'Next',
+                       'title' => __('Next','event-calendar-wd'),
                        'pointer_id' => 'event_calendar',
                        'scroll' => '#tagsdiv-ecwd_event_tag'
                    )
                ),
-               'title' => 'Pick a Date',
+               'title' => __('Pick a Date','event-calendar-wd'),
                'selector' => '.ecwd_all_day_event_description',
                'edge' => 'bottom',
                'align' => 'center',
@@ -432,12 +432,12 @@ class Ecwd_pointers {
                 'page' => 'post-new.php?post_type=ecwd_event',
                 'buttons' => array(
                     'next_pointer' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'pointer_id' => 'publish_event',
                         'scroll' => '#submitdiv'
                     )
                 ),
-                'title' => 'Assign to Calendar',
+                'title' => __('Assign to Calendar','event-calendar-wd'),
                 'selector' => '#ecwd_event_calendars_meta',
                 'edge' => 'right',
                 'align' => 'left',
@@ -447,12 +447,12 @@ class Ecwd_pointers {
                 'page' => 'post-new.php?post_type=ecwd_event',
                 'buttons' => array(
                     'next_pointer' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'pointer_id' => 'menu-pages',
                         'scroll' => '#wpcontent'
                     )
                 ),
-                'title' => 'Publish Event',
+                'title' => __('Publish Event','event-calendar-wd'),
                 'selector' => '#publishing-action',
                 'edge' => 'right',
                 'align' => 'left',
@@ -462,11 +462,11 @@ class Ecwd_pointers {
                 'page' => 'post-new.php?post_type=ecwd_event',
                 'buttons' => array(
                     'next_page' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'url' => 'edit.php?post_type=page'
                     )
                 ),
-                'title' => 'Create a Page',
+                'title' => __('Create a Page','event-calendar-wd'),
                 'selector' => '#menu-pages',
                 'edge' => 'left',
                 'align' => 'left',
@@ -476,11 +476,11 @@ class Ecwd_pointers {
                 'page' => $this->page_url,
                 'buttons' => array(
                     'next_page' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'url' => 'edit.php?post_type=page'
                     )
                 ),
-                'title' => 'Create a Page',
+                'title' => __('Create a Page','event-calendar-wd'),
                 'selector' => '#menu-pages',
                 'edge' => 'left',
                 'align' => 'left',
@@ -490,18 +490,18 @@ class Ecwd_pointers {
                 'page' => 'edit.php?post_type=page',
                 'buttons' => array(
                     'next_page' => array(
-                        'title' => 'Next',
+                        'title' => __('Next','event-calendar-wd'),
                         'url' => 'post-new.php?post_type=page'
                     )
                 ),
-                'title' => 'Add New',
+                'title' => __('Add New','event-calendar-wd'),
                 'selector' => '.page-title-action',
                 'edge' => 'top',
                 'align' => 'left',
             ),
             'add-shortcode' => array(
                 'page' => 'post-new.php?post_type=page',
-                'title' => 'Add shortcode',
+                'title' => __('Add shortcode','event-calendar-wd'),
                 'selector' => '#publishing-action',
                 'edge' => 'right',
                 'align' => 'left',
@@ -509,7 +509,7 @@ class Ecwd_pointers {
             'view_calendar' => array(
                 'page' => $this->page_url,
                 'post_type' => 'page',
-                'title' => 'View Page',
+                'title' => __('View Page','event-calendar-wd'),
                 'selector' => '#wp-admin-bar-view',
                 'edge' => 'top',
                 'align' => 'left',

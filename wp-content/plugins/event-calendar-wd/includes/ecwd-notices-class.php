@@ -147,7 +147,7 @@ class ECWD_Notices {
 					$output_css = true;
 				}
 				if ( $output_css ) {
-					wp_enqueue_style( 'ecwd-admin-notices', ECWD_URL . '/css/admin/notices.css?ecwd_ver=' . ECWD_VERSION );
+					wp_enqueue_style( 'ecwd-admin-notices', ECWD_URL . '/css/admin/notices.css?ecwd_ver=' . ECWD_VERSION.'_'.ECWD_SCRIPTS_KEY );
 				}
 			}
 		}
@@ -170,7 +170,7 @@ class ECWD_Notices {
 		if ( isset( $_GET['ecwd_admin_notice_ignore'] ) ) {
 
 			$admin_notices_option                                                   = get_option( 'ecwd_admin_notice', array() );
-			$admin_notices_option[ $_GET['ecwd_admin_notice_ignore'] ]['dismissed'] = 1;
+			$admin_notices_option[ sanitize_text_field($_GET['ecwd_admin_notice_ignore']) ]['dismissed'] = 1;
 			update_option( 'ecwd_admin_notice', $admin_notices_option );
 			$query_str = remove_query_arg( 'ecwd_admin_notice_ignore' );
 			wp_redirect( $query_str );
@@ -188,12 +188,12 @@ class ECWD_Notices {
 
 			$current_date = current_time( "n/j/Y" );
 			$date_array   = explode( '/', $current_date );
-			$interval     = ( isset( $_GET['ecwd_int'] ) ? $_GET['ecwd_int'] : 14 );
+			$interval     = ( isset( $_GET['ecwd_int'] ) ? sanitize_text_field($_GET['ecwd_int']) : 14 );
 			$date_array[1] += $interval;
 			$new_start = date( "n/j/Y", mktime( 0, 0, 0, $date_array[0], $date_array[1], $date_array[2] ) );
 
-			$admin_notices_option[ $_GET['ecwd_admin_notice_temp_ignore'] ]['start']     = $new_start;
-			$admin_notices_option[ $_GET['ecwd_admin_notice_temp_ignore'] ]['dismissed'] = 0;
+			$admin_notices_option[ sanitize_text_field($_GET['ecwd_admin_notice_temp_ignore']) ]['start']     = $new_start;
+			$admin_notices_option[ sanitize_text_field($_GET['ecwd_admin_notice_temp_ignore']) ]['dismissed'] = 0;
 			update_option( 'ecwd_admin_notice', $admin_notices_option );
 			$query_str = remove_query_arg( array( 'ecwd_admin_notice_temp_ignore', 'ecwd_int' ) );
 			wp_redirect( $query_str );

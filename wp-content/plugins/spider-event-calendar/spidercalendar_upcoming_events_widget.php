@@ -3,11 +3,28 @@ $firtstime=1;
 add_action( 'wp_print_scripts', 'cal_scripts' );
 
 function  cal_scripts(){
-  global $wd_spider_calendar_version;
-  wp_enqueue_script("Calendar", plugins_url("elements/calendar.js", __FILE__), array(), $wd_spider_calendar_version, FALSE);
-  wp_enqueue_script("calendar-setup", plugins_url("elements/calendar-setup.js", __FILE__), array(), $wd_spider_calendar_version, FALSE);
-  wp_enqueue_script("calendar_function", plugins_url("elements/calendar_function.js", __FILE__), array(), $wd_spider_calendar_version, FALSE);
-  wp_enqueue_style("Css", plugins_url("elements/calendar-jos.css", __FILE__), array(), $wd_spider_calendar_version, FALSE);
+  $spider_cal_pages = array(
+    'toplevel_page_SpiderCalendar',
+    'calendar_page_spider_calendar_event_category',
+    'calendar_page_spider_calendar_themes',
+    'calendar_page_spider_widget_calendar_themes',
+    'calendar_page_calendar_export',
+    'calendar_page_Spider_calendar_Licensing',
+    'calendar_page_Uninstall_sp_calendar',
+    'calendar_page_overview_sp_calendar'
+  );
+
+  if(function_exists('get_current_screen')) {
+    $current_screen = get_current_screen();
+    if(is_admin() && !in_array($current_screen->id, $spider_cal_pages)) {
+      return;
+    }
+  }
+
+  wp_enqueue_script("Calendar", plugins_url("elements/calendar.js", __FILE__), array(), SPCALENDAR_VERSION, FALSE);
+  wp_enqueue_script("calendar-setup", plugins_url("elements/calendar-setup.js", __FILE__), array(), SPCALENDAR_VERSION, FALSE);
+  wp_enqueue_script("calendar_function", plugins_url("elements/calendar_function.js", __FILE__), array(), SPCALENDAR_VERSION, FALSE);
+  wp_enqueue_style("spcalendar-jos", plugins_url("elements/calendar-jos.css", __FILE__), array(), SPCALENDAR_VERSION, FALSE);
   wp_enqueue_script('wp-color-picker');
   wp_enqueue_style( 'wp-color-picker' );
 }
@@ -18,7 +35,7 @@ if (!class_exists('WP_Widget')) {
 
 class upcoming_events extends WP_Widget {
   // Constructor //
-  function upcoming_events() {
+  function __construct() {
     $widget_ops = array(
       'classname' => 'upcoming_events',
       'description' => ''
@@ -2873,4 +2890,8 @@ jSelectEvents('<?php echo $this->get_field_id('event_select'); ?>','<?php echo $
   
 	
 }
-add_action('widgets_init', create_function('', 'return register_widget("upcoming_events");'));?>
+function spider_calendar_upcoming_events(){
+	return register_widget("upcoming_events");
+}
+
+add_action('widgets_init', 'spider_calendar_upcoming_events'); ?>

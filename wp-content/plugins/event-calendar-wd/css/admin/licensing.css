@@ -21,17 +21,17 @@ div#featurs_table1 {
 }
 
 div#featurs_table1 span::after {
-  background-image: url("../images/featured/arrow3.png");
-  background-position: center center;
-  background-repeat: no-repeat;
-  content: "";
-  display: inline-block;
-  float: right;
-  height: 37px;
-  position: relative;
-  right: -21px;
-  top: -8px;
-  width: 26px;
+  /*background-image: url("../images/featured/arrow3.png");*/
+  /*background-position: center center;*/
+  /*background-repeat: no-repeat;*/
+  /*content: "";*/
+  /*display: inline-block;*/
+  /*float: right;*/
+  /*height: 37px;*/
+  /*position: relative;*/
+  /*right: -21px;*/
+  /*top: -8px;*/
+  /*width: 26px;*/
 }
 
 div#featurs_table1 span {
@@ -123,17 +123,29 @@ div#featurs_table3 {
   width: 180px;
 }
 
-div#featurs_table2 span.yes,
-div#featurs_table3 span.yes {
-  background-image: url("../images/featured/plus.png");
-  background-position: center center;
-  background-repeat: no-repeat;
+div#featurs_table2 span.yes:before,
+div#featurs_table3 span.yes:before {
+  /*background-image: url("../images/featured/plus.png");*/
+  /*background-position: center center;*/
+  /*background-repeat: no-repeat;*/
+
+  content: '\2714';
+  color: #84B676;
+  font-size: 20px;
+  line-height: 18px;
+
 }
 
-span.no {
-  background-image: url("../images/featured/minus.png");
-  background-position: center center;
-  background-repeat: no-repeat;
+span.no:before {
+  /*background-image: url("../images/featured/minus.png");*/
+  /*background-position: center center;*/
+  /*background-repeat: no-repeat;*/
+
+  content: '\2212';
+  color: #B60B0B;
+  font-size: 25px;
+  line-height: 18px;
+
 }
 
 .download input[type="submit"]:hover,

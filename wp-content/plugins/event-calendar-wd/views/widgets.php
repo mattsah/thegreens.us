@@ -15,7 +15,7 @@ class ECWD_Widget extends WP_Widget {
 
     function __construct() {
         parent::__construct(
-                false, $name = __('Event Calendar WD', 'ecwd'), array('description' => __('Descr', 'ecwd'))
+                false, $name = __('Event Calendar WD', 'event-calendar-wd'), array('description' => __('Descr', 'event-calendar-wd'))
         );
     }
 
@@ -59,7 +59,7 @@ class ECWD_Widget extends WP_Widget {
                 }
             } else {
                 if (current_user_can('manage_options')) {
-                    _e('No valid Event IDs have been entered for this widget. Please check that you have entered the IDs correctly in the widget settings (Appearance > Widgets), and that the Events have not been deleted.', 'ecwd');
+                    _e('No valid Event IDs have been entered for this widget. Please check that you have entered the IDs correctly in the widget settings (Appearance > Widgets), and that the Events have not been deleted.', 'event-calendar-wd');
                 }
             }
 
@@ -79,6 +79,7 @@ class ECWD_Widget extends WP_Widget {
                     'month' => null,
                     'year' => null,
                     'widget' => 1,
+                    'widget_theme' => (!isset($instance['theme']) || $instance['theme'] == "calendar_theme") ? null : $instance['theme']
                 );
 
 //				if( 'list-grouped' == $instance['display_type'] ) {
@@ -91,7 +92,7 @@ class ECWD_Widget extends WP_Widget {
             }
         } else {
             if (current_user_can('manage_options')) {
-                _e('You have not added any events yet.', 'ecwd');
+                _e('You have not added any events yet.', 'event-calendar-wd');
             } else {
                 return;
             }
@@ -111,6 +112,7 @@ class ECWD_Widget extends WP_Widget {
         $instance['id'] = esc_html($new_instance['id']);
         $instance['display_type'] = esc_html($new_instance['display_type']);
         $instance['page_items'] = esc_html($new_instance['page_items']);
+        $instance['theme'] = esc_html($new_instance['theme']);
 
 
         return $instance;
@@ -124,8 +126,8 @@ class ECWD_Widget extends WP_Widget {
 
         // Check for existing events and if there are none then display a message and return
         if (wp_count_posts(ECWD_PLUGIN_PREFIX . '_calendar')->publish <= 0) {
-            echo '<p>' . __('There are no calendars created yet.', 'ecwd') .
-            ' <a href="' . admin_url('edit.php?post_type=ecwd_calendar') . '">' . __('Add your first calendar!', 'ecwd') . '</a>' .
+            echo '<p>' . __('There are no calendars created yet.', 'event-calendar-wd') .
+            ' <a href="' . admin_url('edit.php?post_type=ecwd_calendar') . '">' . __('Add your first calendar!', 'event-calendar-wd') . '</a>' .
             '</p>';
             return;
         }
@@ -139,16 +141,17 @@ class ECWD_Widget extends WP_Widget {
         $calendar_posts = get_posts($args);
         $title = ( isset($instance['title']) ) ? $instance['title'] : '';
         $ids = ( isset($instance['id']) ) ? $instance['id'] : '';
+        $selected_theme = ( isset($instance['theme']) ) ? $instance['theme'] : '';
         $display_type = ( isset($instance['display_type']) ) ? $instance['display_type'] : 'mini';
         $page_items = ( isset($instance['page_items']) ) ? $instance['page_items'] : '5';
         ?>
         <p>
-            <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'ecwd'); ?></label>
+            <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'event-calendar-wd'); ?></label>
             <input type="text" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $title; ?>" class="widefat" />
         </p>
         <p>
             <label for="<?php echo $this->get_field_id('id'); ?>">
-                <?php _e('Calendar to display', 'ecwd'); ?>
+                <?php _e('Calendar to display', 'event-calendar-wd'); ?>
             </label>
             <?php if ($calendar_posts) { ?>
                 <select id="<?php echo $this->get_field_id('id'); ?>" name="<?php echo $this->get_field_name('id'); ?>" class="widefat">
@@ -161,16 +164,29 @@ class ECWD_Widget extends WP_Widget {
         </p>
 
         <p>
-            <label for="<?php echo $this->get_field_id('display_type'); ?>"><?php _e('Display Events as:', 'ecwd'); ?></label>
+            <label for="<?php echo $this->get_field_id('display_type'); ?>"><?php _e('Display Events as:', 'event-calendar-wd'); ?></label>
             <select id="<?php echo $this->get_field_id('display_type'); ?>" name="<?php echo $this->get_field_name('display_type'); ?>" class="widefat">
-                <option value="mini"<?php selected($display_type, 'mini'); ?>><?php _e('Month', 'ecwd'); ?></option>
-                <option value="list"<?php selected($display_type, 'list'); ?>><?php _e('List', 'ecwd'); ?></option>
-                <option value="week" <?php selected($display_type, 'week'); ?>><?php _e('Week', 'ecwd'); ?></option>
-                <option value="day" <?php selected($display_type, 'day'); ?>><?php _e('Day', 'ecwd'); ?></option>
+                <option value="mini"<?php selected($display_type, 'mini'); ?>><?php _e('Month', 'event-calendar-wd'); ?></option>
+                <option value="list"<?php selected($display_type, 'list'); ?>><?php _e('List', 'event-calendar-wd'); ?></option>
+                <option value="week" <?php selected($display_type, 'week'); ?>><?php _e('Week', 'event-calendar-wd'); ?></option>
+                <option value="day" <?php selected($display_type, 'day'); ?>><?php _e('Day', 'event-calendar-wd'); ?></option>
             </select>
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id('page_items'); ?>"><?php _e('Events per page in list view:', 'ecwd'); ?></label>
+            <label for="<?php echo $this->get_field_id('theme'); ?>"><?php _e('Calendar theme', 'event-calendar-wd'); ?></label>
+            <select id="<?php echo $this->get_field_id('theme'); ?>"
+                    name="<?php echo $this->get_field_name('theme'); ?>"
+                    class="widefat">
+                <option
+                  value="calendar_theme" <?php selected($selected_theme, "calendar_theme"); ?>><?php _e('Calendar theme', 'event-calendar-wd'); ?></option>
+                <option
+                  value="calendar" <?php selected($selected_theme, "calendar"); ?>><?php _e('Default Blue', 'event-calendar-wd'); ?></option>
+                <option
+                  value="calendar_grey" <?php selected($selected_theme, "calendar_grey"); ?>><?php _e('Grey', 'event-calendar-wd'); ?></option>
+            </select>
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('page_items'); ?>"><?php _e('Events per page in list view:', 'event-calendar-wd'); ?></label>
             <input type="text" id="<?php echo $this->get_field_id('page_items'); ?>" name="<?php echo $this->get_field_name('page_items'); ?>" value="<?php echo $page_items; ?>" class="widefat" />
         </p>
 
@@ -180,8 +196,10 @@ class ECWD_Widget extends WP_Widget {
 
 }
 
-if (defined('ECWD_MAIN_FILE') && is_plugin_active(ECWD_MAIN_FILE)) {
-
-    add_action('widgets_init', create_function('', 'register_widget("ECWD_Widget");'));
+if(defined('ECWD_MAIN_FILE') && is_plugin_active(ECWD_MAIN_FILE)) {
+  add_action('widgets_init', 'ecwd_register_widget');
 }
 
+function ecwd_register_widget(){
+  register_widget("ECWD_Widget");
+}

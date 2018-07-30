@@ -61,7 +61,7 @@ class ECWD_Config {
                 add_option('ecwd_config', 'on');
             } else if ($_GET['ecwd_config'] == 'off') {
                 delete_option('ecwd_config');
-                header('Location: edit.php?post_type=ecwd_calendar');
+                header('Location: ' . ECWD_MENU_SLUG);
                 die;
             }
         }

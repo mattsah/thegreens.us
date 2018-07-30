@@ -154,7 +154,7 @@
 
             } else {
                 filters = {
-                    title: 'Filters',
+                    title: ecwd_translate.ecwd_filters,
                     layout: 'flex',
                     type: "form",
                     direction: 'column',
@@ -162,7 +162,7 @@
                     items: [
                         {//add id select
                             type: 'label',
-                            text: 'Filter addon should be purchased separately.',
+                            text: ecwd_translate.ecwd_filter_addon,
                             style: 'color:#bf1b02'
 
                         }
@@ -206,15 +206,15 @@
                 calendars = {//add id select
                     type: 'listbox',
                     name: 'id',
-                    label: 'Select Calendar',
+                    label: ecwd_translate.ecwd_select_calendar,
                     value: id,
                     'values': ecwd_plugin.ecwd_calendars,
-                    tooltip: 'Select Calendar'
+                    tooltip: ecwd_translate.ecwd_select_calendar
                 };
             } else {
                 calendars = {//add id select
                     type: 'label',
-                    text: 'Please add a calendar before using the shortcode'
+                    text: ecwd_translate.ecwd_please_add
                 };
             }
 
@@ -240,15 +240,15 @@
             var view_types = {
                 type: 'listbox',
                 name: 'view_type',
-                label: 'Select View type',
+                label: ecwd_translate.ecwd_select_view_type,
                 value: view_type,
                 'values': types,
-                tooltip: 'Select View type'
+                tooltip: ecwd_translate.ecwd_select_view_type
             };            
             
             //open the popup
             var win = editor_calendar.windowManager.open({
-                title: 'ECWD Shortcode',
+                title: ecwd_translate.ecwd_ECWD_shortcode,
                 bodyType: 'tabpanel',
                 //file : url + '/button_popup.php', // file that contains HTML for our modal window
                 body: [
@@ -264,14 +264,14 @@
                             {
                                 type: 'textbox',
                                 name: 'page_items',
-                                label: 'Events per page in list view',
+                                label: ecwd_translate.ecwd_events_per_page,
                                 value: page_items,
-                                tooltip: 'Events per page in list view'
+                                tooltip: ecwd_translate.ecwd_events_per_page
                             },
                             {
                                 type: 'textbox',
-                                name: 'calendar_start_date',
-                                label: 'Calendar start date',
+                                name: ecwd_translate.ecwd_calendar_start_date,
+                                label: ecwd_translate.ecwd_calendar_start_date,
                                 value: calendar_start_date,
                                 tooltip: ''
                             },  
@@ -279,25 +279,25 @@
                                 type: 'container',
                                 name: 'href1',
                                 style: '',
-                                html: '<span style="float:right;font-style:italic;font-size:13px;">Date format Y-m(2016-05) or empty for current date</span>'
+                                html: '<span style="float:right;font-style:italic;font-size:13px;">'+ecwd_translate.ecwd_date_format+'</span>'
                             },
                             {
                                 type: 'checkbox',
                                 name: 'event_search',
-                                label: 'Enable event search',
+                                label: ecwd_translate.ecwd_enable_event_search,
                                 checked: event_search,
-                                tooltip: 'Enable event search'
+                                tooltip: ecwd_translate.ecwd_enable_event_search
                             },
                             {
                                 type: 'container',
                                 name: 'href',
                                 style: 'color:#bf1b02',
-                                html: '<a href="https://web-dorado.com/products/wordpress-event-calendar-wd.html" target="_blank">Upgrade to PRO version.</a>'
+                                html: '<a href="https://web-dorado.com/products/wordpress-event-calendar-wd.html" target="_blank">'+ecwd_translate.ecwd_upgrade_paid+'</a>'
                             }
                         ]
                     },
                     {
-                        title: 'Views',
+                        title: ecwd_translate.ecwd_views,
                         type: "form",
                         layout: 'flex',
                         direction: 'column',
@@ -306,7 +306,7 @@
                             {
                                 type: 'listbox',
                                 name: 'display',
-                                label: 'View 1',
+                                label: ecwd_translate.ecwd_view_1,
                                 value: display,
                                 'values': ecwd_plugin.ecwd_views,
                                 tooltip: 'Select display mode'
@@ -314,7 +314,7 @@
                             {//add id select
                                 type: 'listbox',
                                 name: 'displays_2',
-                                label: 'View 2',
+                                label: ecwd_translate.ecwd_view_2,
                                 value: displays_2,
                                 'values': ecwd_plugin.ecwd_views,
                                 tooltip: 'Select display mode'
@@ -322,7 +322,7 @@
                             {//add id select
                                 type: 'listbox',
                                 name: 'displays_3',
-                                label: 'View 3',
+                                label: ecwd_translate.ecwd_view_3,
                                 value: displays_3,
                                 'values': ecwd_plugin.ecwd_views,
                                 tooltip: 'Select display mode'
@@ -330,14 +330,14 @@
                             {//add id select
                                 type: 'listbox',
                                 name: 'displays_4',
-                                label: 'View 4',
+                                label: ecwd_translate.ecwd_view_4,
                                 value: displays_4,
                                 'values': ecwd_plugin.ecwd_views,
                                 tooltip: 'Select display mode'
                             },                            
                             {
                                 type: 'label',
-                                text: 'Upgrade to Pro version to access three more view options: posterboard, map and 4 days.',
+                                text: ecwd_translate.ecwd_upgrade_premium_version,
                                 style: 'color:#bf1b02'
 
 

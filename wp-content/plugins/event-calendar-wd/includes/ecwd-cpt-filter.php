@@ -31,7 +31,7 @@ if (!class_exists('Tax_CTP_Filter')) {
                         $tax_name = $tax_obj->labels->name;
                         echo "<select name='" . strtolower($tax_slug) . "' id='" . strtolower($tax_slug) . "' class='postform'>";
                         echo "<option value=''>All $tax_name</option>";
-                        $this->generate_taxonomy_options($tax_slug, 0, 0, (isset($_GET[strtolower($tax_slug)])) ? $_GET[strtolower($tax_slug)] : null);
+                        $this->generate_taxonomy_options($tax_slug, 0, 0, (isset($_GET[strtolower($tax_slug)])) ? sanitize_text_field($_GET[strtolower($tax_slug)]) : null);
                     
                     }  else {
                         
@@ -54,7 +54,7 @@ if (!class_exists('Tax_CTP_Filter')) {
                                     'showposts' => -1,
                                     'order' => 'ASC'
                         ));
-                        $selected = isset($_GET[strtolower($tax_slug). '_filter']) ? $_GET[strtolower($tax_slug). '_filter'] : null;
+                        $selected = isset($_GET[strtolower($tax_slug). '_filter']) ? sanitize_text_field($_GET[strtolower($tax_slug). '_filter']) : null;
                         echo "<select name='" . strtolower($tax_slug) . "_filter' id='" . strtolower($tax_slug) . "_filter' class='postform'>";
                         echo "<option value=''>All $tax_name</option>";
                         foreach ($tax_obj as $term) {
@@ -64,21 +64,21 @@ if (!class_exists('Tax_CTP_Filter')) {
                     echo "</select>";
                 }
                 echo "<div style='display:inline-block;'>";
-                _e('From', 'ecwd');?>
+                _e('From', 'event-calendar-wd');?>
                 <input type="text" style="width: 90px"
                        id="<?php echo ECWD_PLUGIN_PREFIX; ?>_date_from_filter"
                        name="<?php echo ECWD_PLUGIN_PREFIX; ?>_date_from_filter"
                        class="<?php echo ECWD_PLUGIN_PREFIX; ?>_event_date"
-                       value="<?php echo isset($_GET[ECWD_PLUGIN_PREFIX.'_date_from_filter'])? $_GET[ECWD_PLUGIN_PREFIX.'_date_from_filter']: ''; ?>" />
+                       value="<?php echo isset($_GET[ECWD_PLUGIN_PREFIX.'_date_from_filter'])? htmlentities(sanitize_text_field($_GET[ECWD_PLUGIN_PREFIX.'_date_from_filter'])): ''; ?>" />
                 <?php
-                 _e('To', 'ecwd');?>
+                 _e('To', 'event-calendar-wd');?>
                 <input type="text" style="width: 90px"
                        id="<?php echo ECWD_PLUGIN_PREFIX; ?>_date_to_filter"
                        name="<?php echo ECWD_PLUGIN_PREFIX; ?>_date_to_filter"
                        class="<?php echo ECWD_PLUGIN_PREFIX; ?>_event_date"
-                       value="<?php echo isset($_GET[ECWD_PLUGIN_PREFIX.'_date_to_filter'])? $_GET[ECWD_PLUGIN_PREFIX.'_date_to_filter']: ''; ?>" />
+                       value="<?php echo isset($_GET[ECWD_PLUGIN_PREFIX.'_date_to_filter'])? htmlentities(sanitize_text_field($_GET[ECWD_PLUGIN_PREFIX.'_date_to_filter'])): ''; ?>" />
                 </div>
-                <a href="<?php echo admin_url( 'edit.php?post_type=ecwd_event' );?>" class="button" >Reset</a>
+                <a href="<?php echo admin_url( 'edit.php?post_type=ecwd_event' );?>" class="button" ><?php _e('Reset','event-calendar-wd')?></a>
                 <?php
             }
         }
@@ -104,28 +104,28 @@ if (!class_exists('Tax_CTP_Filter')) {
         public function event_table_filter($query) {
             global $typenow;
             $types = array_keys($this->cpt);
-            if (is_admin() AND in_array($query->query['post_type'], $types) && in_array($typenow, $types)) {
+                if (is_admin() AND isset($query->query['post_type']) AND  in_array($query->query['post_type'], $types) && in_array($typenow, $types)) {
                 $qv = &$query->query_vars;
                 $qv['meta_query'] = array();
              
                     if (!empty($_GET[ECWD_PLUGIN_PREFIX . '_calendar_filter'])) {
                         $qv['meta_query'][] = array(
                             'key'     => ECWD_PLUGIN_PREFIX . '_event_calendars',
-                            'value'   => serialize( strval( $_GET[ECWD_PLUGIN_PREFIX . '_calendar_filter'] ) ),
+                            'value'   => serialize( strval( sanitize_text_field($_GET[ECWD_PLUGIN_PREFIX . '_calendar_filter']) ) ),
                             'compare' => 'LIKE'
                         );
                     }
                     if (!empty($_GET[ECWD_PLUGIN_PREFIX . '_organizer_filter'])) {
                         $qv['meta_query'][] = array(
                             'key'     => ECWD_PLUGIN_PREFIX . '_event_organizers',
-                            'value'   => serialize( strval( $_GET[ECWD_PLUGIN_PREFIX . '_organizer_filter'] ) ),
+                            'value'   => serialize( strval( sanitize_text_field($_GET[ECWD_PLUGIN_PREFIX . '_organizer_filter']) ) ),
                             'compare' => 'LIKE'
                         );
                     }
                     if (!empty($_GET[ECWD_PLUGIN_PREFIX.'_date_from_filter'])) {
                         $qv['meta_query'][] = array(
                             'key'     => ECWD_PLUGIN_PREFIX . '_event_date_to',
-                            'value'   => $_GET[ECWD_PLUGIN_PREFIX.'_date_from_filter'],
+                            'value'   => sanitize_text_field($_GET[ECWD_PLUGIN_PREFIX.'_date_from_filter']),
                             'compare' => '>=',
                             'type'    => 'DATE'
                         );
@@ -133,7 +133,7 @@ if (!class_exists('Tax_CTP_Filter')) {
                     if (!empty($_GET[ECWD_PLUGIN_PREFIX.'_date_to_filter'])) {
                         $qv['meta_query'][] = array(
                             'key'     => ECWD_PLUGIN_PREFIX . '_event_date_from',
-                            'value'   => $_GET[ECWD_PLUGIN_PREFIX.'_date_to_filter'],
+                            'value'   => sanitize_text_field($_GET[ECWD_PLUGIN_PREFIX.'_date_to_filter']),
                             'compare' => '<=',
                             'type'    => 'DATE'
                         );
@@ -141,7 +141,7 @@ if (!class_exists('Tax_CTP_Filter')) {
                     if (!empty($_GET[ECWD_PLUGIN_PREFIX . '_venue_filter'])) {
                         $qv['meta_query'][] = array(
                             'key'     => ECWD_PLUGIN_PREFIX . '_event_venue',
-                            'value'   => $_GET[ECWD_PLUGIN_PREFIX . '_venue_filter'],
+                            'value'   => sanitize_text_field($_GET[ECWD_PLUGIN_PREFIX . '_venue_filter']),
                             'compare' => '='
                         );
                     }

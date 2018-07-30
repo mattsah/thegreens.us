@@ -3,6 +3,7 @@
  * Display for Event Custom Post Types
  */
 global $post;
+$single_event = $this->single_event_for_metas;
 
 $post_id = $post->ID;
 $type = ECWD_PLUGIN_PREFIX.'_calendar';
@@ -13,12 +14,32 @@ $args = array(
     'ignore_sticky_posts' => 1
 );
 $calendar_posts = get_posts($args);
-$event_calendars = get_post_meta($post->ID, ECWD_PLUGIN_PREFIX.'_event_calendars', true);
+
+if(current_user_can('read_private_posts')) {
+  $private_args = $args;
+  $private_args['post_status'] = array('private');
+  $private_calendar_posts = get_posts($private_args);
+  if(!empty($private_calendar_posts)) {
+    foreach($private_calendar_posts as $private_calendar_post) {
+      $calendar_posts[] = $private_calendar_post;
+    }
+  }
+}
+
+$event_calendars = $event_calendars = $single_event->calendars;
 if(!$event_calendars){
     $event_calendars = array();
 }
 if(isset($_GET['cal_id']) && $_GET['cal_id']){
-    $event_calendars[] = $_GET['cal_id'];
+    $event_calendars[] = sanitize_text_field($_GET['cal_id']);
+}
+
+global $pagenow;
+if ($pagenow == "post-new.php" && empty($event_calendars)) {
+    $ecwd_default_calendar = get_option('ecwd_default_calendar');
+    if ($ecwd_default_calendar !== false && $ecwd_default_calendar !== null) {
+        $event_calendars[] = $ecwd_default_calendar;
+    }
 }
 
 ?>

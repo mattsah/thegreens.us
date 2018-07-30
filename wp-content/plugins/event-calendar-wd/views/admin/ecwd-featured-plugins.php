@@ -56,16 +56,6 @@
                     </div>
                     <a target="_blank" href="https://web-dorado.com/products/wordpress-google-analytics-plugin.html" class="download">Download plugin &#9658;</a>
                 </li>
-                <li class="fb-feed">
-                    <div class="product"></div>
-                    <div class="title">
-                        <strong class="heading">Facebook Feed WD</strong>
-                    </div>
-                    <div class="description">
-                        <p>Facebook Feed WD is a completely customizable, responsive solution to help you display your Facebook feed on your WordPress website.</p>
-                    </div>
-                    <a target="_blank" href="https://web-dorado.com/products/wordpress-facebook-feed-plugin.html" class="download">Download plugin &#9658;</a>
-                </li>
                 <li class="faq-wd">
                     <div class="product"></div>
                     <div class="title">
@@ -85,6 +75,66 @@
                         <p>Instagram Feed WD plugin allows to display image feeds from single or multiple Instagram accounts on a WordPress site.</p>
                     </div>
                     <a target="_blank" href="https://web-dorado.com/products/wordpress-instagram-feed-wd.html" class="download">Download plugin &#9658;</a>
+                </li>
+                <li class="team-wd">
+                    <div class="product"></div>
+                    <div class="title">
+                        <strong class="heading">TEAM WD</strong>
+                    </div>
+                    <div class="description">
+                        <p>Team WD plugin is a perfect solution to display the members of your staff, team or employees on your WordPress website.</p>
+                    </div>
+                    <a target="_blank" href="https://web-dorado.com/products/wordpress-team-wd.html" class="download">Download plugin &#9658;</a>
+                </li>
+                <li class="fb-feed">
+                    <div class="product"></div>
+                    <div class="title">
+                        <strong class="heading">Facebook Feed WD</strong>
+                    </div>
+                    <div class="description">
+                        <p>Facebook Feed WD is a completely customizable, responsive solution to help you display your Facebook feed on your WordPress website.</p>
+                    </div>
+                    <a target="_blank" href="https://web-dorado.com/products/wordpress-facebook-feed-plugin.html" class="download">Download plugin &#9658;</a>
+                </li>
+                <li class="post-slider">
+                    <div class="product"></div>
+                    <div class="title">
+                        <strong class="heading">POST SLIDER WD</strong>
+                    </div>
+                    <div class="description">
+                        <p>Post Slider WD is designed to show off the selected posts of your website in a slider. The slider can be fully customized to fit the website theme and overall design.</p>
+                    </div>
+                    <a target="_blank" href="https://web-dorado.com/products/wordpress-post-slider-plugin.html" class="download">Download plugin &#9658;</a>
+                </li>
+                <li class="ad-manager">
+                    <div class="product"></div>
+                    <div class="title">
+                        <strong class="heading">AD MANAGER WD</strong>
+                    </div>
+                    <div class="description">
+                        <p>Thinking of ways to monetize your WordPress website with ads? Now you can do it without any difficulty.</p>
+                    </div>
+                    <a target="_blank" href="https://web-dorado.com/products/wordpress-ad-manager-wd.html" class="download">Download plugin &#9658;</a>
+                </li>
+                <li class="youtube-wd">
+                    <div class="product"></div>
+                    <div class="title">
+                        <strong class="heading">YOUTUBE WD</strong>
+                    </div>
+                    <div class="description">
+                        <p>Adding YouTube videos, channels and playlists to your WordPress website is super easy with YouTube WD plugin.</p>
+                    </div>
+                    <a target="_blank" href="https://web-dorado.com/products/wordpress-youtube-plugin.html" class="download">Download plugin &#9658;</a>
+                </li>
+                <li class="mailchimp-wd">
+                    <div class="product"></div>
+                    <div class="title">
+                        <strong class="heading">MAILCHIMP WD</strong>
+                    </div>
+                    <div class="description">
+                        <p>Take the next step in your email marketing strategy. Convert your website visitors into subscribers with a comprehensive MailChimp WD WordPress plugin.</p>
+                    </div>
+                    <a target="_blank" href="https://web-dorado.com/products/wordpress-mailchimp-wd.html" class="download">Download plugin &#9658;</a>
                 </li>
                 <li class="spider-calendar">
                     <div class="product"></div>
@@ -229,7 +279,7 @@
                 <li class="google-maps">
                     <div class="product"></div>
                     <div class="title">
-                        <strong class="heading">Google Map</strong>
+                        <strong class="heading">Google Maps</strong>
                     </div>
                     <div class="description">
                         <p>Google Maps WD is an intuitive tool for creating Google maps with advanced markers, custom layers and overlays for your website.</p>

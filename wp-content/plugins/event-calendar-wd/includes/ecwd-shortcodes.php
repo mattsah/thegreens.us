@@ -24,6 +24,27 @@ function ecwd_shortcode($attr) {
     if (empty($id)) {
         return;
     }
+
+
+  $type = (isset($attr['type']) && $attr['type'] === 'mini') ? 'mini' : 'full';//for gutenberg
+
+  $ecwd_displays_list = array('none',$type,"list","week","day");
+
+  if($type === 'mini'){
+    $displays = str_replace('full', 'mini', $displays);
+  }else{
+    $displays = str_replace('mini', 'full', $displays);
+  }
+
+
+  $ecwd_displays = explode(",",$displays);
+  $display = $ecwd_displays[0];
+  foreach ($ecwd_displays as $ecwd_key => $ecwd_display_name){
+    if(!in_array($ecwd_display_name ,$ecwd_displays_list)){
+      $ecwd_displays[$ecwd_key] = $type;
+    }
+  }
+  $displays = implode(",",$ecwd_displays);
     $args = array('displays'=>$displays, 'filters'=>$filters, 'page_items'=>$page_items, 'event_search'=>$event_search);
 
     if($calendar_start_date !== null){

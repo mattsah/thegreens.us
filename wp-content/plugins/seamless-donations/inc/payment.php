@@ -455,7 +455,7 @@ function seamless_donations_process_payment() {
 			dgx_donate_debug_log( $log_msg );
 		}
 
-		$notify_url = plugins_url( '/dgx-donate-paypalstd-ipn.php', __FILE__ );
+		$notify_url = plugins_url( '/pay/paypalstd/ipn.php', __FILE__ );
 
 		$paypal_email  = get_option( 'dgx_donate_paypal_email' );
 		$currency_code = get_option( 'dgx_donate_currency' );

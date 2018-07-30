@@ -13,7 +13,7 @@ global $post;
 			<h2 id="add_on_title"><?php echo esc_html( get_admin_page_title() ); ?></h2>
 			<div id="ecwd-display-options-wrap">
 				<br />
-				<span style="font-size: 15px; font-weight: bold;">The calendar currently uses default theme. Upgrade to Pro version to modify theme options and get fancy 5 more themes.</span>
+				<span style="font-size: 15px; font-weight: bold;">The calendar currently uses default theme. Upgrade to Premium version to modify theme options and get fancy 5 more themes.</span>
 				<br/>
 				<br/>
 				<div class="ecwd-meta-control">

@@ -4,7 +4,7 @@ if (!class_exists('WP_Widget')) {
 }
 class spider_calendar extends WP_Widget {
   // Constructor //
-  function spider_calendar() {
+  function __construct(){
     $widget_ops = array(
       'classname' => 'spider_calendar',
       'description' => 'Spider Calendar is a highly configurable product which allows you to have multiple organized events.'
@@ -149,6 +149,9 @@ class spider_calendar extends WP_Widget {
     <?php
   }
 }
+function spider_calendar_widget(){
+	return register_widget("spider_calendar");
+}
 
-add_action('widgets_init', create_function('', 'return register_widget("spider_calendar");'));
+add_action('widgets_init', 'spider_calendar_widget');
 ?>

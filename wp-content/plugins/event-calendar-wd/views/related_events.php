@@ -1,14 +1,14 @@
 <?php
-if (count($events) > 0) {
-    global $post;    
+if (is_array($events) && !empty($events) > 0) {
+    global $post;
     if ($upcoming_events) {
-        $evs_text = 'Related upcoming events';
+        $evs_text = __('Related upcoming events', 'event-calendar-wd');
     } else {
-        $evs_text = 'Upcoming events';
+        $evs_text = __('Upcoming events', 'event-calendar-wd');
     }
     ?>
     <div class="ecwd-organizer-events">
-        <h3><?php _e($evs_text, 'ecwd') ?></h3>
+        <h3><?php _e($evs_text, 'event-calendar-wd') ?></h3>
 
         <div class="upcoming_events_slider">
             <div class="upcoming_events_slider-arrow-left"><a href="#left"></a></div>
@@ -51,7 +51,7 @@ if (count($events) > 0) {
                                              if ($ecwd_event['to'] && date($date_format, strtotime($ecwd_event['from'])) !== date($date_format, strtotime($ecwd_event['to']))) {
                                                  echo ' - ' . date($date_format, strtotime($ecwd_event['to']));
                                              }
-                                             echo ' ' . __('All day', 'ecwd');
+                                             echo ' ' . __('All day', 'event-calendar-wd');
                                          } else {
 
                                              echo date($date_format, strtotime($ecwd_event['from'])) . ' ' . date($time_format, strtotime($ecwd_event['starttime']));
@@ -59,10 +59,11 @@ if (count($events) > 0) {
                                              if ($ecwd_event['to']) {
                                                  echo ' - ' . date($date_format, strtotime($ecwd_event['to'])) . ' ' . date($time_format, strtotime($ecwd_event['endtime']));
                                              }
+																						 echo ECWD::get_time_zone();
                                          }
                                          ?>
                                 </div>
-                                <div class="upcoming_events_item-content"><?php echo( $ecwd_event['post']->post_content ? $ecwd_event['post']->post_content : 'No additional details for this event.' ); ?> </div>
+                                <div class="upcoming_events_item-content"><?php echo( $ecwd_event['post']->post_content ? wpautop(strip_shortcodes($ecwd_event['post']->post_content)) : 'No additional details for this event.' ); ?> </div>
                             </div>
                         </li>
                         <?php

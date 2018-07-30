@@ -3,8 +3,8 @@ Contributors: dgewirtz
 Donate link: http://zatzlabs.com/project-donations/
 Tags: donation, donations, paypal, donate, non-profit, charity, gifts, church, worship, churches, crowdfunding, donation plugin, fundraiser, fundraising, giving, nonprofit, paypal, PayPal Donate, paypal donations, recurring, recurring donations, wordpress donation plugin, wordpress donations, wp donation
 Requires at least: 3.4
-Tested up to: 4.7
-Stable tag: 4.0.20
+Tested up to: 4.9.7
+Stable tag: 4.0.23
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -202,6 +202,16 @@ If you'd like to keep up with the latest updates to this plugin, please visit [D
 == Changelog ==
 
 **IMPORTANT: Support has moved to the ZATZLabs site and is no longer provided on the WordPress.org forums. Please visit the new [Seamless Donations Community Forums](http://zatzlabs.com/forums/). If you need a timely reply from the developer, please [open a ticket](http://zatzlabs.com/submit-ticket/).**
+
+= 4.0.23 =
+* Fixed a typo (an extra slash) introduced in 4.0.22. Thanks again, Jacob!
+
+= 4.0.22 =
+* Incorporated fixes from user Rachel3004 (Jacob) for PayPal's apparent deprecation of fsockopen.
+
+= 4.0.21 =
+* Added PayPal TLS test results to Settings panel
+* Removed option to see obsolete IPN
 
 = 4.0.20 =
 * Tweak that might help some very out-of-date users update more successfully.

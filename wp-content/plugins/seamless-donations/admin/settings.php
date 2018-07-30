@@ -190,9 +190,12 @@ function seamless_donations_admin_settings_section_paypal( $_setup_object ) {
 
 	// Test email section
 	$section_desc = 'Set up your PayPal deposit information. ';
-	$section_desc .= '<span style="color:blue">Confused about setting up PayPal? ' . '</span>';
+	$section_desc .= '<br><br><span style="color:blue">Confused about setting up PayPal? ' . '</span>';
 	$section_desc .= '<A HREF="https://youtu.be/n8z0ejIEowo"><span style="color:blue">';
 	$section_desc .= 'Watch this video tutorial.</span></A>';
+	$section_desc .= '<br><span style="color:blue">Having difficulties with compatibility? ' . '</span>';
+	$section_desc .= '<A HREF="http://zatzlabs.com/if-paypal-suddenly-stopped-working-for-you-in-seamless-donations/"><span style="color:blue">';
+	$section_desc .= 'Read this lab note trouble-shooting guide.</span></A>';
 
 	// the following code is indicative of a minor architectural flaw in Seamless Donations
 	// in that all admin pages are always instantiated. The approach doesn't seem to cause
@@ -252,14 +255,6 @@ function seamless_donations_admin_settings_section_paypal( $_setup_object ) {
 			'description'  => __(
 				'This is the SSL-compliant URL you should use with PayPal once you have a valid SSL certificate installed.' ),
 			'before_field' => $https_ipn_url,
-		),
-		array(
-			'field_id'     => 'settings_paypal_ipn_url',
-			'title'        => __( 'PayPal IPN URL (old)', 'seamless-donations' ),
-			'type'         => 'ipn_url_html',
-			'description'  => __(
-				'<span style=\'color:red\'>YOU SHOULD NO LONGER USE THIS. This is the non-https IPN. This may not work in the Sandbox and will definitely not work on live sites after September 30, 2016.</span>' ),
-			'before_field' => $http_ipn_url,
 		),
 		array(
 			'field_id'    => 'dgx_donate_obsolete_legacy_ssl_mode',

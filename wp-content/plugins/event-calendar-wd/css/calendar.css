@@ -1,313 +1,343 @@
-/*blue*/
+/*ecwd_11.ecwd_theme_4 => .ecwd_theme_calendar*/
 
 
-.ecwd_calendar_view_tabs  ul li{
-    border-right: 1px solid #1B4650;
-    border-left: 1px solid #87B5C0;
+
+.ecwd_theme_calendar:not(.calendar_widget_content) {
+ width: 100% !important;
 }
 
-table.cal_blue.ecwd_calendar_container .day-without-date {
-    background:#F9F9F9;
-}
-table.cal_blue.ecwd_calendar_container .day-without-date div {
-    text-align:center;
-}
-table.cal_blue.ecwd_calendar_container .weekend {
-    background: #EDEDED;
+.ecwd_theme_calendar .calendar-head {
+ background: #168fb5 !important;
+ border: 1px solid #91CEDF;
 }
 
-table.cal_blue.ecwd_calendar_container .normal-day-heading, table.cal_blue.ecwd_calendar_container .weekend-heading{
-    background: #FFFFFF !important;
+.ecwd_theme_calendar table.cal_blue.mini td ul.events li {
+ background: #168fb5;
 }
 
-
-.ecwd_calendar_view_tabs  ul li a{
-    color: #fff;
-    text-shadow: 0px 1px 1px #444444;
-    background:#10738B;
+.ecwd_theme_calendar .calendar-head .previous {
+ border-right: 1px solid #44a5c3 !important;
 }
 
-.ecwd_calendar_view_tabs  ul li a:hover{
-    color: #fff;
-    background:#10738B;
+.ecwd_theme_calendar .calendar-head .next {
+ border-left: 1px solid #44a5c3 !important;
 }
 
-.ecwd_calendar_view_tabs  ul li.ecwd-selected-mode a{
-    background:#ffffff;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
-    color:#10738B;
+.ecwd_theme_calendar .calendar-head .current-month {
+ border-left: 1px solid #44a5c3 !important;
+ border-right: 1px solid #44a5c3 !important;
 }
 
-.cal_blue.ecwd_calendar_container .view-buttons a {
-    background:#647b9a;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#7D9AC0", endColorstr="#647b9a");
-    background: -webkit-gradient(linear, left top, left bottom, from(#7D9AC0), to(#647b9a));
-    background: -moz-linear-gradient(top,  #7D9AC0, #647b9a);
-    border:1px solid #a5b9d3;
-    color:#fdfefe;
-    font-size: 1.3em;
+.ecwd_theme_calendar .calendar-head .next a, .ecwd_theme_calendar .calendar-head .next a {
+ color: #ffffff !important;
 }
 
-.cal_blue.ecwd_calendar_container .view-buttons a.selected {
-    background: #7D9AC0;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#647b9a", endColorstr="#7D9AC0");
-    background: -webkit-gradient(linear, left top, left bottom, from(#647b9a), to(#7D9AC0));
-    background: -moz-linear-gradient(top,  #647b9a, #7D9AC0);
+.ecwd_theme_calendar .calendar-head .next a, .ecwd_theme_calendar .calendar-head .previous a {
+ color: #ffffff !important;
 }
 
-.cal_blue.ecwd_calendar_container .calendar-heading {
-    text-align:center;
-    padding:4px 3px 3px;
-    height:3.25em;
-    color:#fdfefe;
-    text-shadow: 0 1px 1px rgba(1,2,2,.3);
-
+.ecwd_theme_calendar .current-month a {
+ color: #ffffff !important;
 }
 
-.cal_blue.full .calendar-heading span {
-    font-size:2em;
-
+.ecwd_theme_calendar .calendar-head .next a, .ecwd_theme_calendar .calendar-head .previous a {
+ font-size: 18px !important;
 }
 
-
-.ecwd_calendar  .metainfo,.event-organizers a, .event-venue a,
-.event-detalis span, .event-detalis a{
-    color: #010101;
-    word-break: break-word;
+.ecwd_theme_calendar .calendar-head .current-month {
+ color: #ffffff !important;
 }
 
-table.cal_blue.ecwd_calendar_container select {
-
-    background: #647b9a;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f3f5f9", endColorstr="#f3f5f9");
-    background: -webkit-gradient(linear, left top, left bottom, from(#7D9AC0), to(#647b9a));
-    background: -moz-linear-gradient(top,  #7D9AC0, #647b9a);
-    outline:none;
-    text-shadow: 0 1px 1px rgba(1,2,2,.3);
-    -webkit-box-shadow: 0 1px 2px rgba(1,2,2,.2);
-    -moz-box-shadow: 0 1px 2px rgba(1,2,2,.2);
-    box-shadow: 0 1px 2px rgba(1,2,2,.2);
-}
-.ecwd_calendar_view_tabs .filter-container  ul{
-    background: #10738B;
-}
-table.cal_blue.ecwd_calendar_container .current-day .open-details {
-    background:#7D9AC0;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#7D9AC0", endColorstr="#718bad");
-    background: -webkit-gradient(linear, left top, left bottom, from(#7D9AC0), to(#718bad));
-    background: -moz-linear-gradient(top,  #7D9AC0,  #718bad);
+.ecwd_theme_calendar .calendar-head .current-month {
+ font-size: 28px !important;
 }
 
-table.cal_blue.ecwd_calendar_container .close-details {
-    color: #262e3a;
-    font-size: 0.6em;
-    position: absolute;
-    right: 7px;
-    text-decoration: underline;
-    top: 3px;
+.ecwd_theme_calendar .current-month a {
+ font-size: 28px !important;
 }
 
-table.cal_blue.ecwd_calendar_container .open-details {
-    border:4px solid #647b9a;
-    -webkit-box-shadow: 2px 3px 8px rgba(1,2,2,.2);
-    -moz-box-shadow: 2px 3px 8px rgba(1,2,2,.2);
-    box-shadow: 2px 3px 8px rgba(1,2,2,.2);
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    padding:5px 5px 10px 5px;
-}
-table.cal_blue.ecwd_calendar_container .current-day .day-number {
-    color:#fdfefe;
-    background:#10738B;
-}
-@media only screen and (max-width: 768px){
-
-    .ecwd-page-full table.cal_blue.ecwd_calendar_container .has-events:after {
-
-        background-color: #10738B;
-    }
-
-    .ecwd_calendar.ecwd-page-full div.event-details {
-        border-bottom: 1px solid #CCC;
-    }
+.ecwd_theme_calendar .calendar-head .current-month div {
+ color: #ffffff !important;
 }
 
-
-.ecwd-widget-mini .event-main-content.no-events{
-    padding: 8px 10px;
-    border: 1px solid #D5DCE2;
-    margin-bottom:1px !important;
-    background: #F9F9F9;
-    color: #676767;
+.ecwd_theme_calendar .calendar-head .current-month div {
+ font-size: 16px !important;
+ line-height: 16px !important;
 }
 
-.ecwd-widget-mini .event-container ,
-.ecwd-widget-mini .ecwd_list .event-main-content {
-    border: 1px solid #D5DCE2;
-    margin-bottom: 1px;
-    background: #F9F9F9;
-}
-.ecwd-widget-mini .event-container:last-child {
-    border-bottom: 1px solid #D5DCE2 !important;
+.ecwd_theme_calendar .cal_tabs_blue .filter-container ul {
+ background-color: #10738B !important;
 }
 
-.ecwd_calendar.ecwd-widget-mini  .ecwd-events-day-details li{
-    height: 100% !important;
-    text-indent: 0;
-    margin: 0 auto !important;
-    border-radius: 0;
-    border-bottom: 1px solid #CCC;
-    background: #ffffff !important;
-    padding:10px 0 !important;
-    color: #676767 !important;
+.ecwd_theme_calendar .cal_tabs_blue .filter-container ul li a, .ecwd_theme_calendar .ecwd_calendar .filter-arrow-right, .ecwd_theme_calendar .cal_tabs_blue .filter-container ul li, .ecwd_theme_calendar .ecwd_calendar .filter-arrow-left {
+ background-color: #10738B !important;
 }
 
-table.cal_blue.mini .current-day {
-    color:#fdfefe;
-    background:#10738B;
+.ecwd_theme_calendar .cal_tabs_blue .filter-container ul li, .ecwd_theme_calendar .ecwd_calendar .filter-arrow-right, .ecwd_theme_calendar .cal_tabs_blue .filter-container ul li, .ecwd_theme_calendar .ecwd_calendar .filter-arrow-left {
+ border-left: 1px solid #91CEDF !important;
+ border-right: 1px solid #91CEDF !important;
 }
 
-table.cal_blue.mini td ul.events li {
-    background-color: #10738B;
+.ecwd_theme_calendar .cal_tabs_blue .filter-container ul li a, .ecwd_theme_calendar .ecwd_calendar .filter-arrow-right, .ecwd_theme_calendar .cal_tabs_blue .filter-container ul li, .ecwd_theme_calendar .ecwd_calendar .filter-arrow-left {
+ color: #ffffff !important;
 }
 
-.ecwd-poster-board .ecwd-poster-item .ecwd-event-details .date span:not(.weekday-block):not(.datenumber){
-    color:#ffffff;
-    background:#585858;
+.ecwd_theme_calendar .cal_tabs_blue .filter-container ul li a, .ecwd_theme_calendar .ecwd_calendar .filter-arrow-right, .ecwd_theme_calendar .cal_tabs_blue .filter-container ul li, .ecwd_theme_calendar .ecwd_calendar .filter-arrow-left {
+ font-size: 16px !important;
 }
 
-
-
-.ecwd-poster-board .ecwd-poster-item .post-descr{
-    font-size:15px;
-}
-.ecwd-poster-board .ecwd-poster-item  .ecwd-event-header h2 a{
-    color:#000000
+.ecwd_theme_calendar .cal_tabs_blue ul li.ecwd-selected-mode a {
+ background-color: #ffffff !important;
 }
 
-
-
-/*####################################*/
-/*.ecwd-page-full,
-.ecwd-widget-mini{
-        overflow:hidden;
-}*/
-
-
-
-.ecwd_calendar .filter-arrow-right,
-.ecwd_calendar .filter-arrow-left{
-    color: #fff;
-    font-size: 23px;
-    background:#10738B;
-}
-.ecwd_calendar .ecwd_calendar_filters .filter-arrow-right,
-.ecwd_calendar .ecwd_calendar_filters .filter-arrow-left{
-    color: #10738B;
-    background:#fff;
-    border: 1px solid #E5E4E4 !important;
+.ecwd_theme_calendar .cal_tabs_blue ul li.ecwd-selected-mode a {
+ color: #10738B !important;
 }
 
-.ecwd_calendar .filter-arrow-right{
-    border-left: 1px solid #87B5C0;
-    border-right: 1px solid #87B5C0;
-}
-.ecwd_calendar .filter-arrow-left{
-    border-right: 1px solid #87B5C0;
+.ecwd_theme_calendar .ecwd-search button, .ecwd_theme_calendar .ecwd-search button:hover {
+ background: #10738B !important;
 }
 
-
-.calendar-head{
-    background: #168fb5
+.ecwd_theme_calendar .ecwd-search-submit .fa, .ecwd_theme_calendar .ecwd-search-submit .fa:hover {
+ color: #ffffff !important;
 }
 
-
-
-.calendar-head .previous,
-.calendar-head .next{
-    font-size: 17px;
+.ecwd_theme_calendar .ecwd_show_filters_top {
+ background-color: #10738B !important;
 }
 
-.calendar-head .current-month{
-    font-size:28px;
-    border-left:1px solid #91CEDF;
-    border-right:1px solid #235F71;
-}
-.calendar-head .current-month div{
-    font-size: 16px;
-    line-height: 16px;
+.ecwd_theme_calendar .ecwd_show_filters_left {
+ background-color: #ffffff !important;
 }
 
-@media only screen and (max-width: 500px){
-    .calendar-head .current-month div {
-        font-size: 13px;
-        line-height: 24px;
-        margin-top: -8px;
-    }
+.ecwd_theme_calendar .ecwd_show_filters_top {
+ color: #ffffff !important;
 }
 
-.calendar-head .previous{
-    border-right:1px solid #235F71;
+.ecwd_theme_calendar .ecwd_show_filters_top span {
+ color: #ffffff !important;
 }
 
-.calendar-head .next{
-    border-left:1px solid #91CEDF;
+.ecwd_theme_calendar .ecwd_show_filters_left {
+ color: #10738B !important;
 }
 
-
-.ecwd_calendar td .day-number{
-    background:#E0E0E0;
-    color:#5C5C5C;
+.ecwd_theme_calendar .ecwd_show_filters_left span {
+ color: #10738B !important;
 }
 
-/*############FILTERS##############*/
-
-.ecwd-tag-container  .ecwd-dropdown-menu>div:hover{
-    border: 1px solid #ddd !important;
-    background: #F5F5F5;
+.ecwd_theme_calendar .ecwd_filters .ecwd_filter_heading {
+ background-color: #ECECEC !important;
 }
 
-@media only screen and (max-width: 500px){
-    .event_dropdown_cont{
-        border-top: 1px solid #D5DCE2;
-        display:none;
-        padding-top: 6px;
-    }
-
-    div.ecwd-week-date{
-        background:#10738B;
-    }
-
-}
-/*#############LIST,WEEK VIEW###############*/
-
-.ecwd-day-date,
-.day-event-list .ecwd-week-date,
-.day4-event-list .ecwd-week-date,
-.week-event-list .ecwd-week-date{
-    background: #10738B;
+.ecwd_theme_calendar .ecwd_filters .ecwd_filter_item {
+ border: 1px solid #ffffff !important;
+ border-top: 0 !important;
 }
 
-.ecwd_list .ecwd-list-date{
-    background: #10738B;
-}
-ul.ecwd_list, ul.week-event-list, ul.day-event-list, ul.day4-event-list{
-    background: #f9f9f9;
-    padding:0;
-    margin:0;
+.ecwd_theme_calendar .ecwd_filter_item .ecwd_filter_heading span:after {
+ border-color: transparent transparent transparent #10738B !important;
 }
 
-.ecwd-pagination .page{
-    color: #fff;
-    background: #10738B;
+.ecwd_theme_calendar .ecwd_filter_item .ecwd_filter_heading.open span:after {
+ border-color: #10738B transparent transparent transparent !important;
 }
 
-.ecwd-search button,.ecwd-search button:hover {
-    background: #10738B;
-    color: #ffffff;
+.ecwd_theme_calendar .ecwd_filters .ecwd_filter_heading {
+ color: #10738B !important;
 }
 
-.calendar-head a {
-    color: #fff !important;
+.ecwd_theme_calendar .ecwd_filters .ecwd_filter_heading {
+ font-size: 16px !important;
+}
+
+.ecwd_theme_calendar .ecwd_reset_filters span {
+ color: #10738B !important;
+}
+
+.ecwd_theme_calendar .ecwd_reset_filters span {
+ font-size: 15px !important;
+}
+
+.ecwd_theme_calendar .ecwd_filter_checkboxes ul li {
+ background-color: #ffffff !important;
+}
+
+.ecwd_theme_calendar .ecwd_filter_checkboxes ul li {
+ border-color: #DEE3E8 !important;
+}
+
+.ecwd_theme_calendar .ecwd_filter_checkboxes ul li span {
+ color: #6E6E6E !important;
+}
+
+.ecwd_theme_calendar .ecwd_filter_checkboxes ul li span {
+ font-size: 15px !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .normal-day-heading, .ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .weekend-heading {
+ background: #F9F9F9 !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .normal-day-heading, .ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .weekend-heading {
+ border: 1px solid #B6B6B6 !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .normal-day-heading, .ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .weekend-heading {
+ color: #585858 !important;
+ font-size: 17px !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .normal-day-heading, .ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .weekend-heading {
+ font-size: 17px !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .day-with-date {
+ background: #ffffff !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .day-with-date {
+ border: 1px solid #B6B6B6 !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .day-with-date {
+ color: #5C5C5C !important;
+ font-size: 14px !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .day-with-date {
+ font-size: 14px !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .weekend {
+ background: #EDEDED !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .day-without-date {
+ background: #F9F9F9 !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .day-with-date .day-number {
+ background: #E0E0E0 !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .day-with-date .day-number {
+ color: #5C5C5C !important;
+ font-size: 14px !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .day-with-date {
+ font-size: 14px !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .current-day, .ecwd_theme_calendar table.cal_blue.mini .current-day {
+ background: #ffffff !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .current-day {
+ color: #ffffff !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .current-day .day-number, .ecwd_theme_calendar table.cal_blue.mini .current-day {
+ background: #0071A0 !important;
+}
+
+.ecwd_theme_calendar table.cal_blue.ecwd_calendar_container .current-day .day-number {
+ color: #ffffff !important;
+}
+
+.ecwd_theme_calendar .cal_blue.ecwd_calendar_container .events a, .ecwd_theme_calendar .cal_blue.ecwd_calendar_container .events span.ecwd_open_event_popup {
+ font-size: 14px !important;
+}
+
+.ecwd_theme_calendar ul.ecwd_list li .event-main-content h3 a, .ecwd_theme_calendar ul.ecwd_list li .event-main-content h3 span.ecwd_open_event_popup {
+ font-size: 14px !important;
+}
+
+.ecwd_theme_calendar ul.week-event-list li .event-main-content h3 a, .ecwd_theme_calendar ul.week-event-list li .event-main-content h3 span.ecwd_open_event_popup {
+ font-size: 14px !important;
+}
+
+.ecwd_theme_calendar ul.day-event-list li .event-main-content h3 a, .ecwd_theme_calendar ul.day-event-list li .event-main-content h3 span.ecwd_open_event_popup {
+ font-size: 14px !important;
+}
+
+.ecwd_theme_calendar ul.day4-event-list li .event-main-content h3 a, .ecwd_theme_calendar ul.day4-event-list li .event-main-content h3 span.ecwd_open_event_popup {
+ font-size: 14px !important;
+}
+
+.ecwd_theme_calendar .ecwd_map_event a, .ecwd_theme_calendar .ecwd_map_event span.ecwd_open_event_popup {
+ font-size: 14px !important;
+}
+
+.ecwd_theme_calendar .ecwd-poster-item h2 a, .ecwd_theme_calendar .ecwd-poster-item h2 span.ecwd_open_event_popup {
+ font-size: 14px !important;
+}
+
+.ecwd_theme_calendar div.ecwd-page-full table.cal_blue div.event-details, .ecwd_theme_calendar .ecwd-poster-board .ecwd-poster-item .ecwd-event-content {
+ background: #ffffff !important;
+}
+
+.ecwd_theme_calendar div.ecwd-event-arrow:before {
+ border-right: solid #ffffff !important;
+}
+
+.ecwd_theme_calendar div.ecwd-event-arrow-right:before {
+ border-left: solid #ffffff !important;
+}
+
+.ecwd_theme_calendar div.ecwd-page-full ul.ecwd_list li, .ecwd_theme_calendar ul.ecwd_list li .event-main-content {
+ background: #ffffff !important;
+}
+
+.ecwd_theme_calendar .event-main-content, .ecwd_theme_calendar .ecwd-widget-mini .event-container, .ecwd_theme_calendar.ecwd-widget-mini .ecwd_list .event-main-content {
+ background: #ffffff !important;
+}
+
+.ecwd_theme_calendar div.ecwd-page-full table.cal_blue div.event-details, .ecwd_theme_calendar .ecwd-poster-board .ecwd-poster-item .ecwd-event-content {
+ border: 1px solid #bfbfbf !important;
+}
+
+.ecwd_theme_calendar ul.ecwd_list li {
+ border: 1px solid #bfbfbf !important;
+}
+
+.ecwd_theme_calendar div.ecwd-page-full table.cal_blue div.event-details, .ecwd_theme_calendar .ecwd-poster-board .ecwd-poster-item .ecwd-event-content {
+ color: #000000 !important;
+}
+
+.ecwd_theme_calendar ul.ecwd_list li .event-main-content {
+ color: #000000;
+}
+
+.ecwd_theme_calendar .ecwd-day-date, .ecwd_theme_calendar .day-event-list .ecwd-week-date, .ecwd_theme_calendar .day4-event-list .ecwd-week-date, .ecwd_theme_calendar .week-event-list .ecwd-week-date, .ecwd_theme_calendar .ecwd_list .ecwd-list-date {
+ background: #10738B !important;
+}
+
+.ecwd_theme_calendar .ecwd-day-date, .ecwd_theme_calendar .day-event-list .ecwd-week-date, .ecwd_theme_calendar .day4-event-list .ecwd-week-date, .ecwd_theme_calendar .week-event-list .ecwd-week-date, .ecwd_theme_calendar .ecwd_list .ecwd-list-date {
+ color: #ffffff !important;
+}
+
+.ecwd_theme_calendar div[class^="ecwd-page"] .ecwd-day-date, .ecwd_theme_calendar div[class^="ecwd-page"] .day-event-list .ecwd-week-date, .ecwd_theme_calendar div[class^="ecwd-page"] .day4-event-list .ecwd-week-date, .ecwd_theme_calendar div[class^="ecwd-page"] .week-event-list .ecwd-week-date, .ecwd_theme_calendar div[class^="ecwd-page"] .ecwd_list .ecwd-list-date {
+ font-size: 15px !important;
+}
+
+.ecwd_theme_calendar .ecwd-poster-board .ecwd-poster-item .ecwd-event-details .date span:not(.weekday-block):not(.datenumber) {
+ background: #585858 !important;
+}
+
+.ecwd_theme_calendar .ecwd-poster-board .ecwd-poster-item .ecwd-event-details .date span:not(.weekday-block):not(.datenumber) {
+ color: #ffffff !important;
+}
+
+.ecwd_theme_calendar .ecwd-pagination .cpage {
+ background: #ffffff !important;
+}
+
+.ecwd_theme_calendar .ecwd-pagination .page {
+ background: #10738B !important;
+}
+
+.ecwd_theme_calendar .ecwd-pagination .cpage, .ecwd_theme_calendar .ecwd-pagination .page {
+ color: #A5A5A5 !important;
 }

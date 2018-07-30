@@ -95,9 +95,11 @@ if (typeof ecwd_js_init != "function")
             }
             var main_div = navLink.closest('.calendar_main');
 
-            var calendar_ids_class = jQuery(main_div).find('div.ecwd_calendar').find('div:first-child').attr('class').split('-');
+            var calendar_ids_class_1 = jQuery(main_div).find('div.ecwd_calendar').find('div:first-child').data("id");
+            var calendar_ids_class_2 = jQuery(main_div).find('div.ecwd_calendar').find('div:first-child').data("type");
+
             var display = jQuery(main_div).find('div.ecwd_calendar').attr('class').split(' ')[0].split('-')[2];
-            var calendar_ids = calendar_ids_class[2];
+            var calendar_ids = calendar_ids_class_1;
             var query = jQuery(main_div).find('input.ecwd-search').val();
             var tag = jQuery('.ecwd_tags').val();
             var venue = jQuery('.ecwd_venues').val();
@@ -113,7 +115,7 @@ if (typeof ecwd_js_init != "function")
                 action: 'ecwd_ajax',
                 ecwd_calendar_ids: calendar_ids,
                 ecwd_link: navLink.attr('href'),
-                ecwd_type: calendar_ids_class[1],
+                ecwd_type: calendar_ids_class_2,
                 ecwd_query: query,
                 ecwd_weekdays: days,
                 ecwd_categories: cats,
@@ -181,14 +183,15 @@ if (typeof ecwd_js_init != "function")
         function doSearch(el) {
 
             var main_div = jQuery(el).closest('.calendar_main');
-            var navLink = jQuery(main_div).find('.previous').find('a');
+            var navLink = jQuery(main_div).find('.ecwd_current_link');
             var query = jQuery(main_div).find('input.ecwd-search').val();
             var tag = jQuery(main_div).find('.ecwd_tags').val();
             var venue = jQuery(main_div).find('.ecwd_venues').val();
             var organizer = jQuery(main_div).find('.ecwd_organizers').val();
             var category = jQuery(main_div).find('.ecwd_categories').val();
-            var calendar_ids_class = jQuery(main_div).find('div.ecwd_calendar').find('div:first-child').attr('class').split('-');
-            var calendar_ids = calendar_ids_class[2];
+            var calendar_ids_class_1 = jQuery(main_div).find('div.ecwd_calendar').find('div:first-child').data("id");
+            var calendar_ids_class_2 = jQuery(main_div).find('div.ecwd_calendar').find('div:first-child').data("type");
+            var calendar_ids = calendar_ids_class_1;
             var displays = jQuery(main_div).find('.ecwd_displays').val();
             var page_items = jQuery(main_div).find('.ecwd_page_items').val();
             var event_search = jQuery(main_div).find('.event_search').val();
@@ -204,11 +207,12 @@ if (typeof ecwd_js_init != "function")
                 ecwd_displays: displays,
                 ecwd_filters: filters,
                 ecwd_page_items: page_items,
-                ecwd_link: navLink.attr('href'),
+                ecwd_link: navLink.val(),
                 ecwd_calendar_ids: calendar_ids,
                 ecwd_event_search: event_search,
-                ecwd_date: 0,
-                ecwd_type: calendar_ids_class[1],
+                ecwd_date: 1,
+                ecwd_type: calendar_ids_class_2,
+                ecwd_calendar_search:1,//not filter
                 ecwd_nonce: ecwd.ajaxnonce
             }, function (data) {
                 $(main_div).find('div.ecwd_calendar').replaceWith(data);
@@ -522,17 +526,22 @@ if (typeof ecwd_js_init != "function")
 
         }
         function add_single_events_popup() {
+            if(jQuery('.ecwd_open_event_popup').length == 0){
+                return;
+            }
             jQuery('.single_event_popup').ecwd_popup({
                 button: jQuery('.ecwd_open_event_popup'),
                 body_class: "ecwd-excluded-events ecwd_popup_body_scroll",
                 title: ecwd.event_popup_title_text,
                 get_ajax_data: function (el) {
-                    var date = el.attr('start-date-data');
-                    if (date) {
+                    var start_date = el.attr('start-date-data');
+                    var end_date = el.attr('end-date-data');
+                    if (start_date && end_date) {
                         var data = {
                             action: 'ecwd_event_popup_ajax',
                             id: el.attr('class').split('event')[2],
-                            date: date
+                            start_date: start_date,
+                            end_date: end_date
                         };
                         return data;
                     } else {
@@ -642,7 +651,18 @@ if (typeof ecwd_js_init != "function")
             }
 
         }        
-        this.showMap = function () {            
+        this.showMap = function () {
+            if (ecwd.gmap_key == "") {
+                jQuery(".ecwd_map_div").each(function (k, v) {
+                    var $this = jQuery(this);
+                    if ($this.closest('.ecwd-show-map').length == 1) {
+                        $this.closest('.ecwd-show-map').hide();
+                    }
+                    $this.hide();
+                });
+                return;
+            }
+
             if (typeof google == 'undefined' || typeof google.maps == "undefined") {
                 var script = document.createElement('script');
                 script.type = 'text/javascript';                
@@ -664,6 +684,9 @@ if (typeof ecwd_js_init != "function")
                     } else {
                         zoom = 2;
                     }
+
+                    var center = {lat: 0, lng: 0}
+
                     for (var i = 0; i < locations_len; i++) {
                         if (locations[i]) {
 
@@ -673,15 +696,25 @@ if (typeof ecwd_js_init != "function")
                             marker.data = locations[i].infow;
                             marker.options = new Object();
                             markers.push(marker);
+                            center.lat += parseFloat(locations[i].latlong[0]);
+                            center.lng += parseFloat(locations[i].latlong[1]);
                         }
 
                     }
+                    if(locations_len > 0) {
+                        center.lat = center.lat / locations_len;
+                        center.lng = center.lng / locations_len;
+                    }
+
                     jQuery(maps[k]).gmap3({
                         map: {
                             options: {
                                 zoom: zoom,
-                                zoomControl: true
-                            }
+                                zoomControl: true,
+                                styles: (ecwd.gmap_style !== "") ? JSON.parse(ecwd.gmap_style) : null,
+                                center: center
+                            },
+                            center: center
                         },
                         marker: {
                             values: markers,
@@ -707,16 +740,16 @@ if (typeof ecwd_js_init != "function")
 
                             }
                         },
-                        autofit: {maxZoom: zoom}
+                        //autofit: {maxZoom: zoom}
                     });
 
                 });
             }
         }
-        $('#ecwd_back_link').on('click', function (e) {
-            e.preventDefault();
-            window.history.back();
-        });
+        // $('#ecwd_back_link').on('click', function (e) {
+        //     e.preventDefault();
+        //     window.history.back();
+        // });
 
         if (jQuery('.ecwd_map_div').length > 0) {
             this.showMap();

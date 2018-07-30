@@ -1,80 +1,80 @@
 <?php
-__('January', 'ecwd');
-__('February', 'ecwd');
-__('March', 'ecwd');
-__('April', 'ecwd');
-__('May', 'ecwd');
-__('June', 'ecwd');
-__('July', 'ecwd');
-__('August', 'ecwd');
-__('September', 'ecwd');
-__('October', 'ecwd');
-__('November', 'ecwd');
-__('December', 'ecwd');
+__('January', 'event-calendar-wd');
+__('February', 'event-calendar-wd');
+__('March', 'event-calendar-wd');
+__('April', 'event-calendar-wd');
+__('May', 'event-calendar-wd');
+__('June', 'event-calendar-wd');
+__('July', 'event-calendar-wd');
+__('August', 'event-calendar-wd');
+__('September', 'event-calendar-wd');
+__('October', 'event-calendar-wd');
+__('November', 'event-calendar-wd');
+__('December', 'event-calendar-wd');
 
-__('Sunday', 'ecwd');
-__('Monday', 'ecwd');
-__('Tuesday', 'ecwd');
-__('Wednesday', 'ecwd');
-__('Thursday', 'ecwd');
-__('Friday', 'ecwd');
-__('Saturday', 'ecwd');
-
-
-
-__('Sun', 'ecwd');
-__('Mon', 'ecwd');
-__('Tue', 'ecwd');
-__('Wed', 'ecwd');
-__('Thu', 'ecwd');
-__('Fri', 'ecwd');
-__('Sat', 'ecwd');
+__('Sunday', 'event-calendar-wd');
+__('Monday', 'event-calendar-wd');
+__('Tuesday', 'event-calendar-wd');
+__('Wednesday', 'event-calendar-wd');
+__('Thursday', 'event-calendar-wd');
+__('Friday', 'event-calendar-wd');
+__('Saturday', 'event-calendar-wd');
 
 
-__('Su', 'ecwd');
-__('Mo', 'ecwd');
-__('Tu', 'ecwd');
-__('We', 'ecwd');
-__('Th', 'ecwd');
-__('Fr', 'ecwd');
-__('Sa', 'ecwd');
+
+__('Sun', 'event-calendar-wd');
+__('Mon', 'event-calendar-wd');
+__('Tue', 'event-calendar-wd');
+__('Wed', 'event-calendar-wd');
+__('Thu', 'event-calendar-wd');
+__('Fri', 'event-calendar-wd');
+__('Sat', 'event-calendar-wd');
+
+
+__('Su', 'event-calendar-wd');
+__('Mo', 'event-calendar-wd');
+__('Tu', 'event-calendar-wd');
+__('We', 'event-calendar-wd');
+__('Th', 'event-calendar-wd');
+__('Fr', 'event-calendar-wd');
+__('Sa', 'event-calendar-wd');
 
 
 //Filters
-__('Show Filters', 'ecwd');
-__('Collapse Filters', 'ecwd');
-__('Reset Filters', 'ecwd');
+__('Show Filters', 'event-calendar-wd');
+__('Collapse Filters', 'event-calendar-wd');
+__('Reset Filters', 'event-calendar-wd');
 
-__('Days', 'ecwd');
-__('Categories', 'ecwd');
-__('Venues', 'ecwd');
+__('Days', 'event-calendar-wd');
+__('Categories', 'event-calendar-wd');
+__('Venues', 'event-calendar-wd');
 
 //Countdown
-__('DAYS', 'ecwd');
-__('HOURS', 'ecwd');
-__('MINUTES', 'ecwd');
-__('SECONDS', 'ecwd');
-__('The event has just started', 'ecwd');
+__('DAYS', 'event-calendar-wd');
+__('HOURS', 'event-calendar-wd');
+__('MINUTES', 'event-calendar-wd');
+__('SECONDS', 'event-calendar-wd');
+__('The event has just started', 'event-calendar-wd');
 
 //Repeats
-__('Repeat every', 'ecwd');
-__('Repeat every day', 'ecwd');
-__('Repeat every week', 'ecwd');
-__('Repeat every month', 'ecwd');
-__('Repeat every year', 'ecwd');
+__('Repeat every', 'event-calendar-wd');
+__('Repeat every day', 'event-calendar-wd');
+__('Repeat every week', 'event-calendar-wd');
+__('Repeat every month', 'event-calendar-wd');
+__('Repeat every year', 'event-calendar-wd');
 
-__('days', 'ecwd');
-__('weeks', 'ecwd');
-__('months', 'ecwd');
-__('years', 'ecwd');
-__('until', 'ecwd') ;
+__('days', 'event-calendar-wd');
+__('weeks', 'event-calendar-wd');
+__('months', 'event-calendar-wd');
+__('years', 'event-calendar-wd');
+__('until', 'event-calendar-wd') ;
 
-__('Sundays', 'ecwd');
-__('Mondays', 'ecwd');
-__('Tuesdays', 'ecwd');
-__('Wednesdays', 'ecwd');
-__('Thursdays', 'ecwd');
-__('Fridays', 'ecwd');
-__('Saturdays', 'ecwd');
+__('Sundays', 'event-calendar-wd');
+__('Mondays', 'event-calendar-wd');
+__('Tuesdays', 'event-calendar-wd');
+__('Wednesdays', 'event-calendar-wd');
+__('Thursdays', 'event-calendar-wd');
+__('Fridays', 'event-calendar-wd');
+__('Saturdays', 'event-calendar-wd');
 
-__('Back', 'ecwd');
+__('Back', 'event-calendar-wd');

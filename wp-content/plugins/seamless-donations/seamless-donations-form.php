@@ -678,7 +678,7 @@ function seamless_donations_get_paypal_section() {
 	$paypal_email  = get_option( 'dgx_donate_paypal_email' );
 	$currency_code = get_option( 'dgx_donate_currency' );
 
-	$notify_url = plugins_url( '/dgx-donate-paypalstd-ipn.php', __FILE__ );
+	$notify_url = plugins_url( '/pay/paypalstd/ipn.php', __FILE__ );
 	//$session_id = session_id ();
 
 	// set up success URL

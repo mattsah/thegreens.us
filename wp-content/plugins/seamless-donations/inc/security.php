@@ -39,7 +39,7 @@ function seamless_donations_get_security_status() {
 			$version                = @curl_version();
 			$curl_compare           = @seamless_donations_version_compare( $version['version'], $required_curl_version );
 			$ssl_compare            = @seamless_donations_version_compare( $version['ssl_version'],
-			                                                              $required_ssl_version );
+				$required_ssl_version );
 			$status['curl_version'] = $version['version'];
 			$status['ssl_version']  = $version['ssl_version'];
 
@@ -93,8 +93,12 @@ EOT;
 This is a library on your server that enables some communications features. Seamless Donations uses this as its way of determining whether your server is running the necessary versions of cURL and OpenSSL to support PayPal's TLS 1.2 security requirement. Without this feature library, it's not possible to tell whether your server will properly work with PayPal.
 EOT;
 			$msg .= '</p>';
+		} else {
+			$paypal_status = seamless_donations_check_paypal_tls_URL();
+			$msg .= '<p><b>PayPal TLS test results: </b>' . $paypal_status . '<BR>' . <<<EOT
+This is PayPal's <A HREF=https://www.paypal-notice.com/en/TLS-1.2-and-HTTP1.1-Upgrade/">own testing system</A>. The results you see are the results of how PayPal interprets your server's compatibility.
+EOT;
 		}
-
 		if ( ! $status['ssl_version_ok'] ) {
 			$msg .= '<p><b>OpenSSL version too low: </b><br>' . <<<EOT
 PayPal requires TLSv1.2, which requires OpenSSL 1.0.1 or greater. Your server appears to be running an older version
@@ -149,8 +153,26 @@ EOT;
 		$msg .= "Congratulations! Your site appears compatible with PayPal's requirements.";
 		$msg .= "<BR><i>cURL: " . $status['curl_version'] . ", SSL: " . $status['ssl_version'] .
 		        ", HTTPS: responds</i>";
+		$paypal_status = seamless_donations_check_paypal_tls_URL();
+		$msg .= '<p><b>PayPal TLS test results: </b>' . $paypal_status . '<BR>' . <<<EOT
+This is PayPal's <A HREF=https://www.paypal-notice.com/en/TLS-1.2-and-HTTP1.1-Upgrade/">own testing system</A>. The results you see are the results of how PayPal interprets your server's compatibility.
+EOT;
 	}
+
 	$msg .= '</div>';
 
 	return $msg;
+}
+
+function seamless_donations_check_paypal_tls_URL () {
+	// test code using PayPal's TLS test https://www.paypal-notice.com/en/TLS-1.2-and-HTTP1.1-Upgrade/
+	$url = "https://tlstest.paypal.com/";
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	$paypal_test = curl_exec($ch);
+	curl_close($ch);
+	return $paypal_test;
 }

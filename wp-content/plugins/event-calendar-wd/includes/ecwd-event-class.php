@@ -185,12 +185,12 @@ class ECWD_Event {
     //Returns the difference between two times in human-readable formats
     function ecwd_human_time_diff($from, $to = '', $limit = 1) {
         $units = array(
-            31556926 => array(__('%s year', 'ecwd'), __('%s years', 'ecwd')),
-            2629744 => array(__('%s month', 'ecwd'), __('%s months', 'ecwd')),
-            604800 => array(__('%s week', 'ecwd'), __('%s weeks', 'ecwd')),
-            86400 => array(__('%s day', 'ecwd'), __('%s days', 'ecwd')),
-            3600 => array(__('%s hour', 'ecwd'), __('%s hours', 'ecwd')),
-            60 => array(__('%s min', 'ecwd'), __('%s mins', 'ecwd')),
+            31556926 => array(__('%s year', 'event-calendar-wd'), __('%s years', 'event-calendar-wd')),
+            2629744 => array(__('%s month', 'event-calendar-wd'), __('%s months', 'event-calendar-wd')),
+            604800 => array(__('%s week', 'event-calendar-wd'), __('%s weeks', 'event-calendar-wd')),
+            86400 => array(__('%s day', 'event-calendar-wd'), __('%s days', 'event-calendar-wd')),
+            3600 => array(__('%s hour', 'event-calendar-wd'), __('%s hours', 'event-calendar-wd')),
+            60 => array(__('%s min', 'event-calendar-wd'), __('%s mins', 'event-calendar-wd')),
         );
 
         if (empty($to))
@@ -230,6 +230,10 @@ class ECWD_Event {
 
 
 	public static function getLink( $event, $date ) {
+
+        return trailingslashit( get_permalink( $event->ID ) );
+        //TODO REMOVE FROM FREE VERSION
+        /*
 		// if permalinks are off use ugly links.
 		$date = date('Y-m-d', strtotime($date));
 		if ( '' == get_option( 'permalink_structure' ) ) {
@@ -241,7 +245,7 @@ class ECWD_Event {
 		$eventUrl  = trailingslashit( esc_url_raw( $eventUrl . $date ) );
 		//$eventUrl = add_query_arg('eventDate', $date, $eventUrl );
 		return $eventUrl;
-
+        */
 	}
 
 	public static function uglyLink(  $event, $date  ) {

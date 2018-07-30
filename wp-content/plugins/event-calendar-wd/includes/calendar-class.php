@@ -144,7 +144,7 @@
                 if ($type != '' && !isset($_REQUEST['t'])) {
                     $this->displaytype = $type; // if type is not set in querystring set type to passed value
                 } else {
-                    $this->displaytype = $_REQUEST['t']; // else set to type passed in querystring
+                    $this->displaytype = sanitize_text_field($_REQUEST['t']); // else set to type passed in querystring
                 }
             }
             // calendar date
@@ -152,7 +152,7 @@
                 $date = date('Y-n-j');
             } // set to todays date if no value is set
             if (isset($_REQUEST['date']) && $_REQUEST['date'] != '') {
-                $date = $_REQUEST['date'];
+                $date = sanitize_text_field($_REQUEST['date']);
 
             } // check if date is in the querystring
             $date      = date('Y-n-j', strtotime($date)); // format the date for parsing
@@ -163,13 +163,13 @@
             $day       = $date_part[2];
             
             if (!is_archive() && isset($_REQUEST['y']) && $_REQUEST['y'] != '') {
-                $year = $_REQUEST['y'];
+                $year = sanitize_text_field($_REQUEST['y']);
             } // if year is set in querystring it takes precedence
             if (!is_archive() && isset($_REQUEST['m']) && $_REQUEST['m'] != '') {
-                $month = $_REQUEST['m'];
+                $month = sanitize_text_field($_REQUEST['m']);
             } // if month is set in querystring it takes precedence
             if (!is_archive() && isset($_REQUEST['d']) && $_REQUEST['d'] != '') {
-                $day = $_REQUEST['d'];
+                $day = sanitize_text_field($_REQUEST['d']);
             } // if day is set in querystring it takes precedence
             // make sure we have year/month/day as int
             if ($year == '') {
@@ -192,7 +192,7 @@
             // get the month start day as an int (0 = Sunday, 1 = Monday, etc)
             $this->monthstartday = jddayofweek($this->jd, 0);
             // get the month as a name
-            $this->monthname = __(Date('F', strtotime($this->date)), 'ecwd');
+            $this->monthname = __(Date('F', strtotime($this->date)), 'event-calendar-wd');
             //get weekdate
             $this->weekdate = $this->getWeekFirstDayDate($this->date);
             //get month date
@@ -201,23 +201,23 @@
             $this->daydate = $this->getDayDate($this->date);
             $this->displaysName = array(
                 'full' => array(
-                    'name' => __('Month', 'ecwd'),
+                    'name' => __('Month', 'event-calendar-wd'),
                     'date' => $this->monthdate
                 ),
                 'mini' => array(
-                    'name' => __('Month', 'ecwd'),
+                    'name' => __('Month', 'event-calendar-wd'),
                     'date' => $this->monthdate
                 ),
                 'list' => array(
-                    'name' => __('List', 'ecwd'),
+                    'name' => __('List', 'event-calendar-wd'),
                     'date' => $this->monthdate
                 ),
                 'week' => array(
-                    'name' => __('Week', 'ecwd'),
+                    'name' => __('Week', 'event-calendar-wd'),
                     'date' => $this->weekdate
                 ),
                 'day'  => array(
-                    'name' => __('Day', 'ecwd'),
+                    'name' => __('Day', 'event-calendar-wd'),
                     'date' => $this->daydate
                 ),
             );
@@ -297,7 +297,7 @@
                         $thisclass = 'day-without-date';
                     }
                     if ($this->displaytype == 'full') {
-                        $html .= $this->calendar_cell(__($this->previousmonth, 'ecwd'), $thisclass);
+                        $html .= $this->calendar_cell(__($this->previousmonth, 'event-calendar-wd'), $thisclass);
                     } else {
                         $html .= $this->calendar_cell('&nbsp;', $thisclass);
                     }
@@ -350,20 +350,20 @@
                 $currentWeek = $this->rangeWeek($this->year . '-' . $this->month . '-' . $this->day);
                 $date        = $currentWeek['start'];
                 while (strtotime($date) <= strtotime($currentWeek['end'])) {
-                    $html .= '<li>' . $this->calendar_cell(date('d', strtotime($date)), 'day-with-date', date('Y-n-j', strtotime($date))) . '</li>';
+                    $html .= '<li itemscope itemtype="http://schema.org/Event">' . $this->calendar_cell(date('d', strtotime($date)), 'day-with-date', date('Y-n-j', strtotime($date))) . '</li>';
                     $date = date("Y-m-d", strtotime("+1 day", strtotime($date)));
                 }
                 $html .= '</ul>';
             } elseif ($this->displaytype == 'day') {
                 $html .= '<ul class="day-event-list">';
-                $html .= '<li>' . $this->calendar_cell(date('d', strtotime($this->year . '-' . $this->month . '-' . $this->day)), 'day-with-date', date('Y-n-j', strtotime($this->year . '-' . $this->month . '-' . $this->day))) . '</li>';
+                $html .= '<li itemscope itemtype="http://schema.org/Event">' . $this->calendar_cell(date('d', strtotime($this->year . '-' . $this->month . '-' . $this->day)), 'day-with-date', date('Y-n-j', strtotime($this->year . '-' . $this->month . '-' . $this->day))) . '</li>';
                 $html .= '</ul>';
             } elseif ($this->displaytype == '4day') {
                 $html .= '<ul class="day4-event-list">';
                 $days = $this->range4Days($this->year . '-' . $this->month . '-' . $this->day);
                 $date = $days['start'];
                 while (strtotime($date) <= strtotime($days['end'])) {
-                    $html .= '<li>' . $this->calendar_cell(date('d', strtotime($date)), 'day-with-date', date('Y-n-j', strtotime($date))) . '</li>';
+                    $html .= '<li itemscope itemtype="http://schema.org/Event">' . $this->calendar_cell(date('d', strtotime($date)), 'day-with-date', date('Y-n-j', strtotime($date))) . '</li>';
                     //$this->
                     $date = date("Y-m-d", strtotime("+1 day", strtotime($date)));
                 }
@@ -394,6 +394,7 @@
                     foreach ($events_for_list as $date_key => $events) {
                         $ev_counts += count($events);
                         foreach ($events as $event) {
+												    $all_day_event = (isset($event['all_day_event']) && $event['all_day_event'] == 1) ? true : false;
                             if ($date_key >= $start_date && $date_key <= strtotime($end_date)) {
                                 if ($page_index >= $page * $this->listlimit) {
                                     break 1;
@@ -407,40 +408,57 @@
                                         }
                                         $html .= '<li class="' . $image_class . '" itemscope itemtype="http://schema.org/Event">';
                                         if (!$this->widget) {
-                                            $html .= '<div class="ecwd-list-date resp" itemprop="startDate" content="' . date('Y-m-d', strtotime($event['from'])) . 'T' . date('H:i', $date_key) . '">' . __(date('d', $date_key), 'ecwd') . '</div>';
-                                            //$html .= '<div class="ecwd-list-img"><div class="ecwd-list-img-container"><div class="ecwd-list-date web">' . date('d', strtotime($event['from'])) . '.' . __(date('F', strtotime($event['from'])), 'ecwd') . '.' . __(date('l', strtotime($event['from'])), 'ecwd') . '</div>';
-                                            $event_date = (($this->list_date_format !== 'd.F.l') ? date($this->list_date_format, $date_key) : (date('d', $date_key) . '.' . __(date('F', $date_key), 'ecwd') . '.' . __(date('l', $date_key), 'ecwd')));
+                                            $html .= '<div class="ecwd-list-date resp" itemprop="startDate" content="' . date('Y-m-d', strtotime($event['from'])) . 'T' . date('H:i', $date_key) . '">' . __(date('d', $date_key), 'event-calendar-wd') . '</div>';
+                                            $html .='<span class="ecwd_hidden" itemprop="endDate" content="' . date('Y-m-d', strtotime($event['to'])) . 'T' . date('H:i', $date_key) . '"></span>';
+                                            $event_date = (($this->list_date_format !== 'd.F.l') ? date($this->list_date_format, $date_key) : (date('d', $date_key) . '.' . __(date('F', $date_key), 'event-calendar-wd') . '.' . __(date('l', $date_key), 'event-calendar-wd')));
                                             if ($this->list_date_format !== 'd.F.l') {
                                                 $month_name = date('F', strtotime($event['from']));
-                                                $event_date = str_replace($month_name, __($month_name, 'ecwd'), $event_date);
+                                                $event_date = str_replace($month_name, __($month_name, 'event-calendar-wd'), $event_date);
                                             }
                                             $html .= '<div class="ecwd-list-img"><div class="ecwd-list-img-container"><div class="ecwd-list-date web">' . $event_date . '</div>';
                                             $html .= '<div class="ecwd-img">';
-                                            if (get_the_post_thumbnail($event['id']) || $event['image']) {
-                                                if (get_the_post_thumbnail($event['id'])) {
-                                                    $html .= get_the_post_thumbnail($event['id']);
+                                            $ecwd_has_thumb = has_post_thumbnail($event['id']);
+                                            if ($ecwd_has_thumb || $event['image']) {
+                                                if ($ecwd_has_thumb) {
+                                                    $html .= get_the_post_thumbnail($event['id'],"thumbnail",array("itemprop"=>"image"));
                                                 } else {
-                                                    $html .= '<img src="' . $event['image'] . '" />';
+                                                    $html .= '<img itemprop="image" src="' . $event['image'] . '" />';
                                                 }
                                             } elseif ($image['image'] != null) {
-                                                $html .= '<img src="' . $image['image'] . '" />';
+                                                $html .= '<img itemprop="image" src="' . $image['image'] . '" />';
                                                 $event['details'] = $image['content'];
                                             }
                                             $html .= '</div></div></div>';
                                         } else {
-                                            $html .= '<div class="ecwd-list-date"  itemprop="startDate" content="' . date('Y-m-d', strtotime($event['from'])) . 'T' . date('H:i', strtotime($event['starttime'])) . '">' . __(date('d', strtotime($event['from'])), 'ecwd') . '</div>';
+                                            $html .= '<div class="ecwd-list-date" itemprop="startDate" content="' . date('Y-m-d', strtotime($event['from'])) . 'T' . date('H:i', $date_key) . '">' . __(date('d', $date_key), 'event-calendar-wd') . '</div>';
+                                            $html .= '<span class="ecwd_hidden"  itemprop="endDate" content="' . date('Y-m-d', strtotime($event['to'])) . 'T' . date('H:i', strtotime($event['endtime'])) . '"></span>';
                                         }
                                         $html .= '<div class="event-main-content">';
                                         if ($this->event_popup == "yes" && get_post_meta($event['id'], '', true)) {
-                                            $html .= '<h3 class="event-title"  itemprop="name"><span start-date-data="' . $event['from'] . '" class="ecwd_open_event_popup event' . $event['id'] . '" style="color:' . $event['color'] . ';">' . $event['title'] . '</span></h3>';
+                                            $date_data = 'start-date-data="' . date("Y-m-d", strtotime($event['date'])) . '"';
+                                            $date_data .= ' end-date-data="' . date("Y-m-d", strtotime($event['to'])) . '"';
+                                            $html .= '<h3 class="event-title"  itemprop="name"><span ' . $date_data . ' class="ecwd_open_event_popup event' . $event['id'] . '" style="color:' . $event['color'] . ';">' . $event['title'] . '</span></h3>';
                                         } else if ($event['permalink'] != '') {
                                             $html .= '<h3 class="event-title"  itemprop="name"><a href="' . $event['permalink'] . '" ' . $this->eventlinktarget . ' itemprop="url" style="color:' . $event['color'] . ';">' . $event['title'] . '</a></h3>';
                                         } else {
                                             $html .= '<h3 class="event-title" style="color:' . $event['color'] . ';" itemprop="name">' . $event['title'] . '</h3>';
                                         }
+
+                                        if(isset($event['link']) && $event['link'] !== ""){
+                                            $link = $event['link'];
+                                        }else if(isset($event['metas']['ecwd_event_url'][0]) && $event['metas']['ecwd_event_url'][0] !== ""){
+                                            $link =  $event['metas']['ecwd_event_url'][0];
+                                        }else{
+                                            $link = get_post_permalink($event['id']);
+                                        }
+
+                                        if($link) {
+                                            $html .= '<span class="hidden" itemprop="url">' . $link . '</span>';
+                                        }
+
                                         $html .= '<div class="ecwd-list-date-cont">';
-                                        if (isset($event['all_day_event']) && $event['all_day_event'] == 1) {
-                                            $eventtime = '<div class="ecwd-time"><span class="metainfo"> ' . __('All day', 'ecwd');
+                                        if ($all_day_event) {
+                                            $eventtime = '<div class="ecwd-time"><span class="metainfo"> ' . __('All day', 'event-calendar-wd');
                                             $eventtime .= '</span>';
                                             $eventtime .= '</div>';
                                         } else {
@@ -455,14 +473,16 @@
                                         }
                                         $html .= $eventtime;
                                         if ($event['from'] != '') { // event details - hidden until clicked (full)
-                                            $eventdate = '<div class="ecwd-date"><span class="metainfo"> ' . date($this->dateformat, strtotime($event['from']));
+                                            $eventdate = '<div class="ecwd-date"><span class="metainfo"> ' . date($this->dateformat, $date_key);
                                             if ($event['to'] != '' && strtotime($event['to']) !== strtotime($event['from'])) {
                                                 $eventdate .= "-" . date($this->dateformat, strtotime($event['to']));
                                             }
                                             $eventdate .= '</span>';
+																						$eventdate .= ECWD::get_time_zone( $all_day_event );
                                             $eventdate .= '</div>';
                                             $html .= $eventdate;
                                         }
+																				
                                         $html .= '</div>';
                                         if (isset($event['organizers']) && count($event['organizers']) > 0) {
                                             $html .= '<div class="event-organizers"><div class="ecwd-org-cont">';
@@ -517,7 +537,7 @@
                     }
                     if (count($this->events) <= 0) { // if events array is empty
                         $html .= '<li >';
-                        $html .= '<div class="event-content">' . __('No Events', 'ecwd') . '</div>';
+                        $html .= '<div class="event-content">' . __('No Events', 'event-calendar-wd') . '</div>';
                         $html .= '</li>';
                     }
                     $html .= '</ul>';
@@ -569,7 +589,7 @@
 				&nbsp;<a href="?date=' . $next_dateparam . '&t=' . $this->displaytype . '" rel="noindex, nofollow">></a>
 					<div>';
             if ($this->displaytype !== 'week' && $this->displaytype !== '4day' && $this->displaytype !== 'day') {
-                $html .= __($this->monthname, 'ecwd');
+                $html .= __($this->monthname, 'event-calendar-wd');
             } else {
                 if ($this->displaytype !== 'day') {
                     if ($this->displaytype == 'week') {
@@ -577,14 +597,17 @@
                     } else {
                         $currentDays = $this->range4Days($this->year . '-' . $this->month . '-' . $this->day);
                     }
-                    $html .= __($this->getMonth($currentDays['start']), 'ecwd') . ' ' . date('d', strtotime($currentDays['start'])) . ' - ' . __($this->getMonth($currentDays['end']), 'ecwd') . ' ' . date('d', strtotime($currentDays['end']));
+                    $html .= __($this->getMonth($currentDays['start']), 'event-calendar-wd') . ' ' . date('d', strtotime($currentDays['start'])) . ' - ' . __($this->getMonth($currentDays['end']), 'event-calendar-wd') . ' ' . date('d', strtotime($currentDays['end']));
                 } else {
-                    $html .= __($this->monthname, 'ecwd') . ' ' . $this->day;
+                    $html .= __($this->monthname, 'event-calendar-wd') . ' ' . $this->day;
                 }
             }
             $html .= '		</div>
 				</div>';
             $html .= $this->cal_next(); // next month link
+            $current_date_link = "?date=" . $this->year . "-" . $this->month . "-" . $this->day;
+            $current_date_link .= "&t=" . $this->displaytype;
+            $html .= '<input type="hidden" class="ecwd_current_link" value="' . $current_date_link . '" />';
             $html .= '</div>';
             $html .= $this->cal_viewmode();
             if (!in_array($this->displaytype, array(
@@ -594,10 +617,8 @@
                 'week'
             ))
             ) { // mini and full cal
-                $html .= '
-<table class="ecwd_calendar_container ' . $this->displaytype . ' cal_' . $this->color . '" cellpadding="0" cellspacing="0" border="0">
-
-<tr>';
+                $html .= '<table class="ecwd_calendar_container ' . $this->displaytype . ' cal_' . $this->color . '" cellpadding="0" cellspacing="0" border="0">
+                <tr>';
                 // render week number on left
                 if ($this->weeknumbers == 'left') {
                     $html .= '<td rowspan="2" class="week-number">&nbsp;</td>';
@@ -624,7 +645,7 @@
                     } else {
                         $thisclass = 'normal-day-heading';
                     }
-                    $html .= $this->calendar_cell(__($weekday, 'ecwd'), $thisclass); // calendar cells for full & mini
+                    $html .= $this->calendar_cell(__($weekday, 'event-calendar-wd'), $thisclass); // calendar cells for full & mini
                 }
                 $html .= '
 </tr>
@@ -668,7 +689,7 @@
             if ($this->widget == 1) {
                 $previoustext = '<span><</span>';
             } else {
-                $previoustext = '<span><</span><span class="month-name"> ' . __($this->previousmonth, 'ecwd') . ' ' . $prev_date . '</span>';
+                $previoustext = '<span><</span><span class="month-name"> ' . __($this->previousmonth, 'event-calendar-wd') . ' ' . $prev_date . '</span>';
             }
             $html = '<div class="previous"><a href="?date=' . $dateparam . '&t=' . $this->displaytype . '" rel="noindex, nofollow">' . $previoustext . '</a></div>';
             return $html;
@@ -772,7 +793,7 @@
                 $nexttext = '<span>></span>';
             } else {
                 $divider  = $this->monthselector === false ? '&nbsp;|&nbsp;' : '';
-                $nexttext = '<span class="month-name">' . $next_date . ' ' . $divider . __($this->nextmonth, 'ecwd') . ' </span><span>></span>';
+                $nexttext = '<span class="month-name">' . $next_date . ' ' . $divider . __($this->nextmonth, 'event-calendar-wd') . ' </span><span>></span>';
             }
             $html = '<div class="next"><a href="?date=' . $dateparam . '&t=' . $this->displaytype . '" rel="noindex, nofollow">' . $nexttext . '</a></div>';
             return $html;
@@ -846,6 +867,9 @@
             } else {
                 $tag = 'td';
             }
+
+            $month_view_events_count = (isset($ecwd_options['event_count_per_cell'])) ? intval($ecwd_options['event_count_per_cell']) : 3;
+
             if ($day != '') {
                 $bgColor    = '';
                 $cellevents = array();
@@ -862,7 +886,7 @@
                         //echo $event['from'].'------'.$event['title'].'<br />';
                         $color         = $event['color'];
                         $title         = $event['title'];
-                        $link          = $event['link'];
+                        $link = ($event['link'] == "" && isset($event['metas']['ecwd_event_url'][0])) ? $event['metas']['ecwd_event_url'][0] :  $event['link'];
                         $eventdate     = $event['date'];
                         $from          = strtotime($event['from']);
                         $to            = strtotime($event['to']);
@@ -902,6 +926,7 @@
                         }
                     }
                 }
+
                 // sort by starttime for the cell
                 if (count($cellevents) > 0) {
                     $cellevents = $this->arraySort($cellevents, 'starttime');
@@ -943,12 +968,12 @@
                 $content = '<div class="ecwd-week-date">' . date('d', strtotime($date)) . '</div>';
             } elseif (($this->displaytype == 'week' || $this->displaytype == 'day' || $this->displaytype == '4day') && !$this->widget) {
                 //here
-                $event_date = (($this->list_date_format !== 'd.F.l') ? date($this->list_date_format, strtotime($date)) : (date('d', strtotime($date)) . '.' . __(date('F', strtotime($date)), 'ecwd') . '.' . __(date('l', strtotime($date)), 'ecwd')));
+                $event_date = (($this->list_date_format !== 'd.F.l') ? date($this->list_date_format, strtotime($date)) : (date('d', strtotime($date)) . '.' . __(date('F', strtotime($date)), 'event-calendar-wd') . '.' . __(date('l', strtotime($date)), 'event-calendar-wd')));
                 if ($this->list_date_format !== 'd.F.l') {
                     $month_name = date('F', strtotime($date));
-                    $event_date = str_replace($month_name, __($month_name, 'ecwd'), $event_date);
+                    $event_date = str_replace($month_name, __($month_name, 'event-calendar-wd'), $event_date);
                 }
-                $content = '<div class="ecwd-week-date resp" itemprop="startDate" content="' . date('Y-m-d', strtotime($date)) . '">' . __(date('d', strtotime($date)), 'ecwd') . '</div><div class="ecwd-week-date web"">' . $event_date . '</div>';
+                $content = '<div class="ecwd-week-date resp" itemprop="startDate" content="' . date('Y-m-d', strtotime($date)) . '">' . __(date('d', strtotime($date)), 'event-calendar-wd') . '</div><div class="ecwd-week-date web"">' . $event_date . '</div>';
             } else {
                 $content = '<div class="day-number">' . $day . '</div>'; // day number or prev/next month cell content
             }
@@ -956,10 +981,9 @@
                 $content .= '<ul class="events">';
                 $eventcontent = '';
                 foreach ($cellevents as $i => $cellevent) {
-                    //echo $cellevent['date'].'-------'.$cellevent['title'].'<br />';
-                    //if (!array_key_exists($cellevent['id'], $this->seted_days)) {
+										$all_day_event = (isset($cellevent['all_day_event']) && $cellevent['all_day_event'] == 1) ? true : false;
                     $li_class = '';
-                    if ($i > 2 && $this->displaytype !== 'mini') {
+                    if ($i > ($month_view_events_count - 1) && $this->displaytype !== 'mini') {
                         $li_class = 'inmore';
                     }
                     //var_dump($cellevent);
@@ -977,13 +1001,15 @@
                     if ($this->displaytype != 'mini') {
                         if (isset($cellevent['terms']['ecwd_taxonomy_image']) && $this->displaytype != 'mini') {
                             if ($cellevent['terms']['ecwd_taxonomy_image'] != '') {
-                                $eventcontent .= '<img  class="ecwd-event-cat-icon" src="' . $cellevent['terms']['ecwd_taxonomy_image'] . '" />';
+                                $eventcontent .= '<img  itemprop="image" class="ecwd-event-cat-icon" src="' . $cellevent['terms']['ecwd_taxonomy_image'] . '" />';
                             }/* elseif (isset($cellevent['color'])){
                           $eventcontent .= ' <span class="event-metalabel" style="background:' . $cellevent['color'] . '"></span>';
                           } */
                         }
                         if ($this->event_popup == "yes" && get_post_meta($event['id'], '', true)) {
-                            $eventcontent .= '<span start-date-data="' . $event['date'] . '" class="ecwd_open_event_popup event' . $cellevent['id'] . '" itemprop="name">' . $cellevent['title'] . '</span>';
+                            $date_data = 'start-date-data="' . date("Y-m-d", strtotime($cellevent['date'])) . '"';
+                            $date_data .= ' end-date-data="'.date("Y-m-d", $cellevent['to']).'"';
+                            $eventcontent .= '<span ' . $date_data . ' class="ecwd_open_event_popup event' . $cellevent['id'] . '" itemprop="name">' . $cellevent['title'] . '</span>';
                         } elseif ($cellevent['permalink']) {
                             $eventcontent .= '<a href="' . $cellevent['permalink'] . '" ' . $this->eventlinktarget . '><span itemprop="name">' . $cellevent['title'] . '</span></a>';
                         } else {
@@ -991,7 +1017,7 @@
                         }
                     }
                     $this->seted_days[$cellevent['id']] = $date;
-                    $ecwd_settings_general              = get_option("ecwd_settings_general");
+                    $ecwd_settings_general              = get_option("ecwd_settings_events");
                     $show_events_detail_hover           = true;
                     if ($ecwd_settings_general && isset($ecwd_settings_general["show_events_detail"])) {
                         $show_events_detail = $ecwd_settings_general["show_events_detail"];
@@ -1009,9 +1035,11 @@
                             $eventcontent .= ' <span class="event-metalabel" style="background:' . $cellevent['color'] . '"></span>
                                          <h5 style="color:' . $cellevent['color'] . '" itemprop="name">';
                             if ($this->event_popup == "yes" && get_post_meta($event['id'], '', true)) {
-                                $eventcontent .= '<span start-date-data="' . $cellevent['date'] . '" class="ecwd_open_event_popup event' . $cellevent['id'] . '">' . $cellevent['title'] . '</span>';
+                                $date_data = 'start-date-data="' . date("Y-m-d", strtotime($cellevent['date'])) . '"';
+                                $date_data .= ' end-date-data="' . date("Y-m-d", $cellevent['to']) . '"';
+                                $eventcontent .= '<span ' . $date_data . ' class="ecwd_open_event_popup event' . $cellevent['id'] . ' "itemprop="url">' . $cellevent['title'] . '</span>';
                             } else if (isset($cellevent['permalink']) && $cellevent['permalink'] !== '') {
-                                $eventcontent .= '<a href="' . $cellevent['permalink'] . '" ' . $this->eventlinktarget . ' style="color: ' . $cellevent['color'] . '">' . $cellevent['title'] . '</a>';
+                                $eventcontent .= '<a href="' . $cellevent['permalink'] . '" ' . $this->eventlinktarget . ' style="color: ' . $cellevent['color'] . ' "itemprop="url">' . $cellevent['title'] . '</a>';
                             } else {
                                 $eventcontent .= $cellevent['title'];
                             }
@@ -1021,9 +1049,11 @@
                             $eventcontent .= ' <span class="event-metalabel"></span>
                                          <h5 itemprop="name">';
                             if ($this->event_popup == "yes" && get_post_meta($event['id'], '', true)) {
-                                $eventcontent .= '<span start-date-data="' . $cellevent['date'] . '" class="ecwd_open_event_popup event' . $cellevent['id'] . '">' . $cellevent['title'] . '</span>';
+                                $date_data = 'start-date-data="' . date("Y-m-d", strtotime($cellevent['date'])) . '"';
+                                $date_data .= ' end-date-data="' . date("Y-m-d", $cellevent['to']) . '"';
+                                $eventcontent .= '<span ' . $date_data . ' class="ecwd_open_event_popup event' . $cellevent['id'] . '">' . $cellevent['title'] . '</span>';
                             } else if (isset($cellevent['permalink']) && $cellevent['permalink'] !== '') {
-                                $eventcontent .= '<a href="' . $cellevent['permalink'] . '" ' . $this->eventlinktarget . '>' . $cellevent['title'] . '</a>';
+                                $eventcontent .= '<a href="' . $cellevent['permalink'] . '" ' . $this->eventlinktarget . ' itemprop="url">' . $cellevent['title'] . '</a>';
                             } else {
                                 $eventcontent .= $cellevent['title'];
                             }
@@ -1031,8 +1061,8 @@
                         }
                         $eventcontent .= ' </div>';
                     }
-                    if (isset($cellevent['all_day_event']) && $cellevent['all_day_event'] == 1) {
-                        $eventtime = '<div class="ecwd-time"><span class="metainfo"  itemprop="startDate" content="' . date('Y-m-d', $cellevent['from']) . 'T' . date('H:i', strtotime($cellevent['starttime'])) . '"> ' . __('All day', 'ecwd');
+                    if ($all_day_event) {
+                        $eventtime = '<div class="ecwd-time"><span class="metainfo"  itemprop="startDate" content="' . date('Y-m-d', $cellevent['from']) . 'T' . date('H:i', strtotime($cellevent['starttime'])) . '"> ' . __('All day', 'event-calendar-wd');
                         $eventtime .= '</span>';
                         $eventtime .= '</div>';
                         $eventcontent .= $eventtime;
@@ -1048,11 +1078,13 @@
                         }
                     }
                     if ($cellevent['from'] != '') { // event details - hidden until clicked (full)
-                        $eventdate = '<div class="ecwd-date"><span class="metainfo"> ' . date($this->dateformat, $cellevent['from']);
+                        $eventdate = '<div class="ecwd-date"><span class="metainfo"> ' . date($this->dateformat, strtotime($cellevent['date']));
                         if ($cellevent['to'] != '' && $cellevent['to'] != $cellevent['from']) {
                             $eventdate .= "-" . date($this->dateformat, $cellevent['to']);
                         }
                         $eventdate .= '</span>';
+                        $eventdate .= '<span class="ecwd_hidden"  itemprop="endDate" content="' . date('Y-m-d', $cellevent['to']) . 'T' . date('H:i', strtotime($cellevent['endtime'])) . '">'.'</span>';
+												$eventdate .= ECWD::get_time_zone( $all_day_event );
                         $eventdate .= '</div>';
                         $eventcontent .= $eventdate;
                     }
@@ -1063,6 +1095,7 @@
                         }
                         $eventcontent .= '</div>';
                     }
+
                     if ($cellevent['location'] !== '') {
                         $eventcontent .= '<div class="event-venue" itemprop="location" itemscope itemtype="http://schema.org/Place">';
                         if (isset($cellevent['venue']['name'])) {
@@ -1078,17 +1111,25 @@
                         $eventcontent .= '<div  class="ecwd-link"> <a href="' . $cellevent['link'] . '"  itemprop="url">' . $cellevent['link'] . '</a></div>';
                     }
                     $cellevent['details'] = $cellevent['details'] == '' ? $this->eventemptytext : $cellevent['details'];
+
+                    if (isset($cellevent['link']) && $cellevent['link'] != '') {
+                        $eventcontent .= '<div  class="ecwd-link" itemprop="url"> <a href="' . $cellevent['link'] . '"  itemprop="url">' . $cellevent['link'] . '</a></div>';
+                    }else{
+                        $eventcontent .= '<span class="hidden" itemprop="url">' . get_post_permalink($cellevent['id']) . '</span>';
+                    }
+
                     $image                = $this->getAndReplaceFirstImage($cellevent['details']);
-                    if ($cellevent['details'] != '' || has_post_thumbnail($cellevent['id']) || $cellevent['image']) {
+                    $ecwd_has_thumb = has_post_thumbnail($cellevent['id']);
+                    if ($cellevent['details'] != '' || $ecwd_has_thumb || $cellevent['image']) {
                         $eventcontent .= '<div  class="ecwd-detalis" itemprop="description">';
-                        if (get_the_post_thumbnail($cellevent['id']) || $cellevent['image']) {
-                            if (get_the_post_thumbnail($cellevent['id'])) {
-                                $eventcontent .= get_the_post_thumbnail($cellevent['id'], 'thumbnail');
+                        if ($ecwd_has_thumb || $cellevent['image']) {
+                            if ($ecwd_has_thumb) {
+                                $eventcontent .= get_the_post_thumbnail($cellevent['id'], 'thumbnail',array("itemprop"=>"image"));
                             } else {
-                                $eventcontent .= '<img src="' . $cellevent['image'] . '" />';
+                                $eventcontent .= '<img itemprop="image" src="' . $cellevent['image'] . '" />';
                             }
                         } elseif ($image['image'] != null) {
-                            $eventcontent .= '<img src="' . $image['image'] . '" />';
+                            $eventcontent .= '<img itemprop="image" src="' . $image['image'] . '" />';
                             $cellevent['details'] = $image['content'];
                         }
                         $desc = $cellevent['details'] ? $cellevent['details'] : $this->eventemptytext;
@@ -1102,10 +1143,10 @@
                     //                }
                 }
                 $content .= apply_filters('format_content', $eventcontent);
-                if ($i > 2 && $this->displaytype !== 'mini') {
+                if ($i > ($month_view_events_count - 1) && $this->displaytype !== 'mini') {
                     $content .= '<li class="ecwd-calendar-more-event">
                     <span class="ecwd-calendar-event-add">
-                         <span class="more_events_link">' . __('More events', 'ecwd') . '</span>
+                         <span class="more_events_link">' . __('More events', 'event-calendar-wd') . '</span>
                     </span>
                     <div class="ecwd-more-events-container">                                                                       
                         <ul class="events more_events">' . $eventcontent . '</ul>          
@@ -1118,10 +1159,10 @@
                     if (count($cellevents) > 0) {
                         $html = '';
                         if (!$this->widget) {
-                            $event_date = (($this->list_date_format !== 'd.F.l') ? date($this->list_date_format, strtotime($date)) : (date('d', strtotime($date)) . '.' . __(date('F', strtotime($date)), 'ecwd') . '.' . __(date('l', strtotime($date)), 'ecwd')));
+                            $event_date = (($this->list_date_format !== 'd.F.l') ? date($this->list_date_format, strtotime($date)) : (date('d', strtotime($date)) . '.' . __(date('F', strtotime($date)), 'event-calendar-wd') . '.' . __(date('l', strtotime($date)), 'event-calendar-wd')));
                             if ($this->list_date_format !== 'd.F.l') {
                                 $month_name = date('F', strtotime($date));
-                                $event_date = str_replace($month_name, __($month_name, 'ecwd'), $event_date);
+                                $event_date = str_replace($month_name, __($month_name, 'event-calendar-wd'), $event_date);
                             }
                             $html = '<div class="ecwd-week-date resp"  style="background:#' . $this->eventlistbg . '" itemprop="startDate" content="' . date('Y-m-d', strtotime($date)) . 'T' . date('H:i', strtotime($date)) . '">' . date('d', strtotime($date)) . '</div><div class="ecwd-week-date web"">' . $event_date . '</div>';
                         } else {
@@ -1129,30 +1170,36 @@
                         }
                         $html .= '<div class="event-main-content">';
                         foreach ($cellevents as $cellevent) {
+												    $all_day_event = (isset($cellevent['all_day_event']) && $cellevent['all_day_event'] == 1) ? true : false;
                             $image_class          = '';
                             $cellevent['details'] = $cellevent['details'] == '' ? $this->eventemptytext : $cellevent['details'];
                             $image                = $this->getAndReplaceFirstImage($cellevent['details']);
-                            if (!has_post_thumbnail($cellevent['id']) && $cellevent['image'] == "") {
+                            $ecwd_has_thumb = has_post_thumbnail($cellevent['id']);
+                            if (!$ecwd_has_thumb && $cellevent['image'] == "") {
                                 $image_class = "ecwd-no-image";
                             }
-                            $html .= '<div class="event-container ' . $image_class . '" itemprop="event">';
+                            $html .= '<div class="event-container ' . $image_class . '">';
                             if (!$this->widget) {
                                 $html .= '<div class="ecwd-list-img"><div class="ecwd-list-img-container">';
                                 $html .= '<div class="ecwd-img">';
-                                if (get_the_post_thumbnail($cellevent['id']) || $cellevent['image']) {
-                                    if (get_the_post_thumbnail($cellevent['id'])) {
-                                        $html .= get_the_post_thumbnail($cellevent['id']);
+                                $post_thumbnail_id = get_post_thumbnail_id( $cellevent['id'] );
+                                if ($ecwd_has_thumb || $cellevent['image']) {
+                                    if ($ecwd_has_thumb) {
+                                        $html .= get_the_post_thumbnail($cellevent['id'],'thumb',array("itemprop"=>"image"));
                                     } else {
-                                        $html .= '<img src="' . $cellevent['image'] . '" />';
+                                        $html .= '<img itemprop="image" src="' . $cellevent['image'] . '" />';
                                     }
                                 } elseif ($image['image'] != null) {
-                                    $html .= '<img src="' . $image['image'] . '" />';
+                                    $html .= '<img itemprop="image" src="' . $image['image'] . '" />';
                                     $cellevent['details'] = $image['content'];
                                 }
                                 $html .= '</div></div></div>';
                             }
-                            if ($this->event_popup == "yes" && get_post_meta($event['id'], '', true)) {
-                                $html .= '<h3 class="event-title" itemprop="name"><span start-date-data="' . $cellevent['date'] . '" class="ecwd_open_event_popup event' . $cellevent['id'] . '"';
+                            
+                            if ($this->event_popup == "yes" && get_post_meta($cellevent['id'], '', true)) {
+                                $date_data = 'start-date-data="' . date("Y-m-d", strtotime($cellevent['date'])) . '"';
+                                $date_data .= ' end-date-data="'.date("Y-m-d", $cellevent['to']).'"';
+                                $html .= '<h3 class="event-title" itemprop="name"><span '.$date_data.' class="ecwd_open_event_popup event' . $cellevent['id'] . '"';
                                 if (isset($cellevent['color']) && $cellevent['color'] !== '') {
                                     $html .= ' style="color:' . $cellevent['color'] . ';"';
                                 }
@@ -1171,9 +1218,10 @@
                                 $html .= '>' . $cellevent['title'] . '</h3>';
                             }
                             $html .= '<div class="ecwd-list-date-cont">';
-                            if (isset($cellevent['all_day_event']) && $cellevent['all_day_event'] == 1) {
-                                $eventtime = '<div class="ecwd-time"><span class="metainfo event-time" itemprop="startDate" content="' . date('Y-m-d', $cellevent['from']) . 'T' . date('H:i', strtotime($cellevent['starttime'])) . '"> ' . __('All day', 'ecwd');
-                                $eventtime .= '</span>';
+                            if ($all_day_event) {
+                                $eventtime = '<div class="ecwd-time">'.
+                                  '<span class="metainfo event-time" itemprop="startDate" content="' . date('Y-m-d', $cellevent['from']) . 'T' . date('H:i', strtotime($cellevent['starttime'])) . '"> ' . __('All day', 'event-calendar-wd'). '</span>'.
+                                  '<span class="ecwd_hidden" itemprop="endDate" content="' . date('Y-m-d', $cellevent['to']) . 'T' . date('H:i', strtotime($cellevent['endtime'])) . '"></span>';
                                 $eventtime .= '</div>';
                                 $html .= $eventtime;
                             } else {
@@ -1188,11 +1236,13 @@
                                 }
                             }
                             if ($cellevent['from'] != '') {
-                                $eventdate = '<div class="ecwd-date"><span class="metainfo" itemprop="startDate" content="' . date('Y-m-d', $cellevent['from']) . 'T' . date('H:i', strtotime($cellevent['starttime'])) . '"> ' . date($this->dateformat, $cellevent['from']);
+                                $eventdate = '<div class="ecwd-date"><span class="metainfo" itemprop="startDate" content="' . date('Y-m-d', $cellevent['from']) . 'T' . date('H:i', strtotime($cellevent['starttime'])) . '"> ' . date($this->dateformat, strtotime($cellevent['date']));
                                 if ($cellevent['to'] != '' && $cellevent['to'] != $cellevent['from']) {
                                     $eventdate .= "-" . date($this->dateformat, $cellevent['to']);
                                 }
                                 $eventdate .= '</span>';
+                                $eventdate .= '<span class="ecwd_hidden" itemprop="endDate" content="' . date('Y-m-d', $cellevent['to']) . 'T' . date('H:i', strtotime($cellevent['endtime'])) . '"></span>';
+																$eventdate .= ECWD::get_time_zone( $all_day_event );
                                 $eventdate .= '</div>';
                                 $html .= $eventdate;
                             }
@@ -1204,17 +1254,22 @@
                                 }
                                 $html .= '</div>';
                             }
-                            if ($cellevent['location'] != '') {
-                                $html .= '<div class="event-venue" itemprop="location" itemscope itemtype="http://schema.org/Place">
-                                        <span itemprop="name">';
+                            if ($cellevent['location'] !== '') {
+                                $html .= '<div class="event-venue" itemprop="location" itemscope itemtype="http://schema.org/Place">';
                                 if (isset($cellevent['venue']['name'])) {
-                                    $html .= '<a href="' . $cellevent['venue']['permalink'] . '">' . $cellevent['venue']['name'] . '</a>';
+                                    $html .= '<div class="ecwd-venue" ><span itemprop="name"><a href="' . $cellevent['venue']['permalink'] . '">' . $cellevent['venue']['name'] . '</a></span></div>';
                                 }
-                                $html .= '</span>
-                                        <div class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                                          <span itemprop="streetAddress">' . $cellevent['location'] . '</span>
-                                        </div>
-                                      </div>';
+                                if (isset($cellevent['location']) && $cellevent['location'] != '') {
+                                    $html .= '<span class="ecwd_hidden" itemprop="name">' . $cellevent['location'] . '</span>';
+                                    $html .= '<div class="ecwd-location" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><span>' . $cellevent['location'] . '</span></div>';
+                                }
+                                $html .= '</div>';
+                            }
+
+                            if (isset($cellevent['link']) && $cellevent['link'] != '') {
+                                $html .= '<div  class="ecwd-link" itemprop="url"> <a href="' . $cellevent['link'] . '"  itemprop="url">' . $cellevent['link'] . '</a></div>';
+                            }else{
+                                $html .= '<span class="hidden" itemprop="url">' . get_post_permalink($cellevent['id']) . '</span>';
                             }
                             $desc = $cellevent['details'] ? $cellevent['details'] : $this->eventemptytext;
                             $desc = apply_filters('format_content', $desc);
@@ -1226,10 +1281,10 @@
                 }
             } else {
                 if ($this->displaytype == 'week' || $this->displaytype == 'day' || $this->displaytype == '4day') {
-                    $content .= '<div class="event-main-content no-events">' . __('No events', 'ecwd') . '</div>';
+                    $content .= '<div class="event-main-content no-events">' . __('No events', 'event-calendar-wd') . '</div>';
                 }
             }
-            $html .= '>' . $content . '</td>';
+            $html .= '>' . $content . '</' . $tag . '>';
             return $html;
         }
 

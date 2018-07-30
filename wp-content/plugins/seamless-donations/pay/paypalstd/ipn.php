@@ -148,8 +148,8 @@ class Seamless_Donations_PayPal_IPN_Handler {
 		$response              = '';
 
 		dgx_donate_debug_log( "IPN chatback attempt via TLS..." );
-		$fp = fsockopen( $this->chat_back_url, 443, $errno, $errstr, 30 );
-		if ( ! $fp ) {
+		// $fp = fsockopen( $this->chat_back_url, 443, $errno, $errstr, 30 );
+		/* if ( ! $fp ) {
 			dgx_donate_debug_log( "IPN chatback attempt via SSL..." );
 			$this->configure_for_production_or_test( 'ssl' );
 			$fp = stream_socket_client( $this->chat_back_url, $errno, $errstr, 30 );
@@ -167,7 +167,7 @@ class Seamless_Donations_PayPal_IPN_Handler {
 					$done     = in_array( $response, array( "VERIFIED", "INVALID" ) );
 				}
 			} while( ! $done );
-		} else {
+		} else { */
 			// let's try cURL as a final fallback
 			// based on sample PayPal code at https://github.com/paypal/ipn-code-samples/blob/master/paypal_ipn.php
 			dgx_donate_debug_log( "IPN chatback attempt via SSL failed, attempting cURL..." );
@@ -230,9 +230,9 @@ class Seamless_Donations_PayPal_IPN_Handler {
 				dgx_donate_debug_log( "See https://en.wikipedia.org/wiki/Comparison_of_TLS_implementations" );
 				dgx_donate_debug_log( "for minimum versions for other implementations." );
 			}
-		}
+		//}
 
-		fclose( $fp );
+		//fclose( $fp );
 
 		//dgx_donate_debug_log ( "url = {$this->chat_back_url}, errno = $errno, errstr = $errstr" );
 		return $response;

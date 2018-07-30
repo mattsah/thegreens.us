@@ -9,9 +9,9 @@ if ($response) {
     <table style="width:100%;">
         <tbody>
             <tr>
-                <td>Name</td>
-                <td>Description</td>
-                <td style="width:20%;">Value</td>
+                <td><?php _e('Name','event-calendar-wd');?></td>
+                <td><?php _e('Description','event-calendar-wd');?></td>
+                <td style="width:20%;"><?php _e('Value','event-calendar-wd');?></td>
             </tr>
             <?php
             foreach ($configs as $id => $conf) {

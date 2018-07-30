@@ -23,10 +23,10 @@ global $ecwd_tabs;
 
 			<h2 class="nav-tab-wrapper">
 				<?php
-				$current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
+				$current_tab = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : 'general';
 				foreach ($ecwd_settings as $key=>$ecwd_setting){
 					$active = $current_tab == $key ? 'nav-tab-active' : '';
-					echo '<a class="nav-tab ' . $active . '" href="?post_type=ecwd_calendar&page=ecwd_general_settings&tab=' . $key . '">' . $ecwd_tabs[$key] . '</a>';
+					echo '<a class="nav-tab ' . $active . '" href="' . ECWD_MENU_SLUG . '&page=ecwd_general_settings&tab=' . $key . '">' . $ecwd_tabs[$key] . '</a>';
 				}
 				?>
 

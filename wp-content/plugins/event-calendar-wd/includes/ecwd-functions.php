@@ -2,16 +2,22 @@
 
 //if (!defined())
 function ecwd_print_calendar($calendar_ids, $display = 'mini', $args = array(), $widget = false, $ajax = false, $ecwd_views = array(), $preview = false) {
+
+    if(extension_loaded('calendar') === false){
+        return __("Event Calendar WD requires PHP Calendar module to display events. Contact your hosting provider or enable it manually.", "event-calendar-wd");
+    }
+
     global $ecwd_options;
     (isset($ecwd_options['events_in_popup']) && $ecwd_options['events_in_popup'] == "1") ? $popup = "yes" : $popup = "no";
     wp_enqueue_script(ECWD_PLUGIN_PREFIX . '-public');
-    $gmap_key = (isset($ecwd_options['gmap_key'])) ? $ecwd_options['gmap_key'] : "";
+    $gmap_key = (isset($ecwd_options['gmap_key'])) ? trim($ecwd_options['gmap_key']) : "";
     wp_localize_script(ECWD_PLUGIN_PREFIX . '-public', 'ecwd', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
         'ajaxnonce' => wp_create_nonce(ECWD_PLUGIN_PREFIX . '_ajax_nonce'),
-        'loadingText' => __('Loading...', 'ecwd'),
+        'loadingText' => __('Loading...', 'event-calendar-wd'),
         'plugin_url' => ECWD_URL,
-        'gmap_key'=>$gmap_key
+        'gmap_key'=>$gmap_key,
+        'gmap_style' => (isset($ecwd_options['gmap_style'])) ? $ecwd_options['gmap_style'] : ""
     ));
 
     $defaults = array(
@@ -29,16 +35,15 @@ function ecwd_print_calendar($calendar_ids, $display = 'mini', $args = array(), 
         $ids = $calendar_ids;
     }
 
-    $ecwd_calendar_theme = get_post_meta($ids[0], ECWD_PLUGIN_PREFIX . '_calendar_theme', true);
-    $css_file = $ids[0] . '_' . $ecwd_calendar_theme;
-    $ecwd_default_color = $ecwd_calendar_theme && $ecwd_calendar_theme == 'calendar_grey' ? $ecwd_calendar_theme : 'Default';
-//    wp_enqueue_style( 'ecwd-calendar-main', plugins_url( '../css/calendar.css', __FILE__ ), '', 1 );
+    if($widget == true &&  isset($args['widget_theme']) && $args['widget_theme'] !== null){
+        $ecwd_calendar_theme = $args['widget_theme'];
+    }else {
+        $ecwd_calendar_theme = get_post_meta($ids[0], ECWD_PLUGIN_PREFIX . '_calendar_theme', true);
+    }
 
-    /* 	if ( $ecwd_calendar_theme && file_exists( ECWD_DIR . '/css/themes/' . $css_file . ".css" ) ) {
-      wp_enqueue_style( 'ecwd-calendar-theme_' . $css_file, plugins_url( '../css/themes/' . $css_file . '.css', __FILE__ ), '', 1 );
-      } */
+    $ecwd_default_color = (!empty($ecwd_calendar_theme)) ? $ecwd_calendar_theme : "calendar_grey";
     if ($ecwd_default_color && file_exists(ECWD_DIR . '/css/' . $ecwd_default_color . ".css")) {
-        wp_enqueue_style('ecwd-calendar-main', plugins_url('../css/' . $ecwd_default_color . '.css', __FILE__), '', 1);
+        wp_enqueue_style('ecwd-calendar-main-'.$ecwd_default_color, plugins_url('../css/' . $ecwd_default_color . '.css', __FILE__), '', 1);
     }
 
 
@@ -70,9 +75,9 @@ function ecwd_print_calendar($calendar_ids, $display = 'mini', $args = array(), 
     }
     if ($ajax == false) {
         if ($widget == 1) {
-            $markup .= '<div class="ecwd_' . $calendar_ids_html . ' calendar_widget_content calendar_main">';
+            $markup .= '<div class="ecwd_' . $calendar_ids_html . ' ecwd_theme_'.$ecwd_default_color.' calendar_widget_content calendar_main">';
         } else {
-            $markup .= '<div class="ecwd_' . $calendar_ids_html . ' calendar_full_content calendar_main">';
+            $markup .= '<div class="ecwd_' . $calendar_ids_html . ' ecwd_theme_'.$ecwd_default_color.' calendar_full_content calendar_main">';
         }
         if ($widget !== 1) {
             if (defined('ECWD_FILTERS_EVENT_MAIN_FILE') && is_plugin_active(ECWD_FILTERS_EVENT_MAIN_FILE)) {
@@ -87,11 +92,11 @@ function ecwd_print_calendar($calendar_ids, $display = 'mini', $args = array(), 
     }
     if ($widget == 1) {
         $markup .= '<div class="ecwd-widget-mini ecwd_calendar">';
-        $markup .= '<div class="ecwd-widget-' . $calendar_ids_html . '">';
+        $markup .= '<div data-id="'.$calendar_ids_html.'" data-type="widget" class="ecwd-widget-' . $calendar_ids_html . '">';
     } else {
 
         $markup .= '<div class="ecwd-page-' . $display . ' ecwd_calendar">';
-        $markup .= '<div class="ecwd-page-' . $calendar_ids_html . '">';
+        $markup .= '<div data-id="'.$calendar_ids_html.'" data-type="page" class="ecwd-page-' . $calendar_ids_html . '">';
     }
 
     $markup .= $d->get_view($date, $display, $widget, $ecwd_views, $preview);
@@ -141,8 +146,7 @@ function ecwd_ajax() {
     $args = array();
     $display = '';
     if (isset($_POST[ECWD_PLUGIN_PREFIX . '_link'])) {
-        $link = esc_html($_POST[ECWD_PLUGIN_PREFIX . '_link']);
-        parse_str($link, $link_arr);
+      $link = esc_html(strip_tags(htmlspecialchars_decode($_POST[ECWD_PLUGIN_PREFIX . '_link'])));        parse_str($link, $link_arr);
         $date = $link_arr['?date'];
         $page = isset($link_arr['amp;cpage']) ? $link_arr['amp;cpage'] : 1;
 
@@ -159,10 +163,10 @@ function ecwd_ajax() {
         $args['date'] = '';
     }
     if ($args['date'] == '' && isset($_POST[ECWD_PLUGIN_PREFIX . '_date_filter'])) {
-        $args['date'] = $_POST[ECWD_PLUGIN_PREFIX . '_date_filter'];
+        $args['date'] = sanitize_text_field($_POST[ECWD_PLUGIN_PREFIX . '_date_filter']);
     }
     if (isset($_POST[ECWD_PLUGIN_PREFIX . '_prev_display']) && $_POST[ECWD_PLUGIN_PREFIX . '_prev_display'] != '') {
-        $args['prev_display'] = $_POST[ECWD_PLUGIN_PREFIX . '_prev_display'];
+        $args['prev_display'] = sanitize_text_field($_POST[ECWD_PLUGIN_PREFIX . '_prev_display']);
     } else {
         $args['prev_display'] = '';
     }
@@ -186,19 +190,19 @@ function ecwd_ajax() {
     $args['search_params'] = array();
     if (( isset($_POST[ECWD_PLUGIN_PREFIX . '_query']) && $_POST[ECWD_PLUGIN_PREFIX . '_query'] != '' ) || isset($_POST[ECWD_PLUGIN_PREFIX . '_categories']) || ( isset($_POST[ECWD_PLUGIN_PREFIX . '_tags']) ) || isset($_POST[ECWD_PLUGIN_PREFIX . '_venues']) || isset($_POST[ECWD_PLUGIN_PREFIX . '_organizers']) || isset($_POST[ECWD_PLUGIN_PREFIX . '_weekdays'])) {
 
-        $args['search_params']['query'] = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_query']) ? $_POST[ECWD_PLUGIN_PREFIX . '_query'] : 0 );
-        $args['search_params']['categories'] = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_categories']) ? $_POST[ECWD_PLUGIN_PREFIX . '_categories'] : 0 );
-        $args['search_params']['weekdays'] = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_weekdays']) ? $_POST[ECWD_PLUGIN_PREFIX . '_weekdays'] : 0 );
-        $args['search_params']['tags'] = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_tags']) ? $_POST[ECWD_PLUGIN_PREFIX . '_tags'] : 0 );
-        $args['search_params']['venues'] = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_venues']) ? $_POST[ECWD_PLUGIN_PREFIX . '_venues'] : 0 );
-        $args['search_params']['organizers'] = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_organizers']) ? $_POST[ECWD_PLUGIN_PREFIX . '_organizers'] : 0 );
+        $args['search_params']['query'] = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_query']) ? sanitize_text_field($_POST[ECWD_PLUGIN_PREFIX . '_query']) : 0 );
+        $args['search_params']['categories'] = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_categories']) ? ECWD::sanitize_array($_POST[ECWD_PLUGIN_PREFIX . '_categories']) : 0 );
+        $args['search_params']['weekdays'] = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_weekdays']) ? ECWD::sanitize_array($_POST[ECWD_PLUGIN_PREFIX . '_weekdays']) : 0 );
+        $args['search_params']['tags'] = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_tags']) ? ECWD::sanitize_array($_POST[ECWD_PLUGIN_PREFIX . '_tags']) : 0 );
+        $args['search_params']['venues'] = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_venues']) ? ECWD::sanitize_array($_POST[ECWD_PLUGIN_PREFIX . '_venues']) : 0 );
+        $args['search_params']['organizers'] = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_organizers']) ? ECWD::sanitize_array($_POST[ECWD_PLUGIN_PREFIX . '_organizers']) : 0 );
         $args['search'] = 1;
         //$display = 'list';
     }
-    $displays = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_displays']) ? $_POST[ECWD_PLUGIN_PREFIX . '_displays'] : null );
-    $filters = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_filters']) ? $_POST[ECWD_PLUGIN_PREFIX . '_filters'] : null );
-    $page_items = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_page_items']) ? $_POST[ECWD_PLUGIN_PREFIX . '_page_items'] : null );
-    $event_search = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_event_search']) ? $_POST[ECWD_PLUGIN_PREFIX . '_event_search'] : null );
+    $displays = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_displays']) ? ECWD::sanitize_array($_POST[ECWD_PLUGIN_PREFIX . '_displays']) : null );
+    $filters = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_filters']) ? ECWD::sanitize_array($_POST[ECWD_PLUGIN_PREFIX . '_filters']) : null );
+    $page_items = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_page_items']) ? ECWD::sanitize_array($_POST[ECWD_PLUGIN_PREFIX . '_page_items']) : null );
+    $event_search = ( isset($_POST[ECWD_PLUGIN_PREFIX . '_event_search']) ? ECWD::sanitize_array($_POST[ECWD_PLUGIN_PREFIX . '_event_search']) : null );
     $args['displays'] = $displays;
     $args['filters'] = $filters;
     $args['event_search'] = $event_search;
@@ -270,9 +274,11 @@ function replaceFirstImages($content) {
 }
 
 function ecwd_event_popup_ajax() {
-    $ajax_date = isset($_POST['date']) ? $_POST['date'] : null;
+    $ajax_start_date = isset($_POST['start_date']) ? sanitize_text_field($_POST['start_date']) : null;
+    $ajax_end_date = isset($_POST['end_date']) ? sanitize_text_field($_POST['end_date']) : null;
+
     if (isset($_POST['id'])) {
-        $post_id = $_POST['id'];
+        $post_id = sanitize_text_field(($_POST['id']));
         include_once(ECWD_DIR . '/views/ecwd-event-popup.php');
         die;
     }
@@ -285,20 +291,22 @@ function ecwd_event_content($content) {
     global $post;
     global $wp;
     global $ecwd_options;
-    //echo $content;
+
+
     if (is_single()) {
-        $feat_image = '';
         if ($post->post_type == ECWD_PLUGIN_PREFIX . '_organizer') {
-            $organizer_content = '';
-            include( ECWD_DIR . '/views/ecwd-organizer-content.php' );
-            $organizer_content .= ob_get_clean();
-            $content = $organizer_content;
-        } elseif ($post->post_type == ECWD_PLUGIN_PREFIX . '_venue') {
-            $venue_content = '';
             ob_start();
-            include( ECWD_DIR . '/views/ecwd-venue-content.php' );
-            $venue_content .= ob_get_clean();
-            $content = $venue_content;
+            include(ECWD_DIR . '/views/ecwd-organizer-content.php');
+            $content = ob_get_clean();
+        } elseif ($post->post_type == ECWD_PLUGIN_PREFIX . '_venue') {
+
+            ob_start();
+            include(ECWD_DIR . '/views/ecwd-venue-content.php');
+            $content = ob_get_clean();
+        } elseif ($post->post_type == ECWD_PLUGIN_PREFIX . '_event' && isset($ecwd_options['use_custom_template']) && $ecwd_options['use_custom_template'] == '0' && !isset($_GET['iframe'])) {
+            ob_start();
+            include(ECWD_DIR . '/views/ecwd-event-content.php');
+            $content = ob_get_clean();
         }
     }
 
@@ -327,16 +335,6 @@ function getAndReplaceFirstImage($content) {
 }
 
 add_filter('the_content', ECWD_PLUGIN_PREFIX . '_event_content');
-
-//add_filter('template_include', ECWD_PLUGIN_PREFIX . '_set_template');
-
-function ecwd_set_template($template) {
-    if (is_singular(ECWD_PLUGIN_PREFIX . '_event') && ECWD_DIR . '/views/ecwd-event-content.php' != $template) {
-        $template = ECWD_DIR . '/views/ecwd-event-content.php';
-    }
-
-    return $template;
-}
 
 function ecwd_event_post($post) {
     global $ecwd_options;
@@ -380,7 +378,7 @@ function ecwd_add_meta_tags() {
                 if ($ecwd_event_date_to && date($date_format, strtotime($ecwd_event_date_from)) !== date($date_format, strtotime($ecwd_event_date_to))) {
                     $description .= ' - ' . date($date_format, strtotime($ecwd_event_date_to));
                 }
-                $description .= '  ' . __('All day', 'ecwd') . ' ';
+                $description .= '  ' . __('All day', 'event-calendar-wd') . ' ';
             }
         } else {
             $description .= date($date_format, strtotime($ecwd_event_date_from)) . ' ' . date($time_format, strtotime($ecwd_event_date_from));
@@ -457,10 +455,10 @@ function ecwd_print_countdown($event_id, $widget = 1, $theme_id = null, $args = 
         $markup .= '<div class="ecwd_countdown">';
         $markup .= '<input type="hidden" name="ecwd_end_time" value="' . $start . '"/>';
         $markup .= '<input type="hidden" name="ecwd_timezone" value="' . $diff . '"/>';
-        $markup .= '<input type="hidden" name="ecwd_text_days" value="' . __('DAYS', 'ecwd') . '"/>';
-        $markup .= '<input type="hidden" name="ecwd_text_hours" value="' . __('HOURS', 'ecwd') . '"/>';
-        $markup .= '<input type="hidden" name="ecwd_text_minutes" value="' . __('MINUTES', 'ecwd') . '"/>';
-        $markup .= '<input type="hidden" name="ecwd_text_seconds" value="' . __('SECONDS', 'ecwd') . '"/>';
+        $markup .= '<input type="hidden" name="ecwd_text_days" value="' . __('DAYS', 'event-calendar-wd') . '"/>';
+        $markup .= '<input type="hidden" name="ecwd_text_hours" value="' . __('HOURS', 'event-calendar-wd') . '"/>';
+        $markup .= '<input type="hidden" name="ecwd_text_minutes" value="' . __('MINUTES', 'event-calendar-wd') . '"/>';
+        $markup .= '<input type="hidden" name="ecwd_text_seconds" value="' . __('SECONDS', 'event-calendar-wd') . '"/>';
         $markup .= '<input type="hidden" name="ecwd_finish_text" value="' . $finish_text . '"/>';
         if ($theme_id) {
             $theme = get_post_meta($theme_id, 'ecwd_countdown_theme', true);

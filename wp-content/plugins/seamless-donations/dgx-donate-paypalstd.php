@@ -77,7 +77,7 @@ function dgx_donate_show_paypalstd_settings_form () {
 	echo "<input type='radio' name='paypalserver' value='LIVE' $checkLive /> " .
 	     esc_html__ ( 'Live (Production Server)', 'seamless-donations' ) . "</p>";
 	echo "<p>" . __ ( 'IPN URL', 'seamless-donations' ) . "<p>";
-	$notify_url = plugins_url ( '/dgx-donate-paypalstd-ipn.php', __FILE__ );
+	$notify_url = plugins_url ( '/pay/paypalstd/ipn.php', __FILE__ );
 	echo "<pre>$notify_url</pre>";
 }
 
@@ -183,7 +183,7 @@ function dgx_donate_paypalstd_get_hidden_form () {
 		$formAction = "https://www.paypal.com/cgi-bin/webscr";
 	}
 
-	$notifyUrl = plugins_url ( '/dgx-donate-paypalstd-ipn.php', __FILE__ );
+	$notifyUrl = plugins_url ( '/pay/paypalstd/ipn.php', __FILE__ );
 
 	$sessionID  = session_id ();
 	$successUrl = dgx_donate_paypalstd_get_current_url ();
@@ -311,7 +311,7 @@ function dgx_donate_paypalstd_ajax_checkout () {
 	dgx_donate_debug_log ( "PHP Version: $php_version" );
 	dgx_donate_debug_log ( "Seamless Donations Version: " . dgx_donate_get_version () );
 	dgx_donate_debug_log ( "User browser: " . seamless_donations_get_browser_name() );
-	dgx_donate_debug_log ( 'IPN: ' . plugins_url ( '/dgx-donate-paypalstd-ipn.php', __FILE__ ) );
+	dgx_donate_debug_log ( 'IPN: ' . plugins_url ( '/pay/paypalstd/ipn.php', __FILE__ ) );
 
 	$nonce = $_POST['nonce'];
 	if( ! wp_verify_nonce ( $nonce, 'dgx-donate-nonce' ) ) {

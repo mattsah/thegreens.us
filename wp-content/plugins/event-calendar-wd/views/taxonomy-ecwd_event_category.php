@@ -13,7 +13,14 @@ $display_description = (!isset($ecwd_options['category_archive_description']) ||
 $display_image = (!isset($ecwd_options['category_archive_image']) || (isset($ecwd_options['category_archive_image']) && $ecwd_options['category_archive_image'] === '1'));
 $cat_title = $wp_query->queried_object->name;
 
+$events_template_part_slug = (!empty($ecwd_options['category_archive_template_part_slug'])) ? $ecwd_options['category_archive_template_part_slug'] : "content";
+$events_template_part_name = (!empty($ecwd_options['category_archive_template_part_name'])) ? $ecwd_options['category_archive_template_part_name'] : get_post_format();
+
+
 get_header();
+if ( class_exists( 'WooCommerce' ) ) {
+    do_action('woocommerce_before_main_content');//TODO REMOVE?
+}
 ?>
 
 <section id="primary" class="content-area">    
@@ -33,23 +40,15 @@ get_header();
                 </div>
             <?php } ?> 
         </div>
-        <?php if (have_posts()) : ?>
-            <?php /* The loop */ ?>
-            <?php while (have_posts()) : the_post(); ?>                                
-                <?php get_template_part('content', get_post_format()); ?>
-            <?php endwhile; ?>
-            <?php
-            the_posts_pagination(array(
-                'prev_text' => __('Previous page'),
-                'next_text' => __('Next page')                
-            ));
-            ?>
-        </div>
+    <?php get_template_part($events_template_part_slug, $events_template_part_name); ?>
 
-    <?php else : ?>
-        <?php get_template_part('content', 'none'); ?>
-    <?php endif; ?>         
+
 </section><!-- #primary -->
 
-<?php get_sidebar(); ?>
-<?php get_footer(); ?>
+<?php 
+  get_sidebar();
+    if ( class_exists( 'WooCommerce' ) ) {
+        do_action('woocommerce_after_main_content');//TODO REMOVE ?
+    }
+
+  get_footer(); ?>

@@ -21,28 +21,30 @@ global $ecwd_tabs;
 
 			<div id="featurs_tables"><span id="previous_table"></span>
 
-				<div id="featurs_table1"><span>WordPress 3.9+ ready</span>
-					<span>SEO-friendly</span> <span>Responsive design</span>
-					<span>Unlimited number of calendars/events</span>
-					<span>Structured event markup (microdata)</span>
-					<span>Event categories</span>
-					<span>Event tag</span>
-					<span>Support for venues</span>
-					<span>Support for organizers</span>
-					<span>Google Maps integration</span>
-					<span>Event search</span>
-					<span>Social media integration</span>
-					<span>Month, week, day, list views</span>
-					<span>Recurring events</span>
-					<span>5 beautiful customizable themes</span>
-					<span>Posterboard view</span>
-					<span>4 days view</span>
-					<span>Map view</span>
-					<span>Add ons support</span>
+				<div id="featurs_table1">
+          <span><?php _e('WordPress 3.9+ ready','event-calendar-wd')?></span>
+					<span><?php _e('SEO-friendly','event-calendar-wd')?></span>
+          <span><?php _e('Responsive design','event-calendar-wd')?></span>
+					<span><?php _e('Unlimited number of calendars/events','event-calendar-wd')?></span>
+					<span><?php _e('Structured event markup (microdata)','event-calendar-wd')?></span>
+					<span><?php _e('Event categories','event-calendar-wd')?></span>
+					<span><?php _e('Event tag','event-calendar-wd')?></span>
+					<span><?php _e('Support for venues','event-calendar-wd')?></span>
+					<span><?php _e('Support for organizers','event-calendar-wd')?></span>
+					<span><?php _e('Google Maps integration','event-calendar-wd')?></span>
+					<span><?php _e('Event search','event-calendar-wd')?></span>
+					<span><?php _e('Social media integration','event-calendar-wd')?></span>
+					<span><?php _e('Month, week, day, list views','event-calendar-wd')?></span>
+					<span><?php _e('Recurring events','event-calendar-wd')?></span>
+					<span><?php _e('5 beautiful customizable themes','event-calendar-wd')?></span>
+					<span><?php _e('Posterboard view','event-calendar-wd')?></span>
+					<span><?php _e('4 days view','event-calendar-wd')?></span>
+					<span><?php _e('Map view','event-calendar-wd')?></span>
+					<span><?php _e('Add ons support','event-calendar-wd')?></span>
 
 				</div>
 				<div id="featurs_table2">
-					<span style="padding-top: 18px;height: 39px;">Free</span>
+					<span style="padding-top: 18px;height: 39px;"><?php _e('Free','event-calendar-wd')?></span>
 					<span class="yes"></span>
 					<span class="yes"></span>
 					<span class="yes"></span>
@@ -64,7 +66,7 @@ global $ecwd_tabs;
 					<span class="no"></span>
 
 				</div>
-				<div id="featurs_table3"><span>Pro Version</span>
+				<div id="featurs_table3"><span><?php _e('Premium Version','event-calendar-wd')?></span>
 					<span class="yes"></span>
 					<span class="yes"></span>
 					<span class="yes"></span>
@@ -88,11 +90,11 @@ global $ecwd_tabs;
 
 			</div>
 			<div style="float: left; clear: both;">
-				<p>After purchasing the commercial version follow these steps:</p>
+				<p><?php _e('After purchasing the commercial version follow these steps','event-calendar-wd')?>:</p>
 				<ol>
-					<li>Deactivate Event Calendar WD plugin.</li>
-					<li>Delete Event Calendar WD plugin.</li>
-					<li>Install the downloaded commercial version of the plugin.</li>
+					<li><?php _e('Deactivate Event Calendar WD plugin.','event-calendar-wd')?></li>
+					<li><?php _e('Delete Event Calendar WD plugin.','event-calendar-wd')?></li>
+					<li><?php _e('Install the downloaded commercial version of the plugin.','event-calendar-wd')?></li>
 				</ol>
 			</div>
 		</div>

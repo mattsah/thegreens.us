@@ -3,7 +3,7 @@
         //default params 
         var default_options = {
             button: '',
-            title: 'Modal Title',
+            title: 'Event Details',
             body_id: '',
             body_class: '',
             container_class: '',
@@ -49,11 +49,13 @@
                 }
                 el.on('click', '.ecwd_close_popup', function () {
                     el.hide();
+                    jQuery('body').removeClass("body-ecwd_open_popup");
                     params.popup_close(el);
                 });
                 $(document).keyup(function (e) {
                     if (e.keyCode == 27) { // escape key maps to keycode `27`
                         el.hide();
+                        jQuery('body').removeClass("body-ecwd_open_popup");
                         params.popup_close(el);
                     }
                 });
@@ -64,6 +66,7 @@
             if (params.only_open == false) {
                 add_popup(html);
             }
+            jQuery('body').addClass("body-ecwd_open_popup");
             el.show();
             params.after_popup_show(el);
             el.addClass('ecwd_popup_el');
@@ -101,7 +104,7 @@
 
         function show_gmap() {
             var interval = setInterval(function () {
-                var el = $('.ecwd_popup_container').find('.ecwd_map_div');
+                var el = $('.ecwd_popup_container').find('.ecwd-show-map .ecwd_markers');
                 if (el.html() != "") {
                     ecwd_js_init_call.showMap();
                     clearInterval(interval);
